@@ -7,8 +7,9 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\MateriController;
-use App\Http\Controllers\Admin\NilaiController; // 
-use App\Http\Controllers\Admin\KuisController;
+use App\Http\Controllers\Admin\NilaiController;
+
+use App\Http\Controllers\EvaluationController;
 
 Auth::routes();
 
@@ -35,10 +36,4 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::post('materi/halaman-4/simpan', [NilaiController::class, 'simpanHalaman4'])->name('materi.halaman4.simpan');
     Route::get('materi/halaman-5', [MateriController::class, 'halamanLima'])->name('materi.halaman5');
 
-    Route::get('/evaluasi/{nomor}', [EvaluasiController::class, 'tampilSoal'])->name('evaluasi.soal');
-    Route::post('/evaluasi/simpan', [EvaluasiController::class, 'simpanJawaban'])->name('evaluasi.simpan_jawaban');
-    Route::get('/evaluasi/selesai', [EvaluasiController::class, 'selesai'])->name('evaluasi.selesai');
-
-
 });
-
