@@ -98,3 +98,7 @@ Breadcrumbs::for('admin.kuis.hasil', function (BreadcrumbTrail $trail) {
     $trail->push('Hasil Kuis', route('admin.kuis.hasil'));
 });
 
+Breadcrumbs::for('admin.materi.halaman5', function ($trail) {
+    $trail->parent('admin.materi.index');
+    $trail->push('Materi - Halaman 5', route('admin.materi.halaman5'));
+});

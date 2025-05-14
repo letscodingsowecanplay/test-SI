@@ -71,7 +71,7 @@
         <a href="{{ route('admin.materi.halaman3') }}" class="btn btn-secondary">← Halaman 3</a>
 
         @if($sudahMenjawab)
-            <a href="{{ route('admin.materi.halaman5') }}" class="btn btn-primary">Mulai Kuis</a>  
+            <a href="{{ route('admin.evaluasi.petunjuk') }}" class="btn btn-primary">Mulai Kuis</a>  
         @else
             <a href="#" class="btn btn-primary disabled">Halaman 5 →</a>
         @endif

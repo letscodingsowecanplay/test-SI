@@ -32,3 +32,9 @@
     background-color: #c82333;
     border-color: #bd2130;
 }
+
+.soal-box {
+    background: #ffd6f4;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}

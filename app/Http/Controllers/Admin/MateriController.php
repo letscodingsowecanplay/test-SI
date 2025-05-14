@@ -127,4 +127,9 @@ class MateriController extends Controller
         return redirect()->route('admin.materi.halaman5')->with('success', "Kuis disimpan. Skor Anda: $skor/$total");
     }
 
+    public function halamanEnam()
+    {
+        return view('admin.materi.halaman6');
+    }
+
 }

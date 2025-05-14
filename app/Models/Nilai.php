@@ -17,4 +17,5 @@ class Nilai extends Model
         'skor',
         'total_soal',
     ];
+    
 }

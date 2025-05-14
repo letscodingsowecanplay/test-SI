@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Soal extends Model
+class JawabanSoal extends Model
 {
-    public function jawaban()
+    public function soal()
     {
-        return $this->hasMany(JawabanSoal::class);
+        return $this->belongsTo(Soal::class);
     }
 
 }

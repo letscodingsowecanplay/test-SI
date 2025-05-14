@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\MateriController;
 use App\Http\Controllers\Admin\NilaiController;
+use App\Http\Controllers\Admin\EvaluasiController;
 
 use App\Http\Controllers\EvaluationController;
 
@@ -35,5 +36,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('materi/halaman-4', [MateriController::class, 'halamanEmpat'])->name('materi.halaman4');
     Route::post('materi/halaman-4/simpan', [NilaiController::class, 'simpanHalaman4'])->name('materi.halaman4.simpan');
     Route::get('materi/halaman-5', [MateriController::class, 'halamanLima'])->name('materi.halaman5');
+    Route::get('materi/halaman-6', [MateriController::class, 'halamanEnam'])->name('materi.halaman6');
+
+    Route::get('evaluasi/petunjuk', [EvaluasiController::class, 'petunjuk'])->name('evaluasi.petunjuk');
+
+    Route::get('evaluasi', [EvaluasiController::class, 'index'])->name('evaluasi.index');
+    Route::post('evaluasi/simpan', [EvaluasiController::class, 'simpan'])->name('evaluasi.simpan');
 
 });
