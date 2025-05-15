@@ -26,105 +26,141 @@ class MateriController extends Controller
 
     public function halamanEmpat()
     {
-        // Cek dari database apakah user sudah mengisi nilai kuis halaman 4
-        $sudahMenjawab = Nilai::where('user_id', auth()->id())
-                            ->where('kuis_id', 'halaman4')
-                            ->exists();
+        $userId = auth()->id();
+        $kuisId = 'kuis-1';
+        $kkm = 3; // Contoh KKM, bisa sesuaikan
 
-        return view('admin.materi.halaman4', compact('sudahMenjawab'));
+        $nilai = Nilai::where('user_id', $userId)
+            ->where('kuis_id', $kuisId)
+            ->first();
+
+        $sudahMenjawab = $nilai ? true : false;
+        $skor = $nilai ? $nilai->skor : 0;
+
+        return view('admin.materi.halaman4', compact('sudahMenjawab', 'skor', 'kkm'));
     }
 
     public function simpanHalamanEmpat(Request $request)
     {
-        // Cek apakah sudah pernah menyimpan
-        $sudahAda = Nilai::where('user_id', auth()->id())
-                         ->where('kuis_id', 'halaman4')
-                         ->exists();
+        $request->validate([
+            'jawaban.soal1' => 'required',
+            'jawaban.soal2' => 'required',
+            'jawaban.soal3' => 'required',
+            'jawaban.soal4' => 'required',
+        ]);
 
-        if (!$sudahAda) {
-            Nilai::create([
-                'user_id' => auth()->id(),
-                'kuis_id' => 'halaman4',
-                'nilai' => 100, // Nilai bisa dihitung dari $request
-            ]);
+        $benar = 0;
+        $jawaban = $request->input('jawaban');
+
+        $kunci = [
+            'soal1' => 'a', // misal: a itu gambar lebih panjang
+            'soal2' => 'b', // misal: b itu gambar lebih pendek
+            'soal3' => 'a',
+            'soal4' => 'b',
+        ];
+
+        foreach ($kunci as $soal => $jawabanBenar) {
+            if (isset($jawaban[$soal]) && $jawaban[$soal] === $jawabanBenar) {
+                $benar++;
+            }
         }
 
-        return redirect()->route('admin.materi.halaman4')->with('success', 'Jawaban berhasil disimpan!');
+        Nilai::updateOrCreate(
+            [
+                'user_id' => Auth::id(),
+                'kuis_id' => 'kuis-1',
+            ],
+            [
+                'skor' => $benar,
+                'total_soal' => count($kunci),
+            ]
+        );
+
+        return redirect()->route('admin.materi.halaman4')->with('success', "Skor berhasil disimpan! Nilai Anda: $benar dari " . count($kunci));
+    }
+
+    public function resetHalamanEmpat()
+    {
+        $userId = auth()->id();
+        $kuisId = 'kuis-1';
+
+        Nilai::where('user_id', $userId)
+            ->where('kuis_id', $kuisId)
+            ->delete();
+
+        return redirect()->route('admin.materi.halaman4');
     }
 
     public function HalamanLima()
     {
-        $soal = [
-            [
-                'id' => 1,
-                'pertanyaan' => 'Urutan miniatur rumah banjar dari yang paling tinggi adalah ...',
-                'opsi' => [
-                    'a' => 'Anno 1925 - Bubungan Tinggi - Gajah Manyusu',
-                    'b' => 'Bubungan Tinggi - Anno 1925 - Gajah Manyusu',
-                    'c' => 'Gajah Manyusu - Bubungan Tinggi - Anno 1925',
-                ],
-                'gambar' => 'soal1.png'
-            ],
-            [
-                'id' => 2,
-                'pertanyaan' => 'Urutan tas khas Kalimantan dari yang tergantung paling rendah adalah ...',
-                'opsi' => [
-                    'a' => 'Tas anyaman hitam - Tas anyaman putih - Tas ecoprint',
-                    'b' => 'Tas ecoprint - Tas anyaman putih - Tas anyaman hitam',
-                    'c' => 'Tas anyaman putih - Tas anyaman hitam - Tas ecoprint',
-                ],
-                'gambar' => 'soal2.png'
-            ],
-            [
-                'id' => 3,
-                'pertanyaan' => 'Urutan kerajinan fiber glass patung dayak dimulai dari yang paling panjang adalah ...',
-                'opsi' => [
-                    'a' => 'b-c-a',
-                    'b' => 'b-a-c',
-                    'c' => 'c-a-b',
-                ],
-                'gambar' => 'soal3.png'
-            ],
-            [
-                'id' => 4,
-                'pertanyaan' => 'Urutan vas bunga akar keladi dimulai dari yang paling pendek adalah ...',
-                'opsi' => [
-                    'a' => 'a-c-b',
-                    'b' => 'c-b-a',
-                    'c' => 'c-a-b',
-                ],
-                'gambar' => 'soal4.png'
-            ],
+        $userId = auth()->id();
+        $kuisId = 'kuis-2';
+        $kkm = 3; // minimal benar untuk lulus
+
+        $nilai = \App\Models\Nilai::where('user_id', $userId)
+            ->where('kuis_id', $kuisId)
+            ->first();
+
+        $sudahMenjawab = $nilai !== null;
+        $skor = $nilai?->skor ?? 0;
+
+        $kunci = [
+            'soal1' => 'panjang',
+            'soal2' => 'kecil',
+            'soal3' => 'tinggi',
+            'soal4' => 'kecil'
         ];
 
-        return view('admin.materi.halaman5', compact('soal'));
+        return view('admin.materi.halaman5', compact('sudahMenjawab', 'skor', 'kkm', 'kunci'));
     }
 
-    public function simpanHalaman5(Request $request)
+    public function simpanHalamanLima(Request $request)
     {
-        $jawabanBenar = [
-            1 => 'a',
-            2 => 'c',
-            3 => 'a',
-            4 => 'b',
+        $request->validate([
+            'jawaban' => 'required|array',
+            'jawaban.*' => 'required|string|in:panjang,pendek,tinggi,rendah,besar,kecil',
+        ]);
+
+        $jawaban = $request->input('jawaban');
+        $userId = auth()->id();
+        $kuisId = 'kuis-2';
+
+        // Kunci jawaban
+        $kunci = [
+            'soal1' => 'panjang',
+            'soal2' => 'kecil',
+            'soal3' => 'tinggi',
+            'soal4' => 'kecil'
         ];
 
         $skor = 0;
-        $total = count($jawabanBenar);
-        foreach ($jawabanBenar as $nomor => $benar) {
-            if (($request->jawaban[$nomor] ?? null) === $benar) {
+        foreach ($kunci as $soal => $kunciJawaban) {
+            if (isset($jawaban[$soal]) && strtolower($jawaban[$soal]) === $kunciJawaban) {
                 $skor++;
             }
         }
 
-        \App\Models\Nilai::create([
-            'user_id' => auth()->id(),
-            'kuis_id' => 'urutan',
-            'skor' => $skor,
-            'total_soal' => $total,
-        ]);
+        // Simpan skor
+        \App\Models\Nilai::updateOrCreate(
+            ['user_id' => $userId, 'kuis_id' => $kuisId],
+            [
+                'skor' => $skor,
+                'total_soal' => count($kunci),
+                'jawaban' => json_encode($jawaban),
+            ]
+        );
 
-        return redirect()->route('admin.materi.halaman5')->with('success', "Kuis disimpan. Skor Anda: $skor/$total");
+        return redirect()->route('admin.materi.halaman5')->with('success', "Jawaban berhasil disimpan. Nilai Anda: $skor dari " . count($kunci));
+    }
+
+
+    public function resetHalaman5()
+    {
+        \App\Models\Nilai::where('user_id', auth()->id())
+            ->where('kuis_id', 'kuis-2')
+            ->delete();
+
+        return redirect()->route('admin.materi.halaman5')->with('success', 'Kuis berhasil direset. Silakan mulai ulang.');
     }
 
     public function halamanEnam()

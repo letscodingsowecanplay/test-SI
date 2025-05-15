@@ -7,10 +7,7 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\MateriController;
-use App\Http\Controllers\Admin\NilaiController;
 use App\Http\Controllers\Admin\EvaluasiController;
-
-use App\Http\Controllers\EvaluationController;
 
 Auth::routes();
 
@@ -34,8 +31,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('materi/halaman-2', [MateriController::class, 'halamanDua'])->name('materi.halaman2');
     Route::get('materi/halaman-3', [MateriController::class, 'halamanTiga'])->name('materi.halaman3');
     Route::get('materi/halaman-4', [MateriController::class, 'halamanEmpat'])->name('materi.halaman4');
-    Route::post('materi/halaman-4/simpan', [NilaiController::class, 'simpanHalaman4'])->name('materi.halaman4.simpan');
+    Route::post('materi/halaman-4/simpan', [MateriController::class, 'simpanHalamanEmpat'])->name('materi.halaman4.simpan');
+    Route::delete('materi/halaman4/reset', [MateriController::class, 'resetHalamanEmpat'])->name('materi.halaman4.reset');
     Route::get('materi/halaman-5', [MateriController::class, 'halamanLima'])->name('materi.halaman5');
+    Route::post('materi/halaman-5/simpan', [MateriController::class, 'simpanHalamanLima'])->name('materi.halaman5.simpan');
+    Route::delete('materi/halaman5/reset', [MateriController::class, 'resetHalaman5'])->name('materi.halaman5.reset');
     Route::get('materi/halaman-6', [MateriController::class, 'halamanEnam'])->name('materi.halaman6');
 
     Route::get('evaluasi/petunjuk', [EvaluasiController::class, 'petunjuk'])->name('evaluasi.petunjuk');

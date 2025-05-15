@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'app_name' => 'Laravel Admin Stater',
-    'app_desc' => 'Laravel Admin Stater',
-    'author' => 'Fazle Rabbi',
+    'app_name' => 'Si-Ukur',
+    'app_desc' => 'Si-Ukur',
+    'author' => 'Ana Maria Parasanti',
     'version' => '1.0'
 ];

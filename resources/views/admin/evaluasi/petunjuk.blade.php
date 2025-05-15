@@ -3,6 +3,7 @@
 @section('content')
 <div class="container py-4">
     <div class="row">
+
         {{-- Kolom 1: Profil dan Daftar Isi --}}
         <div class="col-md-4 mb-3">
             <div class="card text-center">
@@ -37,6 +38,12 @@
                     </ol>
                 </div>
             </div>
+
+            @if(session('error'))
+                <div class="alert alert-warning mt-3">
+                    {{ session('error') }}
+                </div>
+            @endif
         </div>
 
         {{-- Kolom 3: Data Siswa dan Tombol --}}
@@ -53,11 +60,34 @@
 
                     <div class="d-flex justify-content-around mt-4">
                         <a href="{{ route('admin.materi.index') }}" class="btn btn-danger rounded-pill">Kembali ke Materi</a>
-                        <a href="{{ route('admin.evaluasi.index') }}" class="btn btn-primary rounded-pill">Mulai Kuis</a>
+
+                        @if(!$hasil)
+                            <a href="{{ route('admin.evaluasi.index') }}" class="btn btn-primary rounded-pill">Mulai Kuis</a>
+                        @else
+                            <button class="btn btn-secondary rounded-pill" disabled>Sudah Dikerjakan</button>
+                        @endif
                     </div>
                 </div>
             </div>
+
+            {{-- Jika sudah ada hasil, tampilkan nilai --}}
+            @if($hasil)
+                <div class="card mt-4">
+                    <div class="card-header text-center"><strong>Hasil Kuis</strong></div>
+                    <div class="card-body">
+                        <p><strong>Skor:</strong> {{ $hasil->skor }} / {{ $hasil->total_soal }}</p>
+                        <p><strong>Persentase:</strong> {{ round(($hasil->skor / $hasil->total_soal) * 100) }}%</p>
+
+                        @if($hasil->skor < 7)
+                            <p class="text-danger">Nilai Anda di bawah KKM. Silakan pelajari materi lagi.</p>
+                        @else
+                            <p class="text-success">Selamat! Anda telah lulus evaluasi ini.</p>
+                        @endif
+                    </div>
+                </div>
+            @endif
         </div>
+
     </div>
 </div>
 @endsection

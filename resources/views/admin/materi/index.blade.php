@@ -35,7 +35,7 @@
             </ul>
         </div>
         <div class="card-footer text-end">
-            <a href="{{ route('admin.materi.halaman2') }}" class="btn btn-primary">Next Halaman →</a>
+            <a href="{{ route('admin.materi.halaman2') }}" class="btn btn-primary">Selanjutnya →</a>
         </div>
     </div>
 @endsection

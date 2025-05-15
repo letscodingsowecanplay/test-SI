@@ -13,6 +13,17 @@ class EvaluasiController extends Controller
 
     public function index()
     {
+        $user = Auth::user();
+
+        $sudah = Nilai::where('user_id', $user->id)
+            ->where('kuis_id', 'evaluasi-1')
+            ->exists();
+
+        if ($sudah) {
+            return redirect()->route('admin.evaluasi.petunjuk')
+                ->with('error', 'Anda sudah mengerjakan kuis ini.');
+        }
+
         $soals = Soal::with('jawaban')->get();
         return view('admin.evaluasi.index', compact('soals'));
     }
@@ -85,8 +96,13 @@ class EvaluasiController extends Controller
     {
         $user = Auth::user();
 
+        $hasil = Nilai::where('user_id', $user->id)
+            ->where('kuis_id', 'evaluasi-1')
+            ->first();
+
         return view('admin.evaluasi.petunjuk', [
-            'user' => $user
+            'user' => $user,
+            'hasil' => $hasil
         ]);
     }
 

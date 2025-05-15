@@ -14,6 +14,10 @@
             @csrf
 
             @foreach (range(1,4) as $no)
+                @php
+                    $kunci = ['soal1' => 'a', 'soal2' => 'b', 'soal3' => 'a', 'soal4' => 'b'];
+                @endphp
+
                 <div class="mb-5">
                     <button onclick="document.getElementById('audio{{ $no }}').play()" type="button" class="btn btn-sm btn-secondary mb-2">
                         🔊 Putar Suara
@@ -22,10 +26,10 @@
 
                     <h5 class="mb-3">Soal {{ $no }}: Perhatikan gambar berikut dengan cermat!</h5>
 
-                    <div class="position-relative mx-auto mb-5" style="max-width: 600px; height: 350px;">
-                        <img src="{{ asset('images/materi/soal'.$no.'_bg.png') }}" 
-                            class="w-100 h-100 rounded shadow" 
-                            alt="Gambar Soal" 
+                    <div class="position-relative mx-auto mb-3" style="max-width: 600px; height: 350px;">
+                        <img src="{{ asset('images/materi/soal'.$no.'_bg.png') }}"
+                            class="w-100 h-100 rounded shadow"
+                            alt="Gambar Soal"
                             style="object-fit: cover;">
 
                         @php
@@ -45,35 +49,51 @@
                             <img src="{{ asset('images/materi/soal'.$no.'_b.png') }}" alt="Pilihan B" width="150" height="150" class="shadow">
                         </div>
 
-                        <div class="position-absolute w-100 text-center" style="bottom: 10px;">
-                            <div class="row justify-content-center">
-                                <div class="col-6 text-center">
-                                    <input type="radio" class="form-check-input me-1" name="jawaban[soal{{ $no }}]" value="a" id="soal{{ $no }}a" required>
-                                    <label class="form-check-label" for="soal{{ $no }}a">Pilihan A</label>
-                                </div>
-                                <div class="col-6 text-center">
-                                    <input type="radio" class="form-check-input me-1" name="jawaban[soal{{ $no }}]" value="b" id="soal{{ $no }}b">
-                                    <label class="form-check-label" for="soal{{ $no }}b">Pilihan B</label>
+                        @if(!$sudahMenjawab)
+                            <div class="position-absolute w-100 text-center" style="bottom: 10px;">
+                                <div class="row justify-content-center">
+                                    <div class="col-6 text-center">
+                                        <input type="radio" class="form-check-input me-1" name="jawaban[soal{{ $no }}]" value="a" id="soal{{ $no }}a" required>
+                                        <label class="form-check-label" for="soal{{ $no }}a">Pilihan A</label>
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <input type="radio" class="form-check-input me-1" name="jawaban[soal{{ $no }}]" value="b" id="soal{{ $no }}b">
+                                        <label class="form-check-label" for="soal{{ $no }}b">Pilihan B</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @elseif($skor >= $kkm)
+                            <div class="text-center mt-3">
+                                <span class="badge bg-info text-dark">Kunci Jawaban: <strong>{{ strtoupper($kunci['soal'.$no]) }}</strong></span>
+                            </div>
+                        @endif
                     </div>
                 </div>
             @endforeach
 
-            <div class="d-flex justify-content-end">
-                <button type="submit" id="submitBtn" class="btn btn-primary">Kirim Jawaban</button>
-            </div>
+            @if(!$sudahMenjawab)
+                <div class="d-flex justify-content-end">
+                    <button type="submit" id="submitBtn" class="btn btn-primary">Kirim Jawaban</button>
+                </div>
+            @endif
         </form>
     </div>
 
     <div class="card-footer d-flex justify-content-between">
-        <a href="{{ route('admin.materi.halaman3') }}" class="btn btn-secondary">← Halaman 3</a>
+        <a href="{{ route('admin.materi.halaman3') }}" class="btn btn-secondary">← Sebelumnya</a>
 
         @if($sudahMenjawab)
-            <a href="{{ route('admin.evaluasi.petunjuk') }}" class="btn btn-primary">Mulai Kuis</a>  
+            @if($skor >= $kkm)
+                <a href="{{ route('admin.materi.halaman5') }}" class="btn btn-success">Selanjutnya →</a>
+            @else
+                <form action="{{ route('admin.materi.halaman4.reset') }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-warning" onclick="return confirm('Yakin ingin mengulang kuis?')">Ulangi Kuis</button>
+                </form>
+            @endif
         @else
-            <a href="#" class="btn btn-primary disabled">Halaman 5 →</a>
+            <button class="btn btn-success disabled">Selanjutnya →</button>
         @endif
     </div>
 

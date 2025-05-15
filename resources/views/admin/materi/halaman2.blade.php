@@ -78,8 +78,8 @@
         </div>
 
         <div class="card-footer d-flex justify-content-between">
-            <a href="{{ route('admin.materi.index') }}" class="btn btn-secondary">← Halaman 1</a>
-            <a href="{{ route('admin.materi.halaman3') }}" class="btn btn-primary">Halaman 3 →</a>
+            <a href="{{ route('admin.materi.index') }}" class="btn btn-secondary">← Sebelumnya</a>
+            <a href="{{ route('admin.materi.halaman3') }}" class="btn btn-primary">Selanjutnya →</a>
         </div>
     </div>
     <br>
