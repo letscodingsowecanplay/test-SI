@@ -12,11 +12,11 @@
 
                 <li class="list-group-item bg-transparent">
                     <div class="d-flex align-items-start justify-content-between">
-                        <h6 class="fw-bold mb-0">Ayo Belajar</h6>
+                        <h6 class="fw-bold mb-0">Ayo Belajar
                         <button onclick="playSound('ayo-belajar')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white" title="Dengarkan">
                             🔊
                         </button>
-                        <audio id="audio-ayo-belajar" src="{{ asset('sounds/materi/ayo-belajar.mp3') }}"></audio>
+                        <audio id="audio-ayo-belajar" src="{{ asset('sounds/materi/ayo-belajar.mp3') }}"></audio></h6>
                     </div>
 
                     <p class="mt-2">

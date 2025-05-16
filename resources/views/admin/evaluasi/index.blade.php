@@ -56,26 +56,26 @@
         },
         {
             id: 2,
-            soal: "Pertanyaan ke-2",
-            pilihan: ["Jawaban A", "Jawaban B", "Jawaban C", "Jawaban D"],
+            soal: "Urutan tas kerajinan khas Kalimantan dari yang digantung paling rendah adalah ....",
+            pilihan: ["Tas anyaman hitam - Tas anyaman putih - Tas ecoprint", "Tas ecoprint - Tas anyaman putih - Tas anyaman Hitam", "Tas anyaman putih - Tas anyaman hitam - Tas ecoprint"],
             audio: "/audio/soal2.mp3"
         },
         {
             id: 3,
-            soal: "Pertanyaan ke-3",
-            pilihan: ["Jawaban A", "Jawaban B", "Jawaban C", "Jawaban D"],
+            soal: "Urutan kerajinan fiber glass patung dayak dimulai dari yang paling panjang adalah ....",
+            pilihan: ["b-c-a", "b-a-c", "c-a-b"],
             audio: "/audio/soal2.mp3"
         },
         {
             id: 4,
-            soal: "Pertanyaan ke-4",
-            pilihan: ["Jawaban A", "Jawaban B", "Jawaban C", "Jawaban D"],
+            soal: "Urutan vas bunga akar keladi dimulai dari yang paling pendek adalah ....",
+            pilihan: ["a-c-b", "c-b-a", "a-b-c"],
             audio: "/audio/soal2.mp3"
         },
         {
             id: 5,
-            soal: "Pertanyaan ke-5",
-            pilihan: ["Jawaban A", "Jawaban B", "Jawaban C", "Jawaban D"],
+            soal: "Urutan kain sasirangan dimulai dari yang paling panjang adalah ....",
+            pilihan: ["a-b-c", "c-b-a", "a-c-b"],
             audio: "/audio/soal2.mp3"
         },
         {
@@ -118,7 +118,7 @@
         const data = soalList[indexSoal];
         let html = `
             <div class="question-title">${data.id}. ${data.soal}
-                <button onclick="playSound('audio${data.id}')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-3" title="Dengarkan kalimat ini">🔊</button>
+                <button onclick="playSound('audio${data.id}')" class="btn btn-sm btn-outline-dark text-white ms-3" title="Dengarkan kalimat ini">🔊</button>
                 <audio id="audio${data.id}" src="${data.audio}"></audio>
             </div>
             <form id="form-soal">
@@ -126,8 +126,8 @@
 
         html += `
         <div class="mt-3">
-            <img src="/images/evaluasi/gambarEval${data.id}.png" 
-                 alt="Gambar Evaluasi Soal ${data.id}" 
+            <img src="/images/kuis1/gambarKuis${data.id}.png" 
+                 alt="Gambar Kuis 1 Soal ${data.id}" 
                  style="width: 600px; height: 300px; object-fit: cover;" 
                  class="rounded shadow">
         </div>

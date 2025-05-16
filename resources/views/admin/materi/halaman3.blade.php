@@ -12,16 +12,16 @@
         <div class="row text-center my-4">
             <div class="col-md-6 mb-3">
                 <img src="{{ asset('images/materi/jukung-big.png') }}" class="img-fluid rounded shadow" alt="Pensil Pendek">
-                <p class="mt-2 fw-semibold d-flex justify-content-center align-items-center gap-2">
-                    Pensil ini lebih pendek.
+                <p class="mt-2 fw-semibold">
+                    jukung berukuran panjang 
                     <button onclick="playSound('gambar1')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white">🔊</button>
                     <audio id="audio-gambar1" src="{{ asset('sounds/materi/gambar1.mp3') }}"></audio>
                 </p>
             </div>
             <div class="col-md-6 mb-3">
                 <img src="{{ asset('images/materi/jukung-mini.png') }}" class="img-fluid rounded shadow" alt="Pensil Panjang">
-                <p class="mt-2 fw-semibold d-flex justify-content-center align-items-center gap-2">
-                    Pensil ini lebih panjang.
+                <p class="mt-2 fw-semibold">
+                    miniatur jukung berukuran pendek 
                     <button onclick="playSound('gambar2')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white">🔊</button>
                     <audio id="audio-gambar2" src="{{ asset('sounds/materi/gambar2.mp3') }}"></audio>
                 </p>
@@ -32,16 +32,16 @@
         <div class="row text-center my-4">
             <div class="col-md-6 mb-3">
                 <img src="{{ asset('images/materi/rumahadat-big.png') }}" class="img-fluid rounded shadow" alt="Sedotan Panjang">
-                <p class="mt-2 fw-semibold d-flex justify-content-center align-items-center gap-2">
-                    Sedotan ini panjang.
+                <p class="mt-2 fw-semibold">
+                    rumah adat banjar Anjung Surung itu tinggi 
                     <button onclick="playSound('gambar3')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white">🔊</button>
                     <audio id="audio-gambar3" src="{{ asset('sounds/materi/gambar3.mp3') }}"></audio>
                 </p>
             </div>
             <div class="col-md-6 mb-3">
                 <img src="{{ asset('images/materi/rumahadat-mini.png') }}" class="img-fluid rounded shadow" alt="Sedotan Pendek">
-                <p class="mt-2 fw-semibold d-flex justify-content-center align-items-center gap-2">
-                    Sedotan ini pendek.
+                <p class="mt-2 fw-semibold">
+                    miniatur rumah adat banjar Tadah alas itu rendah 
                     <button onclick="playSound('gambar4')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white">🔊</button>
                     <audio id="audio-gambar4" src="{{ asset('sounds/materi/gambar4.mp3') }}"></audio>
                 </p>
@@ -52,16 +52,16 @@
         <div class="row text-center my-4">
             <div class="col-md-6 mb-3">
                 <img src="{{ asset('images/materi/bekantan-big.png') }}" class="img-fluid rounded shadow" alt="Penggaris Panjang">
-                <p class="mt-2 fw-semibold d-flex justify-content-center align-items-center gap-2">
-                    Penggaris kayu ini lebih panjang.
+                <p class="mt-2 fw-semibold">
+                    Patung bekantan itu tinggi 
                     <button onclick="playSound('gambar5')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white">🔊</button>
                     <audio id="audio-gambar5" src="{{ asset('sounds/materi/gambar5.mp3') }}"></audio>
                 </p>
             </div>
             <div class="col-md-6 mb-3">
                 <img src="{{ asset('images/materi/bekantan-mini.png') }}" class="img-fluid rounded shadow" alt="Penggaris Pendek">
-                <p class="mt-2 fw-semibold d-flex justify-content-center align-items-center gap-2">
-                    Penggaris plastik ini lebih pendek.
+                <p class="mt-2 fw-semibold">
+                    miniatur bekantan itu rendah 
                     <button onclick="playSound('gambar6')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white">🔊</button>
                     <audio id="audio-gambar6" src="{{ asset('sounds/materi/gambar6.mp3') }}"></audio>
                 </p>
@@ -70,14 +70,14 @@
 
         {{-- Dua Paragraf --}}
         <div class="mt-2">
-            <p class="d-flex justify-content-between align-items-start gap-2">
+            <p>
                 Ukuran panjang dan pendek digunakan untuk membandingkan jarak dari ujung ke ujung suatu benda. Benda dengan jarak yang lebih jauh disebut panjang, sedangkan benda dengan jarak lebih dekat disebut pendek.
-               <button onclick="playSound('paragraf1')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white mt-1">🔊</button>
+                <button onclick="playSound('paragraf1')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white">🔊</button>
                 <audio id="audio-paragraf1" src="{{ asset('sounds/materi/paragraf1.mp3') }}"></audio>
             </p>
-            <p class="d-flex justify-content-between align-items-start gap-2">
+            <p>
                 Tinggi dan rendah adalah ukuran yang digunakan untuk membandingkan ketinggian suatu benda dari dasar ke atas. Benda yang memiliki jarak vertikal lebih jauh disebut tinggi, sedangkan benda dengan jarak vertikal lebih dekat disebut rendah.
-                <button onclick="playSound('paragraf2')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white mt-1">🔊</button>
+                <button onclick="playSound('paragraf2')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white">🔊</button>
                 <audio id="audio-paragraf2" src="{{ asset('sounds/materi/paragraf2.mp3') }}"></audio>
             </p>
         </div>
@@ -95,7 +95,6 @@
 @section('scripts')
 <script>
     function playSound(id) {
-        // Stop semua audio aktif
         document.querySelectorAll('audio').forEach(audio => {
             audio.pause();
             audio.currentTime = 0;

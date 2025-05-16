@@ -233,3 +233,11 @@
 .bg-coklapbet {
     background-color: #4E1F00;
 }
+
+.pilihan {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+

@@ -8,29 +8,28 @@
         <div class="card-body">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item bg-transparent border-dark">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="fw-bold mb-0">SubBab 1: Membandingkan dan Mengurutkan Panjang Benda</h5>
-                        <button onclick="playSound('subbab1')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white">🔊</button>
+                    <h5 class="fw-bold mb-0">
+                        SubBab 1: Membandingkan dan Mengurutkan Panjang Benda
+                        <button onclick="playSound('subbab1')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2">🔊</button>
                         <audio id="audio-subbab1" src="{{ asset('sounds/materi/subbab1.mp3') }}"></audio>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-start mt-2">
-                        <p>Peserta didik dapat membandingkan panjang dan mengukur menggunakan satuan tidak baku.
-                        <button onclick="playSound('paragraf1')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white mt-1">🔊</button>
-                        <audio id="audio-paragraf1" src="{{ asset('sounds/materi/paragraf1.mp3') }}"></audio></p>
-                    </div>
+                    </h5>
+                    <p class="mt-2">
+                        Setelah mempelajari materi ini, diharapkan peserta didik dapat membandingkan panjang dua benda dan mengurutkan benda berdasarkan panjangnya.
+                        <button onclick="playSound('paragraf1')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2">🔊</button>
+                        <audio id="audio-paragraf1" src="{{ asset('sounds/materi/paragraf1.mp3') }}"></audio>
+                    </p>
                 </li>
-
-                <li class="list-group-item bg-transparent">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="fw-bold mb-0">SubBab 2: Mengukur Panjang Benda</h5>
-                        <button onclick="playSound('subbab2')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white">🔊</button>
-                        <audio id="audio-subbab2" src="{{ asset('sounds/materi/subbab2.mp3') }}"></audio>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-start mt-2">
-                        <p>Peserta didik mengenali benda ringan dan berat serta cara mengukurnya secara sederhana.
-                        <button onclick="playSound('paragraf2')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white mt-1">🔊</button>
-                        <audio id="audio-paragraf2" src="{{ asset('sounds/materi/paragraf2.mp3') }}"></audio></p>
-                    </div>
+                <li class="list-group-item bg-transparent border-dark">
+                    <h5 class="fw-bold mb-0">
+                        SubBab 2: Mengukur Panjang Benda
+                        <button onclick="playSound('subbab1')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2">🔊</button>
+                        <audio id="audio-subbab1" src="{{ asset('sounds/materi/subbab1.mp3') }}"></audio>
+                    </h5>
+                    <p class="mt-2">
+                        Setelah mempelajari materi ini, diharapkan peserta didik dapat memperkirakan panjang benda dengan menggunakan satuan tidak baku dan mengukur panjang benda dengan memanfaatkan objek lain sebagai satuan tidak baku.
+                        <button onclick="playSound('paragraf1')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2">🔊</button>
+                        <audio id="audio-paragraf1" src="{{ asset('sounds/materi/paragraf1.mp3') }}"></audio>
+                    </p>
                 </li>
             </ul>
         </div>

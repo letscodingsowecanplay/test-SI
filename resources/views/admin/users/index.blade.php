@@ -70,18 +70,20 @@
                                 {{ $user->created_at->format('Y-m-d') ?? '' }}
                             </td>
                             <td>
-                                @if (auth()->user()->hasRole('Guru'))
+                                
+                                    {{-- Tombol Block/Unblock --}}
                                     @if($user->status)
                                         <a href="{{ route('admin.user.banUnban', ['id' => $user->id, 'status' => 0]) }}" class="badge bg-warning">Block</a>
                                     @else
                                         <a href="{{ route('admin.user.banUnban', ['id' => $user->id, 'status' => 1]) }}" class="badge bg-dark">Unblock</a>
                                     @endif
 
-                                    <a class="badge bg-purple" href="{{ route('admin.users.edit', $user->id) }}">
-                                        Edit
+                                    {{-- Tombol Edit Roles --}}
+                                    <a class="badge bg-info" href="{{ route('admin.users.edit', $user->id) }}">
+                                        Edit Roles
                                     </a>
-                                    
 
+                                    {{-- Tombol Delete --}}
                                     <a href="javascript:void(0)" class="badge bg-danger" onclick="
                                         if(confirm('Are you sure, You want to Delete this ??')) {
                                             event.preventDefault();
@@ -93,8 +95,9 @@
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
                                     </form>
-                                @endif
+                                
                             </td>
+
 
                         </tr>
                     @endforeach

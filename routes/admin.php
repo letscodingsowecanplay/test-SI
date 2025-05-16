@@ -22,6 +22,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // User, Role, Permission
     Route::resource('users', UserController::class);
+    Route::get('users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('users/{id}', [UserController::class, 'update'])->name('users.update');  
     Route::get('user-ban-unban/{id}/{status}', [UserController::class, 'banUnban'])->name('user.banUnban');
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
@@ -35,12 +37,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::delete('materi/halaman4/reset', [MateriController::class, 'resetHalamanEmpat'])->name('materi.halaman4.reset');
     Route::get('materi/halaman-5', [MateriController::class, 'halamanLima'])->name('materi.halaman5');
     Route::post('materi/halaman-5/simpan', [MateriController::class, 'simpanHalamanLima'])->name('materi.halaman5.simpan');
-    Route::delete('materi/halaman5/reset', [MateriController::class, 'resetHalaman5'])->name('materi.halaman5.reset');
+    Route::delete('materi/halaman-5/reset', [MateriController::class, 'resetHalamanLima'])->name('materi.halaman5.reset');
     Route::get('materi/halaman-6', [MateriController::class, 'halamanEnam'])->name('materi.halaman6');
+    Route::get('materi/halaman-7', [MateriController::class, 'halaman7'])->name('materi.halaman7');
+    Route::post('materi/halaman-7/submit', [MateriController::class, 'submitHalaman7'])->name('materi.halaman7.submit');
+    Route::post('materi/halaman-7/reset', [MateriController::class, 'resetHalaman7'])->name('materi.halaman7.reset');
+    Route::get('materi/halaman-8', [MateriController::class, 'halaman8'])->name('materi.halaman8');
 
     Route::get('evaluasi/petunjuk', [EvaluasiController::class, 'petunjuk'])->name('evaluasi.petunjuk');
 
     Route::get('evaluasi', [EvaluasiController::class, 'index'])->name('evaluasi.index');
     Route::post('evaluasi/simpan', [EvaluasiController::class, 'simpan'])->name('evaluasi.simpan');
+
+
 
 });

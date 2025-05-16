@@ -19,10 +19,9 @@ Breadcrumbs::for('admin.users.create', function (BreadcrumbTrail $trail): void {
     $trail->parent('admin.users.index');
     $trail->push('Add new user', route('admin.users.create'));
 });
-
-Breadcrumbs::for('admin.users.edit', function (BreadcrumbTrail $trail, User $user): void {
-    $trail->parent('admin.users.index'); // Atur breadcrumb parent
-    $trail->push($user->name, route('admin.users.edit', $user)); // Tambahkan breadcrumb edit
+Breadcrumbs::for('admin.users.edit', function ($trail, User $user) {
+    $trail->parent('admin.users.index');
+    $trail->push("Edit {$user->name}", route('admin.users.edit', $user));
 });
 
 // Role
@@ -79,7 +78,7 @@ Breadcrumbs::for('admin.materi.halaman2', function (BreadcrumbTrail $trail) {
 });
 
 Breadcrumbs::for('admin.materi.halaman3', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin.materi.halaman2');
+    $trail->parent('admin.materi.index');
     $trail->push('Materi - Halaman 3', route('admin.materi.halaman3'));
 });
 
@@ -101,4 +100,13 @@ Breadcrumbs::for('admin.kuis.hasil', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('admin.materi.halaman5', function ($trail) {
     $trail->parent('admin.materi.index');
     $trail->push('Materi - Halaman 5', route('admin.materi.halaman5'));
+});
+Breadcrumbs::for('admin.materi.halaman6', function ($trail) {
+    $trail->parent('admin.materi.index');
+    $trail->push('Materi - Halaman 6', route('admin.materi.halaman6'));
+});
+
+Breadcrumbs::for('admin.materi.halaman7', function ($trail) {
+    $trail->parent('admin.materi.index');
+    $trail->push('Kuis - Halaman 7', route('admin.materi.halaman7'));
 });

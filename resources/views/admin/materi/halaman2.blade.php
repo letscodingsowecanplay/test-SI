@@ -3,27 +3,29 @@
 @section('content')
 
     <div class="card bg-coklat">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h4 class="mb-0">Pengukuran</h4>
+        <div class="card-header">
+            <h4 class="mb-0">
+                Pengukuran
+            </h4>
         </div>
         <div class="card-body">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item bg-transparent border-dark">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <h5 class="fw-bold mb-0">Membandingkan dan Mengurutkan Panjang Benda</h5>
-                        <button onclick="playSound('judul')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white" title="Dengarkan">
+                    <h5 class="fw-bold mb-0">
+                        Membandingkan dan Mengurutkan Panjang Benda
+                        <button onclick="playSound('judul')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" title="Dengarkan">
                             🔊
                         </button>
                         <audio id="audio-judul" src="{{ asset('sounds/materi/judul.mp3') }}"></audio>
-                    </div>
+                    </h5>
 
-                    <div class="d-flex align-items-start justify-content-between mt-3">
-                        <h6 class="fw-bold mb-0">Tujuan Pembelajaran</h6>
-                        <button onclick="playSound('tujuan')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white" title="Dengarkan">
+                    <h6 class="fw-bold mt-3 mb-0">
+                        Tujuan Pembelajaran
+                        <button onclick="playSound('tujuan')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" title="Dengarkan">
                             🔊
                         </button>
                         <audio id="audio-tujuan" src="{{ asset('sounds/materi/tujuan.mp3') }}"></audio>
-                    </div>
+                    </h6>
 
                     <p class="mt-2">
                         Setelah mempelajari materi ini, diharapkan peserta didik dapat:<br>
@@ -37,13 +39,13 @@
                 </li>
 
                 <li class="list-group-item bg-transparent">
-                    <div class="d-flex align-items-start justify-content-between">
-                        <h6 class="fw-bold mb-0">Ayo Belajar</h6>
-                        <button onclick="playSound('ayo-belajar')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white" title="Dengarkan">
+                    <h6 class="fw-bold mb-0">
+                        Ayo Belajar
+                        <button onclick="playSound('ayo-belajar')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" title="Dengarkan">
                             🔊
                         </button>
                         <audio id="audio-ayo-belajar" src="{{ asset('sounds/materi/ayo-belajar.mp3') }}"></audio>
-                    </div>
+                    </h6>
 
                     <p class="mt-2">
                         Pengukuran adalah cara untuk mengetahui seberapa besar, panjang, atau tinggi suatu benda. Dengan pengukuran, kita dapat membandingkan benda-benda di sekitar kita. Perhatikan contoh berikut.
@@ -59,22 +61,21 @@
             <div class="row text-center my-4">
                 <div class="col-md-6 mb-3">
                     <img src="{{ asset('images/materi/baju-sasi-pendek.png') }}" class="img-fluid rounded shadow" alt="Gambar Penggaris">
-                    <p class="mt-2 fw-semibold d-flex justify-content-center align-items-center gap-2">
+                    <p class="mt-2 fw-semibold">
                         baju pengantin banjar lengan pendek
-                        <button onclick="playSound('gambar1')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white" title="Dengarkan kalimat ini">🔊</button>
+                        <button onclick="playSound('gambar1')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" title="Dengarkan kalimat ini">🔊</button>
                         <audio id="audio-gambar1" src="{{ asset('sounds/materi/gambar1.mp3') }}"></audio>
                     </p>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <img src="{{ asset('images/materi/baju-sasi-panjang.png') }}" class="img-fluid rounded shadow" alt="Gambar Pensil">
-                    <p class="mt-2 fw-semibold d-flex justify-content-center align-items-center gap-2">
+                    <img src="{{ asset('images/materi/baju-sasi-panjang.svg') }}" class="img-fluid rounded shadow" alt="Gambar Pensil" style="width: 313px; height: 313px;">
+                    <p class="mt-2 fw-semibold">
                         baju pengantin banjar lengan panjang
-                        <button onclick="playSound('gambar2')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white" title="Dengarkan kalimat ini">🔊</button>
+                        <button onclick="playSound('gambar2')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" title="Dengarkan kalimat ini">🔊</button>
                         <audio id="audio-gambar2" src="{{ asset('sounds/materi/gambar2.mp3') }}"></audio>
                     </p>
                 </div>
             </div>
-
         </div>
 
         <div class="card-footer d-flex justify-content-between">

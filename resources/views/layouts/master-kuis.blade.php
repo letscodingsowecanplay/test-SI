@@ -9,9 +9,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="icon" sizes="180x180" href="{{ asset('ikon-si-ukur.ico') }}">
+
     <style>
         body {
-            background-color: #ffc0cb;
+            background-color: #fffbe9;
             font-family: Arial, sans-serif;
         }
         .container-kuis {
@@ -21,13 +24,13 @@
         }
         .soal-section {
             flex: 2;
-            background: white;
+            background: #e3caa5;
             padding: 20px;
             border-radius: 12px;
         }
         .navigasi-section {
             flex: 1;
-            background: #ffe4ec;
+            background: #e3caa5;
             padding: 20px;
             border-radius: 12px;
             height: fit-content;
@@ -40,12 +43,13 @@
             margin: 5px;
         }
         .btn-outline-dark.active {
-            background-color: #ff69b4;
+            background-color: #4E1F00;
             color: white;
-            border-color: #ff69b4;
+            border-color: #4E1F00;
         }
         audio {
             height: 30px;
+            background-color: #4E1F00;
         }
     </style>
 </head>

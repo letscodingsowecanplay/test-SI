@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -83,52 +84,26 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function edit(User $user)
     {
         abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // Ambil semua roles yang ada
-        $roles = \Spatie\Permission\Models\Role::pluck('name', 'id');
-        
-        // Ambil roles yang dimiliki oleh pengguna ini
-        $userRoles = $user->roles->pluck('id')->toArray();
+        $roles = Role::pluck('name', 'id');
 
-        // Kembalikan view dengan data pengguna, roles, dan roles pengguna
-        return view('admin.users.edit', compact('user', 'roles', 'userRoles'));
+        $user->load('roles');
+
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
-
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, User $user)
     {
-        abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-            'roles' => 'required|array', // Pastikan roles dipilih
-        ]);
-
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-        ]);
-
-        // Sync roles (mengupdate roles pengguna)
-        $user->syncRoles($request->input('roles'));
+        $user->update($request->only('name', 'email'));
+        $user->syncRoles($request->input('roles', []));
 
         flash()->addSuccess('User updated successfully.');
-
         return redirect()->route('admin.users.index');
     }
-
 
     /**
      * Remove the specified resource from storage.
