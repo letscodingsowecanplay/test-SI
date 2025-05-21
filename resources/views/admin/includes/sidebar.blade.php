@@ -16,6 +16,45 @@
                         Dashboard
                     </a>
                 </li>
+
+                @can('datasiswa_access')
+                <li class="nav-item">
+                    <a class="text-white nav-link {{ request()->is('admin/datasiswa*') ? 'active' : '' }}"
+                    href="{{ route('admin.datasiswa.index') }}">
+                        <span data-feather="users" class="align-text-bottom text-white"></span>
+                        Data Siswa
+                    </a>
+                </li>
+                @endcan
+                @can('datalatihansiswa_access')
+                    <li class="nav-item">
+                        <a class="text-white nav-link {{ request()->is('admin/datalatihan*') ? 'active' : '' }}"
+                        href="{{ route('admin.datalatihan.index') }}">
+                            <span data-feather="edit" class="align-text-bottom text-white"></span>
+                            Data Latihan Siswa
+                        </a>
+                    </li>
+                @endcan
+                @can('datahasilbelajarsiswa_access')
+                <li class="nav-item">
+                    <a class="text-white nav-link {{ request()->is('admin/datahasilbelajar*') ? 'active' : '' }}"
+                    href="{{ route('admin.hasilbelajar.index') }}">
+                        <span data-feather="bar-chart-2" class="align-text-bottom text-white"></span>
+                        Hasil Belajar
+                    </a>
+                </li>
+                @endcan
+                @can('editkkm_access')
+                <li class="nav-item">
+                    <a class="text-white nav-link {{ (request()->is('admin/editkkm*')) ? 'active' : '' }}"
+                    href="{{ route('admin.kkm.index') }}">
+                        <span data-feather="award" class="align-text-bottom text-white"></span>
+                        KKM
+                    </a>
+                </li>
+                @endcan
+
+                
                 @can('materi_access')
                 <li class="nav-item">
                         <a class="text-white nav-link {{ (request()->is('admin/materi*')) ? 'active' : '' }}"

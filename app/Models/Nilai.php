@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Nilai extends Model
 {
-    use HasFactory;
-
     protected $table = 'nilai';
 
     protected $fillable = [
@@ -16,6 +14,22 @@ class Nilai extends Model
         'kuis_id',
         'skor',
         'total_soal',
+        'status',
+        'jawaban',
     ];
-    
+
+    protected $casts = [
+        'jawaban' => 'array',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function kkm()
+    {
+        return $this->belongsTo(Kkm::class, 'kuis_id', 'kuis_id');
+    }
+
 }

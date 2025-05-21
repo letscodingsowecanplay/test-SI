@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Nilai;
+use App\Models\Kkm;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 
 class MateriController extends Controller
 {
@@ -28,17 +31,31 @@ class MateriController extends Controller
     public function halamanEmpat()
     {
         $userId = auth()->id();
-        $kuisId = 'kuis-1';
-        $kkm = 3; // Contoh KKM, bisa sesuaikan
+        $kuisId = 'ayo-mencoba-1';
 
-        $nilai = Nilai::where('user_id', $userId)
+        // Ambil KKM dari tabel
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 3;
+
+        $nilai = \App\Models\Nilai::where('user_id', $userId)
             ->where('kuis_id', $kuisId)
             ->first();
 
-        $sudahMenjawab = $nilai ? true : false;
-        $skor = $nilai ? $nilai->skor : 0;
+        $sudahMenjawab = $nilai !== null;
+        $skor = $nilai->skor ?? 0;
+        $status = $nilai->status ?? null;
 
-        return view('admin.materi.halaman4', compact('sudahMenjawab', 'skor', 'kkm'));
+        $kunci = [
+            'soal1' => 'a',
+            'soal2' => 'b',
+            'soal3' => 'a',
+            'soal4' => 'a',
+        ];
+
+        $jawabanUser = is_array($nilai?->jawaban) ? $nilai->jawaban : [];
+
+        return view('admin.materi.halaman4', compact(
+            'sudahMenjawab', 'skor', 'kkm', 'status', 'jawabanUser', 'kunci'
+        ));
     }
 
     public function simpanHalamanEmpat(Request $request)
@@ -50,77 +67,103 @@ class MateriController extends Controller
             'jawaban.soal4' => 'required',
         ]);
 
-        $benar = 0;
         $jawaban = $request->input('jawaban');
+        if (!is_array($jawaban)) {
+            return back()->with('error', 'Format jawaban tidak valid.');
+        }
+
+        $userId = auth()->id();
+        $kuisId = 'ayo-mencoba-1';
 
         $kunci = [
-            'soal1' => 'a', // misal: a itu gambar lebih panjang
-            'soal2' => 'b', // misal: b itu gambar lebih pendek
-            'soal3' => 'a',
-            'soal4' => 'b',
+            'soal1' => 'a',
+            'soal2' => 'a',
+            'soal3' => 'b',
+            'soal4' => 'a',
         ];
 
+        $benar = 0;
         foreach ($kunci as $soal => $jawabanBenar) {
             if (isset($jawaban[$soal]) && $jawaban[$soal] === $jawabanBenar) {
                 $benar++;
             }
         }
 
-        Nilai::updateOrCreate(
-            [
-                'user_id' => Auth::id(),
-                'kuis_id' => 'kuis-1',
-            ],
-            [
-                'skor' => $benar,
-                'total_soal' => count($kunci),
-            ]
-        );
+        // Ambil nilai KKM dari tabel kkm
+        $kkmRecord = \App\Models\Kkm::where('kuis_id', $kuisId)->first();
+        $kkm = $kkmRecord?->kkm ?? 3; // fallback ke 3 jika belum ada kkm-nya
 
-        return redirect()->route('admin.materi.halaman4')->with('success', "Skor berhasil disimpan! Nilai Anda: $benar dari " . count($kunci));
-    }
-
-    public function resetHalamanEmpat()
-    {
-        $userId = auth()->id();
-        $kuisId = 'kuis-1';
-
-        Nilai::where('user_id', $userId)
-            ->where('kuis_id', $kuisId)
-            ->delete();
-
-        return redirect()->route('admin.materi.halaman4');
-    }
-
-    public function halamanLima()
-    {
-        $userId = auth()->id();
-        $kuisId = 'kuis-2';
-        $kkm = 3;
+        $status = $benar >= $kkm ? 'lulus' : 'tidak_lulus';
+        $now = now();
 
         $nilai = \App\Models\Nilai::where('user_id', $userId)
             ->where('kuis_id', $kuisId)
             ->first();
 
-        $sudahMenjawab = $nilai !== null;
-        $skor = $nilai?->skor ?? 0;
-
-        $kunci = [
-            'soal1' => 'pendek',
-            'soal2' => 'panjang',
-            'soal3' => 'tinggi',
-            'soal4' => 'rendah'
-        ];
-
-        $jawabanUser = [];
-        if ($nilai && $nilai->jawaban) {
-            $jawabanUser = json_decode($nilai->jawaban, true);
-        } elseif (session()->has('jawaban_terakhir')) {
-            $jawabanUser = session()->get('jawaban_terakhir');
-            session()->forget('jawaban_terakhir');
+        if ($nilai) {
+            $nilai->update([
+                'skor' => $benar,
+                'total_soal' => count($kunci),
+                'jawaban' => $jawaban,
+                'status' => $status,
+                'updated_at' => $now,
+            ]);
+        } else {
+            \App\Models\Nilai::create([
+                'user_id' => $userId,
+                'kuis_id' => $kuisId,
+                'skor' => $benar,
+                'total_soal' => count($kunci),
+                'jawaban' => $jawaban,
+                'status' => $status,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
         }
 
-        return view('admin.materi.halaman5', compact('sudahMenjawab', 'skor', 'kkm', 'kunci', 'jawabanUser'));
+        return redirect()->route('admin.materi.halaman4')
+            ->with('success', "Skor berhasil disimpan! Nilai Anda: $benar dari " . count($kunci) . ". KKM: $kkm");
+    }
+
+
+    public function resetHalamanEmpat()
+    {
+        \App\Models\Nilai::where('user_id', auth()->id())
+            ->where('kuis_id', 'ayo-mencoba-1')
+            ->delete(); // observer akan jalan di sini
+
+        return redirect()->route('admin.materi.halaman4')
+            ->with('success', 'Kuis berhasil direset. Silakan mulai ulang.');
+    }
+
+
+
+
+
+    public function halamanLima()
+    {
+    $userId = auth()->id();
+    $kuisId = 'ayo-berlatih-1';
+
+    $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 3;
+
+    $nilai = \App\Models\Nilai::where('user_id', $userId)
+        ->where('kuis_id', $kuisId)
+        ->first();
+
+    $sudahMenjawab = $nilai !== null;
+    $skor = $nilai->skor ?? 0;
+
+    $kunci = [
+        'soal1' => 'pendek',
+        'soal2' => 'panjang',
+        'soal3' => 'tinggi',
+        'soal4' => 'rendah'
+    ];
+
+    $jawabanUser = is_array($nilai?->jawaban) ? $nilai->jawaban : [];
+
+    return view('admin.materi.halaman5', compact('sudahMenjawab', 'skor', 'kkm', 'kunci', 'jawabanUser'));
     }
 
     public function simpanHalamanLima(Request $request)
@@ -132,7 +175,7 @@ class MateriController extends Controller
 
         $jawaban = $request->input('jawaban');
         $userId = auth()->id();
-        $kuisId = 'kuis-2';
+        $kuisId = 'ayo-berlatih-1';
 
         $kunci = [
             'soal1' => 'pendek',
@@ -142,52 +185,181 @@ class MateriController extends Controller
         ];
 
         $skor = 0;
-        $kkm = 3;
         foreach ($kunci as $soal => $jawabanBenar) {
             if (isset($jawaban[$soal]) && strtolower($jawaban[$soal]) === $jawabanBenar) {
                 $skor++;
             }
         }
 
-        \App\Models\Nilai::updateOrCreate(
-            ['user_id' => $userId, 'kuis_id' => $kuisId],
-            [
+        // Ambil nilai KKM dari tabel kkm
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 3;
+        $status = $skor >= $kkm ? 'lulus' : 'tidak_lulus';
+        $now = now();
+
+        $nilai = \App\Models\Nilai::where('user_id', $userId)
+            ->where('kuis_id', $kuisId)
+            ->first();
+
+        if ($nilai) {
+            $nilai->update([
                 'skor' => $skor,
                 'total_soal' => count($kunci),
-                'jawaban' => json_encode($jawaban),
-            ]
-        );
-
-        if ($skor < $kkm) {
-            session(['jawaban_terakhir' => $jawaban]);
+                'jawaban' => $jawaban,
+                'status' => $status,
+                'updated_at' => $now,
+            ]);
+        } else {
+            \App\Models\Nilai::create([
+                'user_id' => $userId,
+                'kuis_id' => $kuisId,
+                'skor' => $skor,
+                'total_soal' => count($kunci),
+                'jawaban' => $jawaban,
+                'status' => $status,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
         }
 
-        return redirect()->route('admin.materi.halaman5')->with('success', "Jawaban berhasil disimpan. Nilai Anda: $skor dari " . count($kunci));
+        return redirect()->route('admin.materi.halaman5')
+            ->with('success', "Jawaban berhasil disimpan. Nilai Anda: $skor dari " . count($kunci) . ". KKM: $kkm");
     }
+
 
     public function resetHalamanLima()
     {
-        $nilai = \App\Models\Nilai::where('user_id', auth()->id())
-            ->where('kuis_id', 'kuis-2')
-            ->first();
-
-        if ($nilai && $nilai->jawaban) {
-            session(['jawaban_terakhir' => json_decode($nilai->jawaban, true)]);
-        }
-
         \App\Models\Nilai::where('user_id', auth()->id())
-            ->where('kuis_id', 'kuis-2')
+            ->where('kuis_id', 'ayo-berlatih-1')
             ->delete();
 
-        return redirect()->route('admin.materi.halaman5')->with('success', 'Kuis berhasil direset. Silakan mulai ulang.');
+
+        return redirect()->route('admin.materi.halaman5')
+            ->with('success', 'Kuis berhasil direset. Silakan mulai ulang.');
     }
+
 
     public function halamanEnam()
     {
         return view('admin.materi.halaman6');
     }
 
-    private function getSoalHalaman7()
+    public function halaman7()
+    {
+        return view('admin.materi.halaman7');
+    }
+
+    public function halaman8()
+    {
+        return view('admin.materi.halaman8');
+    }
+
+    public function halaman9()
+    {
+        $userId = auth()->id();
+        $kuisId = 'ayo-mencoba-2';
+
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 3;
+
+        $nilaiRecord = \App\Models\Nilai::where('user_id', $userId)
+            ->where('kuis_id', $kuisId)
+            ->first();
+
+        $sudahMenjawab = !is_null($nilaiRecord);
+        $skor = $nilaiRecord->skor ?? 0;
+        $status = $nilaiRecord->status ?? null;
+
+        $kunciJawaban = [
+            'soal1' => 'a',
+            'soal2' => 'b',
+            'soal3' => 'a',
+            'soal4' => 'b',
+        ];
+
+        $jawabanUser = is_array($nilaiRecord?->jawaban) ? $nilaiRecord->jawaban : [];
+
+        return view('admin.materi.halaman9', compact(
+            'sudahMenjawab', 'skor', 'kkm', 'jawabanUser', 'status', 'kunciJawaban'
+        ));
+    }
+
+
+    public function simpanHalaman9(Request $request)
+    {
+        $request->validate([
+            'jawaban.soal1' => 'required',
+            'jawaban.soal2' => 'required',
+            'jawaban.soal3' => 'required',
+            'jawaban.soal4' => 'required',
+        ]);
+
+        $jawaban = $request->input('jawaban');
+        if (!is_array($jawaban)) {
+            return redirect()->back()->with('error', 'Format jawaban tidak valid.');
+        }
+
+        $kunci = [
+            'soal1' => 'a',
+            'soal2' => 'b',
+            'soal3' => 'a',
+            'soal4' => 'b',
+        ];
+
+        $benar = 0;
+        foreach ($kunci as $soal => $kunciJawaban) {
+            if (isset($jawaban[$soal]) && $jawaban[$soal] === $kunciJawaban) {
+                $benar++;
+            }
+        }
+
+        $kuisId = 'ayo-mencoba-2';
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 3;
+        $status = $benar >= $kkm ? 'lulus' : 'tidak_lulus';
+        $now = now();
+
+        $nilai = \App\Models\Nilai::where('user_id', auth()->id())
+            ->where('kuis_id', $kuisId)
+            ->first();
+
+        $data = [
+            'skor' => $benar,
+            'total_soal' => count($kunci),
+            'jawaban' => $jawaban,
+            'status' => $status,
+            'updated_at' => $now,
+        ];
+
+        try {
+            if ($nilai) {
+                $nilai->update($data);
+            } else {
+                \App\Models\Nilai::create(array_merge([
+                    'user_id' => auth()->id(),
+                    'kuis_id' => $kuisId,
+                    'created_at' => $now,
+                ], $data));
+            }
+        } catch (\Exception $e) {
+            \Log::error("Exception saving nilai halaman9: " . $e->getMessage());
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan.');
+        }
+
+        return redirect()->route('admin.materi.halaman9')
+            ->with('success', "Skor berhasil disimpan! Nilai Anda: $benar. KKM: $kkm");
+    }
+
+
+    public function resetHalaman9()
+    {
+        \App\Models\Nilai::where('user_id', auth()->id())
+            ->where('kuis_id', 'ayo-mencoba-2')
+            ->delete();
+
+        return redirect()->route('admin.materi.halaman9')
+            ->with('success', 'Kuis berhasil direset. Silakan mulai ulang.');
+    }
+
+
+    private function getSoalHalaman10()
     {
         return [
             [
@@ -248,31 +420,36 @@ class MateriController extends Controller
         ];
     }
 
-    public function halaman7(Request $request)
+    public function halaman10(Request $request)
     {
-        $kkm = 75;
-        $soal = $this->getSoalHalaman7();
+        $kuisId = 'ayo-berlatih-2';
+        $soal = $this->getSoalHalaman10();
 
-        $skor = $request->session()->get('skor_halaman7', null);
-        $status = $request->session()->get('status_halaman7', null);
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 75;
 
-        if ($status !== null) {
-            $kunciJawaban = array_column($soal, 'jawaban');
-            $jawabanUser = $request->session()->get('jawaban_halaman7', []);
-            return view('admin.materi.halaman7', compact(
-                'soal', 'kkm', 'skor', 'status',
-                'kunciJawaban', 'jawabanUser'
-            ));
-        }
+        $userId = auth()->id();
+        $nilai = \App\Models\Nilai::where('user_id', $userId)
+            ->where('kuis_id', $kuisId)
+            ->first();
 
-        return view('admin.materi.halaman7', compact('soal', 'kkm', 'skor', 'status'));
+        $status = $nilai->status ?? null;
+        $skor = $nilai->skor ?? null;
+        $jawabanUser = is_array($nilai?->jawaban) ? $nilai->jawaban : [];
+
+        $kunciJawaban = array_column($soal, 'jawaban');
+
+        return view('admin.materi.halaman10', compact(
+            'soal', 'kkm', 'skor', 'status',
+            'kunciJawaban', 'jawabanUser'
+        ));
     }
 
-    public function submitHalaman7(Request $request)
-    {
-        $soal = $this->getSoalHalaman7();
 
-        // Validasi: semua jawaban wajib diisi dan harus sesuai pilihan
+    public function submitHalaman10(Request $request)
+    {
+        $kuisId = 'ayo-berlatih-2';
+        $soal = $this->getSoalHalaman10();
+
         $rules = [];
         foreach ($soal as $index => $item) {
             $rules["jawaban_$index"] = 'required|in:' . implode(',', array_keys($item['pilihan']));
@@ -281,47 +458,232 @@ class MateriController extends Controller
 
         $totalSoal = count($soal);
         $skor = 0;
+        $jawaban = [];
 
         foreach ($soal as $index => $item) {
-            $jawabanUser = $request->input("jawaban_$index");
-            if ($jawabanUser === $item['jawaban']) {
+            $jawaban[$index] = $request->input("jawaban_$index");
+            if ($jawaban[$index] === $item['jawaban']) {
                 $skor++;
             }
         }
 
-        $kkm = 75;
+        // Ambil nilai KKM dari DB
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 75;
         $skorMinimal = ceil($kkm * $totalSoal / 100);
         $status = $skor >= $skorMinimal ? 'lulus' : 'tidak_lulus';
 
-        // Simpan ke session
-        $request->session()->put('skor_halaman7', $skor);
-        $request->session()->put('status_halaman7', $status);
-        $request->session()->put('jawaban_halaman7', array_map(fn($idx) => $request->input("jawaban_$idx"), array_keys($soal)));
+        // Simpan pakai model agar observer aktif & jawaban tidak di-escape
+        \App\Models\Nilai::updateOrCreate(
+            ['user_id' => auth()->id(), 'kuis_id' => $kuisId],
+            [
+                'skor' => $skor,
+                'total_soal' => $totalSoal,
+                'jawaban' => $jawaban,
+                'status' => $status,
+                'updated_at' => now(),
+                'created_at' => now(), // hanya akan digunakan saat insert
+            ]
+        );
 
-        // Simpan ke database
-        Nilai::updateOrCreate([
-            'user_id' => Auth::id(),
-            'kuis_id' => 'halaman7',
-        ], [
-            'skor' => $skor,
-            'total_soal' => $totalSoal,
-            'updated_at' => now(),
-            'created_at' => now(),
+        return redirect()->route('admin.materi.halaman10')->with('success', 'Skor berhasil disimpan!');
+    }
+
+
+    public function resetHalaman10(Request $request)
+    {
+        \App\Models\Nilai::where('user_id', auth()->id())
+            ->where('kuis_id', 'ayo-berlatih-2')
+            ->delete();
+
+        return redirect()->route('admin.materi.halaman10')->with('success', 'Kuis berhasil direset.');
+    }
+
+
+    public function halaman11()
+    {
+        return view('admin.materi.halaman11');
+    }
+
+    public function halaman12()
+    {
+        return view('admin.materi.halaman12');
+    }
+
+    public function halaman13()
+    {
+        return view('admin.materi.halaman13');
+    }
+
+    public function halaman14()
+    {
+        return view('admin.materi.halaman14');
+    }
+
+    public function halaman15()
+    {
+        $userId = auth()->id();
+        $kuisId = 'ayo-mencoba-3';
+
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 3;
+
+        $nilai = \App\Models\Nilai::where('user_id', $userId)
+            ->where('kuis_id', $kuisId)
+            ->first();
+
+        $jawabanUser = is_array($nilai?->jawaban) ? $nilai->jawaban : [];
+        $skor = $nilai->skor ?? null;
+        $status = $nilai->status ?? null;
+        $sudahMenjawab = $nilai !== null;
+
+        return view('admin.materi.halaman15', compact('sudahMenjawab', 'skor', 'kkm', 'jawabanUser', 'status'));
+    }
+
+
+    public function simpanHalaman15(Request $request)
+    {
+        $request->validate([
+            'jawaban.soal1' => 'required|in:benar,salah',
+            'jawaban.soal2' => 'required|in:benar,salah',
+            'jawaban.soal3' => 'required|in:benar,salah',
+            'jawaban.soal4' => 'required|in:benar,salah',
         ]);
 
-        return redirect()->route('admin.materi.halaman7');
+        $jawaban = $request->input('jawaban');
+        $userId = auth()->id();
+        $kuisId = 'ayo-mencoba-3';
+
+        $kunci = [
+            'soal1' => 'benar',
+            'soal2' => 'salah',
+            'soal3' => 'benar',
+            'soal4' => 'salah',
+        ];
+
+        $benar = 0;
+        foreach ($kunci as $soal => $kunciJawaban) {
+            if (isset($jawaban[$soal]) && strtolower($jawaban[$soal]) === $kunciJawaban) {
+                $benar++;
+            }
+        }
+
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 3;
+        $status = $benar >= $kkm ? 'lulus' : 'tidak_lulus';
+        $now = now();
+
+        \App\Models\Nilai::updateOrCreate(
+            ['user_id' => $userId, 'kuis_id' => $kuisId],
+            [
+                'skor' => $benar,
+                'total_soal' => count($kunci),
+                'jawaban' => $jawaban, // langsung array, tidak di-encode
+                'status' => $status,
+                'updated_at' => $now,
+                'created_at' => $now, // hanya dipakai jika insert
+            ]
+        );
+
+        return redirect()->route('admin.materi.halaman15')
+            ->with('success', "Skor berhasil disimpan! Nilai Anda: $benar dari " . count($kunci) . ". KKM: $kkm");
     }
 
-    public function resetHalaman7(Request $request)
+
+    public function resetHalaman15()
     {
-        $request->session()->forget(['skor_halaman7', 'status_halaman7', 'jawaban_halaman7']);
-        return redirect()->route('admin.materi.halaman7');
+        \App\Models\Nilai::where('user_id', auth()->id())
+            ->where('kuis_id', 'ayo-mencoba-3')
+            ->delete();
+
+        return redirect()->route('admin.materi.halaman15')
+            ->with('success', 'Kuis berhasil direset. Silakan mulai ulang.');
     }
 
-    public function halaman8()
+
+
+
+    public function halaman16()
     {
-        return view('admin.materi.halaman8');
+        $userId = auth()->id();
+        $kuisId = 'ayo-berlatih-3';
+
+        // Ambil KKM dari tabel
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 3;
+
+        $nilai = \App\Models\Nilai::where('user_id', $userId)
+            ->where('kuis_id', $kuisId)
+            ->first();
+
+        $jawabanUser = is_array($nilai?->jawaban) ? $nilai->jawaban : [];
+        $skor = $nilai->skor ?? null;
+        $status = $nilai->status ?? null;
+        $sudahMenjawab = $nilai !== null;
+
+        return view('admin.materi.halaman16', compact('sudahMenjawab', 'skor', 'kkm', 'jawabanUser', 'status'));
     }
 
+    public function simpanHalaman16(Request $request)
+    {
+        $request->validate([
+            'jawaban.soal1' => 'required|numeric',
+            'jawaban.soal2' => 'required|numeric',
+            'jawaban.soal3' => 'required|numeric',
+            'jawaban.soal4' => 'required|numeric',
+            'jawaban.soal5' => 'required|numeric',
+        ]);
+
+        $jawaban = $request->input('jawaban');
+        $userId = auth()->id();
+        $kuisId = 'ayo-berlatih-3';
+
+        $kunci = [
+            'soal1' => 5,
+            'soal2' => 5,
+            'soal3' => 4,
+            'soal4' => 7,
+            'soal5' => 7,
+        ];
+
+        $benar = 0;
+        foreach ($kunci as $soal => $jawabanBenar) {
+            if (isset($jawaban[$soal]) && (int)$jawaban[$soal] === $jawabanBenar) {
+                $benar++;
+            }
+        }
+
+        // Ambil KKM dari tabel
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 3;
+        $status = $benar >= $kkm ? 'lulus' : 'tidak_lulus';
+
+        \App\Models\Nilai::updateOrCreate(
+            ['user_id' => $userId, 'kuis_id' => $kuisId],
+            [
+                'skor' => $benar,
+                'total_soal' => count($kunci),
+                'jawaban' => $jawaban, // langsung array, bukan json
+                'status' => $status,
+                'updated_at' => now(),
+                'created_at' => now(), // hanya digunakan saat insert
+            ]
+        );
+
+        return redirect()->route('admin.materi.halaman16')
+            ->with('success', "Skor berhasil disimpan! Nilai Anda: $benar dari " . count($kunci) . ". KKM: $kkm");
+    }
+
+    public function resetHalaman16()
+    {
+        \App\Models\Nilai::where('user_id', auth()->id())
+            ->where('kuis_id', 'ayo-berlatih-3')
+            ->delete();
+
+        return redirect()->route('admin.materi.halaman16')
+            ->with('success', 'Kuis berhasil direset. Silakan mulai ulang.');
+    }
+
+
+
+    public function halaman17()
+    {
+        return view('admin.materi.halaman17');
+    }
 
 }

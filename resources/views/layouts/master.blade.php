@@ -16,6 +16,7 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@15.6.1/dist/nouislider.min.css">
 
     {{-- favicon --}}
     <link rel="icon" sizes="180x180" href="{{ asset('ikon-si-ukur.ico') }}">
@@ -23,6 +24,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/dragdrop.css') }}" rel="stylesheet">
+
 
     @yield('styles')
     @stack('scripts')

@@ -6,13 +6,20 @@
 
         {{-- Kolom 1: Profil dan Daftar Isi --}}
         <div class="col-md-4 mb-3 ">
-            <div class="card text-center bg-coklat">
-                <div class="card-body">
-                    <h6><strong>Kuis 1</strong></h6>
-                    <p><strong>Subbab Membandingkan dan Mengurutkan Panjang Benda</strong></p>
+            <div class="card bg-coklat">
+                <div class="card-header">
+                    <i class="bi bi-info-circle"></i> Evaluasi
+                        <button onclick="playSound('ayo-belajar')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" title="Dengarkan">
+                            🔊
+                        </button>
+                        <audio id="audio-ayo-belajar" src="{{ asset('sounds/materi/ayo-belajar.mp3') }}"></audio>
+                </div>
+                <div class="card-body text-center">
+                    <p><strong>Pengukuran:
+                    </strong></p>
                     <ul class="text-start px-3">
-                        <li>Membandingkan panjang dua benda</li>
-                        <li>Mengurutkan benda berdasarkan panjangnya</li>
+                        <li>Membandingkan dan Mengurutkan Panjang Benda</li>
+                        <li>Mengukur Panjang Benda</li>
                     </ul>
                 </div>
             </div>
@@ -23,6 +30,10 @@
             <div class="card bg-coklat">
                 <div class="card-header">
                     <i class="bi bi-info-circle"></i> Petunjuk Kuis
+                        <button onclick="playSound('ayo-belajar')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" title="Dengarkan">
+                            🔊
+                        </button>
+                        <audio id="audio-ayo-belajar" src="{{ asset('sounds/materi/ayo-belajar.mp3') }}"></audio>
                 </div>
                 <div class="card-body">
                     <ol class="ps-3">
@@ -48,6 +59,10 @@
             <div class="card bg-coklat">
                 <div class="card-header">
                     <i class="bi bi-gear"></i> Data Siswa
+                        <button onclick="playSound('ayo-belajar')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" title="Dengarkan">
+                            🔊
+                        </button>
+                        <audio id="audio-ayo-belajar" src="{{ asset('sounds/materi/ayo-belajar.mp3') }}"></audio>
                 </div>
                 <div class="card-body">
                     <p><strong>Email:</strong> {{ $user->email }}</p>
@@ -56,18 +71,18 @@
                     <p><strong>Sekolah:</strong> SD Banjarmasin</p>
 
                     <div class="d-flex justify-content-around mt-4">
-                            <a href="{{ route('admin.materi.halaman4') }}" class="btn bg-coklapbet rounded-pill d-flex align-items-center justify-content-center text-white">ke Materi Sebelumnya</a>
-                        @if(!$hasil)
+                        <a href="{{ route('admin.materi.index') }}" class="btn bg-coklapbet rounded-pill d-flex align-items-center justify-content-center text-white">Kembali ke Materi</a>
+
+                        @if($bisaMulaiKuis)
                             <a href="{{ route('admin.evaluasi.index') }}" class="btn btn-primary rounded-pill">Mulai Kuis</a>
-                            <button class="btn btn-secondary rounded-pill" disabled>ke Materi Selanjutnya</button>
                         @else
                             <button class="btn btn-secondary rounded-pill" disabled>Sudah Dikerjakan</button>
-                            <a href="{{ route('admin.materi.halaman5') }}" class="btn btn-danger rounded-pill">Lanjut ke Materi Selanjutnya</a>
                         @endif
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
     @if($hasil)
     <div class="row">
@@ -81,7 +96,7 @@
                     @if($hasil->skor < 7)
                         <p class="text-danger">Nilai Anda di bawah KKM. Silakan pelajari materi lagi.</p>
                     @else
-                        <p class="text-success">Selamat! Anda telah lulus kuis ini.</p>
+                        <p class="text-success">Selamat! Anda telah lulus Evaluasi ini.</p>
                     @endif
                 </div>
             </div>

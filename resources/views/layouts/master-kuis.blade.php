@@ -51,6 +51,10 @@
             height: 30px;
             background-color: #4E1F00;
         }
+
+        .bg-coklap {
+            background-color: #4E1F00;
+        }
     </style>
 </head>
 <body>

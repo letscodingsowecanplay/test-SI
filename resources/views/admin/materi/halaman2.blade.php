@@ -16,7 +16,7 @@
                         <button onclick="playSound('judul')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" title="Dengarkan">
                             🔊
                         </button>
-                        <audio id="audio-judul" src="{{ asset('sounds/materi/judul.mp3') }}"></audio>
+                        <audio id="audio-hal2-1" src="{{ asset('sounds/materi/hal2/1.mp3') }}"></audio>
                     </h5>
 
                     <h6 class="fw-bold mt-3 mb-0">
@@ -24,17 +24,13 @@
                         <button onclick="playSound('tujuan')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" title="Dengarkan">
                             🔊
                         </button>
-                        <audio id="audio-tujuan" src="{{ asset('sounds/materi/tujuan.mp3') }}"></audio>
+                        <audio id="audio-hal2-2" src="{{ asset('sounds/materi/hal2/2.mp3') }}"></audio>
                     </h6>
 
                     <p class="mt-2">
                         Setelah mempelajari materi ini, diharapkan peserta didik dapat:<br>
                         1. Membandingkan panjang benda;<br>
                         2. Mengurutkan benda berdasarkan panjangnya.
-                        <button onclick="playSound('list')" class="btn btn-sm btn-outline-dark ms-2 bg-coklapbet text-white" title="Dengarkan">
-                            🔊
-                        </button>
-                        <audio id="audio-list" src="{{ asset('sounds/materi/list.mp3') }}"></audio>
                     </p>
                 </li>
 
@@ -44,15 +40,11 @@
                         <button onclick="playSound('ayo-belajar')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" title="Dengarkan">
                             🔊
                         </button>
-                        <audio id="audio-ayo-belajar" src="{{ asset('sounds/materi/ayo-belajar.mp3') }}"></audio>
+                        <audio id="audio-hal2-3" src="{{ asset('sounds/materi/hal2/3.mp3') }}"></audio>
                     </h6>
 
                     <p class="mt-2">
                         Pengukuran adalah cara untuk mengetahui seberapa besar, panjang, atau tinggi suatu benda. Dengan pengukuran, kita dapat membandingkan benda-benda di sekitar kita. Perhatikan contoh berikut.
-                        <button onclick="playSound('paragraf-belajar')" class="btn btn-sm btn-outline-dark ms-2 bg-coklapbet text-white" title="Dengarkan">
-                            🔊
-                        </button>
-                        <audio id="audio-paragraf-belajar" src="{{ asset('sounds/materi/paragraf-belajar.mp3') }}"></audio>
                     </p>
                 </li>
             </ul>
@@ -64,7 +56,7 @@
                     <p class="mt-2 fw-semibold">
                         baju pengantin banjar lengan pendek
                         <button onclick="playSound('gambar1')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" title="Dengarkan kalimat ini">🔊</button>
-                        <audio id="audio-gambar1" src="{{ asset('sounds/materi/gambar1.mp3') }}"></audio>
+                        <audio id="audio-hal2-4" src="{{ asset('sounds/materi/hal2/4.mp3') }}"></audio>
                     </p>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -72,7 +64,7 @@
                     <p class="mt-2 fw-semibold">
                         baju pengantin banjar lengan panjang
                         <button onclick="playSound('gambar2')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" title="Dengarkan kalimat ini">🔊</button>
-                        <audio id="audio-gambar2" src="{{ asset('sounds/materi/gambar2.mp3') }}"></audio>
+                        <audio id="audio-hal2-5" src="{{ asset('sounds/materi/hal2/5.mp3') }}"></audio>
                     </p>
                 </div>
             </div>

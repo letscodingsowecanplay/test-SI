@@ -14,13 +14,16 @@
             <h5 class="mb-3 d-flex align-items-center">
                 <strong>Contoh Soal</strong>
                 <button onclick="document.getElementById('audio_contoh1').play()" type="button" class="btn btn-sm bg-coklapbet text-white ms-2">🔊</button>
-                <audio id="audio_contoh1" src="{{ asset('audio/materi/contoh1.mp3') }}"></audio>
+                <audio id="audio_hal4_7" src="{{ asset('audio/materi/hal4/7.mp3') }}"></audio>
             </h5>
 
             <p>
-                Perhatikan gambar berikut dengan cermat!
-                <button onclick="document.getElementById('audio_contoh2').play()" type="button" class="btn btn-sm bg-coklapbet text-white ms-2">🔊</button>
-                <audio id="audio_contoh2" src="{{ asset('audio/materi/contoh2.mp3') }}"></audio>
+                Amati gambar berikut dengan saksama.
+            </p>
+            <p>
+                <strong>Pilih makanan dengan bentuk yang tinggi!</strong>
+                <button onclick="document.getElementById('audio_contoh3').play()" type="button" class="btn btn-sm bg-coklapbet text-white ms-2">🔊</button>
+                <audio id="audio_hal4_6" src="{{ asset('audio/materi/hal4/6.mp3') }}"></audio>
             </p>
 
             <div class="position-relative mx-auto mb-3" style="max-width: 600px; height: 300px;">
@@ -37,36 +40,37 @@
 
             <div class="mt-3">
                 <p>
-                    <strong>Berilah tanda ✔ pada makanan yang berukuran tinggi!</strong>
-                    <button onclick="document.getElementById('audio_contoh3').play()" type="button" class="btn btn-sm bg-coklapbet text-white ms-2">🔊</button>
-                    <audio id="audio_contoh3" src="{{ asset('audio/materi/contoh3.mp3') }}"></audio>
-                </p>
-                <p>
                     <strong>Penyelesaian:</strong><br>
-                    Ketika kita perhatikan dengan seksama, punudut di sebelah kanan berukuran lebih tinggi dibandingkan dengan nasi kuning di sebelah kiri. Sehingga tanda ✔ berada di gambar punudut.
-                    <button onclick="document.getElementById('audio_contoh4').play()" type="button" class="btn btn-sm bg-coklapbet text-white ms-2">🔊</button>
-                    <audio id="audio_contoh4" src="{{ asset('audio/materi/contoh4.mp3') }}"></audio>
+                    Ketika kita amati kedua makanan ini, pundut di sebelah kanan memiliki bentuk yang rendah, sedangkan nasi kuning di sebelah kiri memiliki bentuk yang tinggi. Oleh karena itu, kita memilih gambar pundut.
                 </p>
             </div>
         </div>
 
         <hr>
 
+        <h5 class="mb-3 d-flex align-items-center">
+            <strong>Ayo Mencoba</strong>
+            <button onclick="document.getElementById('audio_contoh1').play()" type="button" class="btn btn-sm bg-coklapbet text-white ms-2">🔊</button>
+            <audio id="audio_hal4_5" src="{{ asset('audio/materi/hal4/5.mp3') }}"></audio>
+        </h5>
+        <p>
+            Amati gambar berikut dengan saksama.
+        </p>
+
         <form id="kuisForm" action="{{ route('admin.materi.halaman4.simpan') }}" method="POST">
             @csrf
 
             @php
-                $kunci = ['soal1' => 'a (kiri)', 'soal2' => 'b (kanan)', 'soal3' => 'a (kiri)', 'soal4' => 'b (kanan)'];
                 $soalText = [
-                    1 => 'Berilah tanda ✔ pada iwak yang berukuran pendek!',
-                    2 => 'Berilah tanda ✔ pada wadi patin yang berukuran panjang!',
-                    3 => 'Berilah tanda ✔ pada botol biji-bijian khas Kalimantan yang digantung tinggi!',
-                    4 => 'Berilah tanda ✔ pada jam dinding rotan oleh-oleh khas Kalimantan yang digantung rendah!',
+                    1 => 'Pilih iwak dengan bentuk yang pendek!',
+                    2 => 'Pilih olahan iwak wadi khas banjar dengan bentuk yang pendek!',
+                    3 => 'Pilih tempat biji-bijian khas Kalimantan yang tergantung tinggi!',
+                    4 => 'Pilih jam dinding rotan oleh-oleh khas Kalimantan yang tergantung rendah!',
                 ];
                 $positions = [
                     1 => ['a_top' => '60%', 'b_top' => '60%'],
                     2 => ['a_top' => '65%', 'b_top' => '65%'],
-                    3 => ['a_top' => '35%', 'b_top' => '55%'],
+                    3 => ['a_top' => '55%', 'b_top' => '35%'],
                     4 => ['a_top' => '55%', 'b_top' => '35%'],
                 ];
             @endphp
@@ -74,10 +78,9 @@
             @foreach (range(1, 4) as $no)
                 <div class="mb-5">
                     <button onclick="document.getElementById('audio{{ $no }}').play()" type="button" class="btn btn-sm mb-2 bg-coklapbet text-white">🔊</button>
-                    <audio id="audio{{ $no }}" src="{{ asset('audio/materi/soal'.$no.'.mp3') }}"></audio>
+                    <audio id="audio_hal4_{{ $no }}" src="{{ asset('audio/materi/hal4/'.$no.'.mp3') }}"></audio>
 
-                    <h5 class="mb-1">Soal {{ $no }}:</h5>
-                    <p class="mb-3"><em>Perhatikan gambar berikut dengan cermat!</em><br><strong>{{ $soalText[$no] }}</strong></p>
+                    <p class="mb-3"><strong>{{ $no }}. {{ $soalText[$no] }}</strong></p>
 
                     <div class="position-relative mx-auto mb-3" style="max-width: 600px; height: 350px;">
                         <img src="{{ asset('images/materi/soal'.$no.'_bg.png') }}" class="w-100 h-100 rounded shadow" style="object-fit: cover;">
@@ -103,9 +106,14 @@
                                     </div>
                                 </div>
                             </div>
-                        @elseif($skor >= $kkm)
-                            <div class="text-center mt-3">
-                                <span class="badge bg-info text-dark">Kunci Jawaban: <strong>{{ strtoupper($kunci['soal'.$no]) }}</strong></span>
+                        @else
+                            <div class="text-center mt-2">
+                                <span class="badge bg-warning text-dark">Jawaban Kamu: {{ strtoupper($jawabanUser['soal'.$no] ?? '-') }}</span>
+                                @if($skor >= $kkm)
+                                    <div class="mt-1">
+                                        <span class="badge bg-success">Kunci Jawaban: {{ strtoupper($kunci['soal'.$no]) }}</span>
+                                    </div>
+                                @endif
                             </div>
                         @endif
                     </div>
@@ -118,26 +126,36 @@
                 </div>
             @endif
         </form>
+
+        @if($sudahMenjawab && $skor < $kkm)
+            <form action="{{ route('admin.materi.halaman4.reset') }}" method="POST" class="mt-3">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">Ulangi Kuis</button>
+            </form>
+            <div class="alert alert-warning mt-3">
+                Nilai kamu belum mencapai KKM. Silakan ulangi kuis ini.
+            </div>
+        @elseif($sudahMenjawab && $skor >= $kkm)
+            <br>
+            <div class="text-center flex-grow-1">
+                <div class="alert alert-info d-inline-block mb-0">
+                    Skor Anda: {{ $skor }} / 4
+                </div>
+            </div>
+            <br><div class="alert alert-success mt-3">
+                Selamat, kamu telah mencapai KKM. Kamu boleh melanjutkan ke halaman berikutnya.
+            </div>
+        @endif
     </div>
 
-    <div class="d-flex justify-content-between align-items-center mt-4"">
+    <div class="card-footer d-flex justify-content-between">
         <a href="{{ route('admin.materi.halaman3') }}" class="btn btn-secondary">← Sebelumnya</a>
 
-        @if($sudahMenjawab)
-            @if($skor >= $kkm)
-                <div class="alert alert-info d-inline-block mb-0">
-                    Skor Anda: {{ $skor }}/{{ $kkm + 1 }}
-                </div>
-                <a href="{{ route('admin.materi.halaman5') }}" class="btn btn-success">Selanjutnya →</a>
-            @else
-                <form action="{{ route('admin.materi.halaman4.reset') }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-warning" onclick="return confirm('Yakin ingin mengulang kuis?')">Ulangi Kuis</button>
-                </form>
-            @endif
+        @if($sudahMenjawab && $skor >= $kkm)
+            <a href="{{ route('admin.materi.halaman5') }}" class="btn btn-success">Selanjutnya →</a>
         @else
-            <button class="btn btn-success disabled">Selanjutnya →</button>
+            <button class="btn btn-primary disabled">Selanjutnya →</button>
         @endif
     </div>
 </div>

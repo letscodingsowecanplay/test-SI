@@ -5,6 +5,9 @@ use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
+use App\Models\Nilai;
+use App\Models\Kkm;
+
 
 
 
@@ -87,16 +90,6 @@ Breadcrumbs::for('admin.materi.halaman4', function ($trail) {
     $trail->push('Kuis - Halaman 4', route('admin.materi.halaman4'));
 });
 
-Breadcrumbs::for('admin.kuis.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin.index');
-    $trail->push('Kuis', route('admin.kuis.index'));
-});
-
-Breadcrumbs::for('admin.kuis.hasil', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin.kuis.index');
-    $trail->push('Hasil Kuis', route('admin.kuis.hasil'));
-});
-
 Breadcrumbs::for('admin.materi.halaman5', function ($trail) {
     $trail->parent('admin.materi.index');
     $trail->push('Materi - Halaman 5', route('admin.materi.halaman5'));
@@ -109,4 +102,99 @@ Breadcrumbs::for('admin.materi.halaman6', function ($trail) {
 Breadcrumbs::for('admin.materi.halaman7', function ($trail) {
     $trail->parent('admin.materi.index');
     $trail->push('Kuis - Halaman 7', route('admin.materi.halaman7'));
+});
+
+Breadcrumbs::for('admin.materi.halaman8', function ($trail) {
+    $trail->parent('admin.materi.index');
+    $trail->push('Materi - Halaman 8', route('admin.materi.halaman8'));
+});
+
+Breadcrumbs::for('admin.materi.halaman9', function ($trail) {
+    $trail->parent('admin.materi.index');
+    $trail->push('Materi - Halaman 9', route('admin.materi.halaman9'));
+});
+
+Breadcrumbs::for('admin.materi.halaman10', function ($trail) {
+    $trail->parent('admin.materi.index');
+    $trail->push('Kuis - Halaman 10', route('admin.materi.halaman10'));
+});
+
+Breadcrumbs::for('admin.materi.halaman11', function ($trail) {
+    $trail->parent('admin.materi.index');
+    $trail->push('Materi - Halaman 11', route('admin.materi.halaman11'));
+});
+
+Breadcrumbs::for('admin.materi.halaman12', function ($trail) {
+    $trail->parent('admin.materi.index');
+    $trail->push('Materi - Halaman 12', route('admin.materi.halaman12'));
+});
+
+Breadcrumbs::for('admin.materi.halaman13', function ($trail) {
+    $trail->parent('admin.materi.index');
+    $trail->push('Materi - Halaman 13', route('admin.materi.halaman13'));
+});
+
+Breadcrumbs::for('admin.materi.halaman14', function ($trail) {
+    $trail->parent('admin.materi.index');
+    $trail->push('Materi - Halaman 14', route('admin.materi.halaman14'));
+});
+
+Breadcrumbs::for('admin.materi.halaman15', function ($trail) {
+    $trail->parent('admin.materi.index');
+    $trail->push('Materi - Halaman 15', route('admin.materi.halaman15'));
+});
+
+Breadcrumbs::for('admin.materi.halaman16', function ($trail) {
+    $trail->parent('admin.materi.index');
+    $trail->push('Materi - Halaman 16', route('admin.materi.halaman16'));
+});
+
+Breadcrumbs::for('admin.materi.halaman17', function ($trail) {
+    $trail->parent('admin.materi.index');
+    $trail->push('Materi - Halaman 17', route('admin.materi.halaman17'));
+});
+
+
+Breadcrumbs::for('admin.datasiswa.index', function ($trail) {
+    $trail->parent('admin.index');
+    $trail->push('Data Siswa', route('admin.datasiswa.index'));
+});
+
+Breadcrumbs::for('admin.datasiswa.create', function ($trail) {
+    $trail->parent('admin.datasiswa.index');
+    $trail->push('Tambah Siswa');
+});
+
+Breadcrumbs::for('admin.datasiswa.edit', function ($trail, User $user) {
+    $trail->parent('admin.datasiswa.index');
+    $trail->push("Edit {$user->name}", route('admin.datasiswa.edit', $user));
+});
+
+Breadcrumbs::for('admin.datalatihan.index', function ($trail) {
+    $trail->parent('admin.index');
+    $trail->push('Data Latihan Siswa', route('admin.datalatihan.index'));
+});
+
+Breadcrumbs::for('admin.datalatihan.edit', function ($trail, Nilai $nilai) {
+    $trail->parent('admin.datalatihan.index');
+    $trail->push("Edit: {$nilai->user->name}", route('admin.datalatihan.edit', $nilai));
+});
+
+Breadcrumbs::for('admin.hasilbelajar.index', function ($trail) {
+    $trail->parent('admin.index');
+    $trail->push('Data Hasil Belajar Siswa', route('admin.hasilbelajar.index'));
+});
+
+Breadcrumbs::for('admin.hasilbelajar.edit', function ($trail, Nilai $nilai) {
+    $trail->parent('admin.hasilbelajar.index');
+    $trail->push("Edit: {$nilai->user->name}", route('admin.hasilbelajar.edit', $nilai));
+});
+
+Breadcrumbs::for('admin.kkm.index', function ($trail) {
+    $trail->push('Data KKM', route('admin.kkm.index'));
+});
+
+Breadcrumbs::for('admin.kkm.edit', function ($trail, Kkm $kkm) {
+    $trail->parent('admin.kkm.index');
+    $trail->push("Edit: {$kkm->kuis_id}", route('admin.kkm.edit', $kkm));
 });

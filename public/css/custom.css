@@ -241,3 +241,20 @@
     margin-bottom: 10px;
 }
 
+/* Contoh ubah background paginator */
+.custom-pagination .pagination .page-item .page-link {
+    background-color: #A0522D; /* coklat lembut */
+    color: #fff;
+    border: none;
+    margin: 0 2px;
+}
+
+.custom-pagination .pagination .page-item.active .page-link {
+    background-color: #5C4033; /* coklat tua */
+    border-color: #5C4033;
+}
+
+.custom-pagination .pagination .page-item.disabled .page-link {
+    background-color: #d3d3d3;
+    color: #888;
+}

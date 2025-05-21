@@ -11,7 +11,7 @@
         @endif
 
         <p>
-            Perhatikan gambar berikut dengan cermat! Isilah titik-titik di bawah ini dengan kata <strong>panjang/pendek/tinggi/rendah</strong>.
+            Amati gambar berikut dengan saksama! Isilah titik-titik di bawah ini menggunakan pilihan kata panjang, pendek, tinggi, atau rendah melalui menu dropdown.
             <button type="button" onclick="document.getElementById('audio-instruksi').play()" class="btn btn-sm bg-coklapbet text-white ms-2" title="Putar Audio">
                 🔊
             </button>
@@ -24,9 +24,15 @@
             @foreach(range(1, 4) as $no)
                 <div class="mb-4">
                     <h5 class="mb-2">Soal {{ $no }}</h5>
-                    <div class="mb-2">
-                        <img src="{{ asset("images/materi/lat2/soal$no.png") }}" alt="Soal {{ $no }}" width="150" height="150" class="img-fluid rounded shadow">
+                    <div class="row mb-2 align-items-center">
+                        <div class="col-6 text-center">
+                            <img src="{{ asset("images/materi/ayo-berlatih-1/soal{$no}a.png") }}" alt="Soal {{ $no }}a" class="img-fluid rounded shadow" style="max-height: 150px;">
+                        </div>
+                        <div class="col-6 text-center">
+                            <img src="{{ asset("images/materi/ayo-berlatih-1/soal{$no}b.png") }}" alt="Soal {{ $no }}b" class="img-fluid rounded shadow" style="max-height: 150px;">
+                        </div>
                     </div>
+
                     <p>
                         {!! match($no) {
                             1 => 'Sendok nasi dari kayu ulin ini berukuran <strong>________</strong> dibandingkan sutil dari kayu ulin.',
@@ -49,6 +55,7 @@
                         </select>
                     @elseif($skor >= $kkm)
                         <div class="mt-2">
+                            <span class="badge bg-warning text-dark">Jawaban Kamu: {{ $jawabanUser['soal'.$no] ?? '-' }}</span><br>
                             <span class="badge bg-success">Kunci Jawaban: {{ $kunci['soal'.$no] }}</span>
                         </div>
                     @else
@@ -76,22 +83,21 @@
                 Nilai kamu belum mencapai KKM. Silakan ulangi kuis ini.
             </div>
         @elseif($sudahMenjawab && $skor >= $kkm)
+            <br><div class="text-center flex-grow-1">
+                <div class="alert alert-info d-inline-block mb-0">
+                    Skor Anda: {{ $skor }} / 4
+                </div>
+            </div><br>
             <div class="alert alert-success mt-3">
                 Selamat, kamu telah mencapai KKM. Kamu boleh melanjutkan ke halaman berikutnya.
             </div>
         @endif
     </div>
 
-    <div class="d-flex justify-content-between align-items-center mt-4">
+    <div class="card-footer d-flex justify-content-between">
         <a href="{{ route('admin.materi.halaman4') }}" class="btn btn-secondary">
             ← Sebelumnya
         </a>
-
-        <div class="text-center flex-grow-1">
-            <div class="alert alert-info d-inline-block mb-0">
-                Skor Anda: {{ $skor }} / 4
-            </div>
-        </div>
 
         @if($sudahMenjawab && $skor >= $kkm)
             <a href="{{ route('admin.materi.halaman6') }}" class="btn btn-success">

@@ -15,7 +15,7 @@
                 <p class="mt-2 fw-semibold">
                     jukung berukuran panjang 
                     <button onclick="playSound('gambar1')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white">🔊</button>
-                    <audio id="audio-gambar1" src="{{ asset('sounds/materi/gambar1.mp3') }}"></audio>
+                    <audio id="audio-hal3-1" src="{{ asset('sounds/materi/hal3/1.mp3') }}"></audio>
                 </p>
             </div>
             <div class="col-md-6 mb-3">
@@ -23,7 +23,7 @@
                 <p class="mt-2 fw-semibold">
                     miniatur jukung berukuran pendek 
                     <button onclick="playSound('gambar2')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white">🔊</button>
-                    <audio id="audio-gambar2" src="{{ asset('sounds/materi/gambar2.mp3') }}"></audio>
+                    <audio id="audio-hal3-2" src="{{ asset('sounds/materi/hal3/2.mp3') }}"></audio>
                 </p>
             </div>
         </div>
@@ -35,7 +35,7 @@
                 <p class="mt-2 fw-semibold">
                     rumah adat banjar Anjung Surung itu tinggi 
                     <button onclick="playSound('gambar3')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white">🔊</button>
-                    <audio id="audio-gambar3" src="{{ asset('sounds/materi/gambar3.mp3') }}"></audio>
+                    <audio id="audio-hal3-3" src="{{ asset('sounds/materi/hal3/3.mp3') }}"></audio>
                 </p>
             </div>
             <div class="col-md-6 mb-3">
@@ -43,7 +43,7 @@
                 <p class="mt-2 fw-semibold">
                     miniatur rumah adat banjar Tadah alas itu rendah 
                     <button onclick="playSound('gambar4')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white">🔊</button>
-                    <audio id="audio-gambar4" src="{{ asset('sounds/materi/gambar4.mp3') }}"></audio>
+                    <audio id="audio-hal3-4" src="{{ asset('sounds/materi/hal3/4.mp3') }}"></audio>
                 </p>
             </div>
         </div>
@@ -55,7 +55,7 @@
                 <p class="mt-2 fw-semibold">
                     Patung bekantan itu tinggi 
                     <button onclick="playSound('gambar5')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white">🔊</button>
-                    <audio id="audio-gambar5" src="{{ asset('sounds/materi/gambar5.mp3') }}"></audio>
+                    <audio id="audio-hal3-5" src="{{ asset('sounds/materi/hal3/5.mp3') }}"></audio>
                 </p>
             </div>
             <div class="col-md-6 mb-3">
@@ -63,7 +63,7 @@
                 <p class="mt-2 fw-semibold">
                     miniatur bekantan itu rendah 
                     <button onclick="playSound('gambar6')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white">🔊</button>
-                    <audio id="audio-gambar6" src="{{ asset('sounds/materi/gambar6.mp3') }}"></audio>
+                    <audio id="audio-hal3-6" src="{{ asset('sounds/materi/hal3/6.mp3') }}"></audio>
                 </p>
             </div>
         </div>
@@ -73,12 +73,12 @@
             <p>
                 Ukuran panjang dan pendek digunakan untuk membandingkan jarak dari ujung ke ujung suatu benda. Benda dengan jarak yang lebih jauh disebut panjang, sedangkan benda dengan jarak lebih dekat disebut pendek.
                 <button onclick="playSound('paragraf1')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white">🔊</button>
-                <audio id="audio-paragraf1" src="{{ asset('sounds/materi/paragraf1.mp3') }}"></audio>
+                <audio id="audio-hal3-7" src="{{ asset('sounds/materi/hal3/7.mp3') }}"></audio>
             </p>
             <p>
                 Tinggi dan rendah adalah ukuran yang digunakan untuk membandingkan ketinggian suatu benda dari dasar ke atas. Benda yang memiliki jarak vertikal lebih jauh disebut tinggi, sedangkan benda dengan jarak vertikal lebih dekat disebut rendah.
                 <button onclick="playSound('paragraf2')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white">🔊</button>
-                <audio id="audio-paragraf2" src="{{ asset('sounds/materi/paragraf2.mp3') }}"></audio>
+                <audio id="audio-hal3-8" src="{{ asset('sounds/materi/hal3/8.mp3') }}"></audio>
             </p>
         </div>
 

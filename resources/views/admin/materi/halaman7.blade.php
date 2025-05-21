@@ -1,126 +1,98 @@
 @extends('layouts.master')
 
-@section('title', 'Ayo Berlatih')
-
 @section('content')
-<div class="container mt-4">
-    <h2>Ayo Berlatih</h2>
 
-    @if($status !== null)
-        <div class="alert alert-info">
-            Nilai kamu: <strong>{{ round($skor, 2) }} / {{ count($soal) }}</strong><br>
-            KKM: {{ $kkm }}%
+    <div class="card bg-coklat">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Pengukuran</h4>
         </div>
-    @endif
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                
 
-    @if($status === null)
-        <form method="POST" action="{{ route('admin.materi.halaman7.submit') }}">
-            @csrf
-    @endif
+                <li class="list-group-item bg-transparent">
 
-    @foreach($soal as $index => $item)
-        <div class="card mb-4" style="background-color: #e3caa5; color: black; padding: 20px; border-radius: 10px;">
-            <p class="fw-bold">
-                {{ $item['pertanyaan'] }}
-                @if(!empty($item['audio']))
-                    <button onclick="playSound('soal-{{ $index }}')" type="button" class="btn btn-sm btn-outline-dark ms-2 bg-coklapbet text-white" title="Dengarkan">
-                        🔊
-                    </button>
-                    <audio id="audio-soal-{{ $index }}" src="{{ asset($item['audio']) }}"></audio>
-                @endif
-            </p>
+                    <p class="mt-2">
+                        Kita bandingkan lukisan a, b, c, dan d.
+                        <button onclick="playSound('paragraf-belajar')" class="btn btn-sm btn-outline-dark ms-2 bg-coklapbet text-white" title="Dengarkan">
+                            🔊
+                        </button>
+                        <audio id="audio-paragraf-belajar" src="{{ asset('sounds/materi/paragraf-belajar.mp3') }}"></audio>
+                    </p>
+                </li>
+            </ul>
 
-            @if(!empty($item['gambar']))
-                <img src="{{ asset('images/materi/lat3/' . $item['gambar']) }}" alt="Gambar soal {{ $index + 1 }}" class="img-fluid mb-3" style="max-width: 300px; border-radius: 8px;">
-            @endif
-
-            @foreach($item['pilihan'] as $key => $pilihan)
-                <div class="card mb-2" style="background-color: #C68642; color: white;">
-                    <div class="card-body p-2">
-                        @if($status === null)
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input"
-                                    type="radio"
-                                    name="jawaban_{{ $index }}"
-                                    id="soal{{ $index }}_{{ $key }}"
-                                    value="{{ $key }}"
-                                    required
-                                    @if(old("jawaban_$index") === $key) checked @endif
-                                >
-                                <label class="form-check-label" for="soal{{ $index }}_{{ $key }}">
-                                    {{ strtoupper($key) }}) {{ $pilihan }}
-                                </label>
-                            </div>
-                        @else
-                            <div>
-                                <span>{{ strtoupper($key) }}) {{ $pilihan }}</span>
-                                @if($status === 'lulus')
-                                    @if(isset($kunciJawaban[$index]) && $kunciJawaban[$index] === $key)
-                                        <span class="badge bg-success ms-2">Kunci Jawaban</span>
-                                    @endif
-                                @endif
-
-                                @if(isset($jawabanUser[$index]) && $jawabanUser[$index] === $key)
-                                    <span class="badge bg-danger ms-2">Jawaban Kamu</span>
-                                @endif
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    @endforeach
-
-    @if($status === null)
-        <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-light text-dark fw-bold">Kirim Jawaban</button>
-        </div>
-        </form>
-    @endif
-
-    @if($status === 'tidak_lulus')
-        <form action="{{ route('admin.materi.halaman7.reset') }}" method="POST" class="mb-3 mt-3">
-            @csrf
-            <button type="submit" class="btn btn-danger">Ulangi Kuis</button>
-        </form>
-    @endif
-
-    {{-- Pesan status --}}
-    @if($status === 'tidak_lulus')
-        <div class="alert alert-warning mt-3">
-            Nilai kamu belum mencapai KKM. Silakan ulangi kuis ini.
-        </div>
-    @elseif($status === 'lulus')
-        <div class="alert alert-success mt-3">
-            Selamat, kamu telah mencapai KKM. Kamu boleh melanjutkan ke halaman berikutnya.
-        </div>
-    @endif
-
-    {{-- Navigasi --}}
-    <div class="d-flex justify-content-between align-items-center mt-4">
-        <a href="{{ route('admin.materi.halaman6') }}" class="btn btn-secondary">
-            ← Sebelumnya
-        </a>
-
-        @if($status === 'lulus')
-            <div class="text-center flex-grow-1">
-                <div class="alert alert-info d-inline-block mb-0">
-                    Skor Anda: {{ round($skor, 2) }} / {{ count($soal) }}
+            {{-- Gambar --}}
+            <div class="row text-center my-4">
+                <div class="d-flex justify-content-center my-4">
+                    <img src="{{ asset('images/materi/susunan-foto-banjar.png') }}" 
+                    alt="Gambar Penggaris" 
+                    class="rounded shadow" 
+                    style="display: block; margin: 0 auto; width: 600px; height: 300px; object-fit: cover;">
                 </div>
             </div>
-            <a href="{{ route('admin.materi.halaman8') }}" class="btn btn-success">
-                Selanjutnya →
-            </a>
-        @else
-            <button class="btn btn-primary disabled">Selanjutnya →</button>
-        @endif
-    </div>
-</div>
 
+            <ul class="list-group list-group-flush">
+                
+
+                <li class="list-group-item bg-transparent">
+                    <button onclick="playSound('paragraf-belajar')" class="btn btn-sm btn-outline-dark ms-2 bg-coklapbet text-white" title="Dengarkan">
+                        🔊
+                    </button>
+                    <audio id="audio-paragraf-belajar" src="{{ asset('sounds/materi/paragraf-belajar.mp3') }}"></audio>
+                    <p class="mt-2">
+                        Lukisan a lebih tinggi dari lukisan b, c, dan d.<br>
+                        Jadi, lukisan a paling tinggi.
+                    </p>
+
+                    <p class="mt-2">
+                        Lukisan d lebih rendah dari lukisan c, b, dan a.<br>
+                        Jadi, lukisan d paling rendah.
+                    </p>
+                    <p class="mt-2">
+                        Kita dapat membandingkan tinggi tiga benda atau lebih.<br>
+                        Kita menggunakan kata:<br>
+                        • paling tinggi<br>
+                        • paling rendah
+                    </p>
+                    <p class="mt-2">
+                        Kita dapat membandingkan tinggi dua benda.
+                        Kita menggunakan kata:<br>
+                        • lebih tinggi<br>
+                        • lebih rendah
+                    </p>
+                    <p class="mt-2">
+                        Mengurutkan panjang, pendek, tinggi, dan rendah adalah proses menyusun benda-benda berdasarkan ukurannya, baik dari segi jarak maupun ketinggian. Dalam pengurutan ini, kita bisa mulai dari yang paling kecil hingga yang paling besar atau sebaliknya, tergantung kebutuhan. Benda yang lebih panjang atau lebih tinggi ditempatkan di salah satu ujung urutan, sementara yang lebih pendek atau lebih rendah berada di ujung lainnya. 
+                    </p>
+                    <p class="mt-2">
+                        Urutan lukisan dari yang paling tinggi adalah a, b, c, dan d
+                        atau a, c, b, dan d.<br>
+                        Urutan lukisan dari yang paling pendek adalah d, c, b, dan a
+                        atau d, b, c, dan a.
+                    </p>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="card-footer d-flex justify-content-between">
+            <a href="{{ route('admin.materi.halaman6') }}" class="btn btn-secondary">← Sebelumnya</a>
+            <a href="{{ route('admin.materi.halaman8') }}" class="btn btn-primary">Selanjutnya →</a>
+        </div>
+    </div>
+    <br>
+@endsection
+
+@section('scripts')
 <script>
     function playSound(id) {
-        const audio = document.getElementById('audio-' + id);
+        // pause all audio
+        document.querySelectorAll('audio').forEach(audio => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+
+        const audio = document.getElementById(`audio-${id}`);
         if (audio) {
             audio.play();
         }

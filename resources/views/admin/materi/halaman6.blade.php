@@ -21,10 +21,6 @@
 
                     <p class="mt-2">
                         Membandingkan ukuran berarti melihat perbedaan antara dua atau lebih benda berdasarkan panjang, pendek, tinggi, atau rendahnya. Dengan membandingkan, kita bisa mengetahui mana benda yang lebih panjang, lebih pendek, lebih tinggi, atau lebih rendah.  Perhatikan contoh berikut.
-                        <button onclick="playSound('paragraf-belajar')" class="btn btn-sm btn-outline-dark ms-2 bg-coklapbet text-white" title="Dengarkan">
-                            🔊
-                        </button>
-                        <audio id="audio-paragraf-belajar" src="{{ asset('sounds/materi/paragraf-belajar.mp3') }}"></audio>
                     </p>
                 </li>
             </ul>
@@ -43,59 +39,32 @@
                 
 
                 <li class="list-group-item bg-transparent">
-
+                    <button onclick="playSound('paragraf-belajar')" class="btn btn-sm btn-outline-dark ms-2 bg-coklapbet text-white" title="Dengarkan">🔊</button>
+                    <audio id="audio-paragraf-belajar" src="{{ asset('sounds/materi/paragraf-belajar.mp3') }}"></audio>
                     <p class="mt-2">
                         Kita akan membandingkan tinggi lukisan khas kalimantan yang digantung yaitu c dan d.
-                        <button onclick="playSound('paragraf-belajar')" class="btn btn-sm btn-outline-dark ms-2 bg-coklapbet text-white" title="Dengarkan">
-                            🔊
-                        </button>
-                        <audio id="audio-paragraf-belajar" src="{{ asset('sounds/materi/paragraf-belajar.mp3') }}"></audio>
                     </p>
 
                     <p class="mt-2">
                         Lukisan c lebih tinggi dari lukisan d.
-                        <button onclick="playSound('paragraf-belajar')" class="btn btn-sm btn-outline-dark ms-2 bg-coklapbet text-white" title="Dengarkan">
-                            🔊
-                        </button>
-                        <audio id="audio-paragraf-belajar" src="{{ asset('sounds/materi/paragraf-belajar.mp3') }}"></audio>
                     </p>
                     <p class="mt-2">
                         Lukisan d lebih rendah dari lukisan c.
-                        <button onclick="playSound('paragraf-belajar')" class="btn btn-sm btn-outline-dark ms-2 bg-coklapbet text-white" title="Dengarkan">
-                            🔊
-                        </button>
-                        <audio id="audio-paragraf-belajar" src="{{ asset('sounds/materi/paragraf-belajar.mp3') }}"></audio>
                     </p>
                     <p class="mt-2">
                         Kita dapat membandingkan tinggi dua benda.
                         Kita menggunakan kata:<br>
                         • lebih tinggi<br>
                         • lebih rendah
-                        <button onclick="playSound('paragraf-belajar')" class="btn btn-sm btn-outline-dark ms-2 bg-coklapbet text-white" title="Dengarkan">
-                            🔊
-                        </button>
-                        <audio id="audio-paragraf-belajar" src="{{ asset('sounds/materi/paragraf-belajar.mp3') }}"></audio>
                     </p>
                     <p class="mt-2">
                         Kita akan membandingkan tinggi lukisan b dan c.
-                        <button onclick="playSound('paragraf-belajar')" class="btn btn-sm btn-outline-dark ms-2 bg-coklapbet text-white" title="Dengarkan">
-                            🔊
-                        </button>
-                        <audio id="audio-paragraf-belajar" src="{{ asset('sounds/materi/paragraf-belajar.mp3') }}"></audio>
                     </p>
                     <p class="mt-2">
                         Lukisan b sama tinggi dengan lukisan c.
-                        <button onclick="playSound('paragraf-belajar')" class="btn btn-sm btn-outline-dark ms-2 bg-coklapbet text-white" title="Dengarkan">
-                            🔊
-                        </button>
-                        <audio id="audio-paragraf-belajar" src="{{ asset('sounds/materi/paragraf-belajar.mp3') }}"></audio>
                     </p>
                     <p class="mt-2">
                         Dua benda ada yang sama tingginya. Kita menggunakan kata sama tinggi untuk membandingkannya.
-                        <button onclick="playSound('paragraf-belajar')" class="btn btn-sm btn-outline-dark ms-2 bg-coklapbet text-white" title="Dengarkan">
-                            🔊
-                        </button>
-                        <audio id="audio-paragraf-belajar" src="{{ asset('sounds/materi/paragraf-belajar.mp3') }}"></audio>
                     </p>
                 </li>
             </ul>

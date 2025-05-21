@@ -23,29 +23,28 @@
                 </div>
             </div>
         </div>
-        @if(auth()->user()->hasRole('Guru'))
+        @if(auth()->user()->hasRole('Admin'))
             <div class="col-12 col-sm-6 col-xxl-3 d-flex mb-4">
                 <div class="card flex-fill bg-coklat">
                     <div class="card-body py-4">
                         <div class="d-flex align-items-start">
                             <div class="flex-grow-1">
-                                <h3 class="mb-2">{{ $count['users'] ?? 0 }}</h3>
-                                <p class="mb-2">Total User</p>
+                                <h4 class="mb-2">Capaian Pembelajaran</h3>
+                                <p class="mb-2">
+                                    Pada akhir Fase A, peserta didik dapat membandingkan panjang dan berat
+                                    benda secara langsung. Mereka dapat mengukur dan mengestimasi panjang
+                                    benda menggunakan satuan tidak baku.
+                                </p>
                                 <div class="mb-0">
-                                    {{--<span class="badge badge-soft-success me-2"> +5.35% </span>
-                                    <span class="text-muted">Since last week</span>--}}
                                 </div>
                             </div>
                             <div class="d-inline-block ms-3">
                                 <div class="stat">
                                     <svg style="width: 35px; height: 35px;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                         stroke-linejoin="round"
-                                         class="feather feather-users align-middle text-success">
-                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="9" cy="7" r="4"></circle>
-                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                         stroke-linejoin="round" class="feather feather-book-open align-middle text-primary">
+                                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                                     </svg>
                                 </div>
                             </div>
@@ -61,7 +60,9 @@
                             <div class="flex-grow-1">
                                 <h4 class="mb-2">Capaian Pembelajaran</h3>
                                 <p class="mb-2">
-                                    Peserta didik dapat membandingkan panjang. Mereka dapat mengukur dan mengestimasi panjang benda menggunakan satuan tidak baku.
+                                    Pada akhir Fase A, peserta didik dapat membandingkan panjang dan berat
+                                    benda secara langsung. Mereka dapat mengukur dan mengestimasi panjang
+                                    benda menggunakan satuan tidak baku.
                                 </p>
                                 <div class="mb-0">
                                 </div>
@@ -83,7 +84,7 @@
         @endif
         <div class="col-12 col-sm-6 col-xxl-3 d-flex mb-4">
             <div class="card flex-fill bg-coklat">
-                <a href="#" class="text-decoration-none text-reset">
+                <a href="{{ route('admin.materi.index') }}" class="text-decoration-none text-reset">
                     <div class="card-body py-4">
                         <div class="d-flex align-items-start">
                             <div class="flex-grow-1">
@@ -109,14 +110,14 @@
                 </a>
             </div>
         </div>
-        @if(auth()->user()->hasRole('Guru'))
+        @if(auth()->user()->hasRole('Admin'))
             <div class="col-12 col-sm-6 col-xxl-3 d-flex mb-4">
                 <div class="card flex-fill bg-coklat">
                     <a href="#" class="text-decoration-none text-reset">
                         <div class="card-body py-4">
                             <div class="d-flex align-items-start">
                                 <div class="flex-grow-1">
-                                    <h4 class="mb-2">Mulai Belajar</h3>
+                                    <h4 class="mb-2">Mulai Belajar/halaman admin</h3>
                                     <p class="mb-2">Klik Disini Untuk Mulai Belajar!</p>
                                     <div class="mb-0">
                                     </div>
@@ -140,7 +141,7 @@
         @else
             <div class="col-12 col-sm-6 col-xxl-3 d-flex mb-4">
                 <div class="card flex-fill bg-coklat">
-                    <a href="#" class="text-decoration-none text-reset">
+                    <a href="{{ route('admin.evaluasi.petunjuk') }}" class="text-decoration-none text-reset">
                         <div class="card-body py-4">
                             <div class="d-flex align-items-start">
                                 <div class="flex-grow-1">
