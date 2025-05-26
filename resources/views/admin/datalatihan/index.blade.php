@@ -43,7 +43,7 @@
                                 <td>{{ \Carbon\Carbon::parse($row->created_at)->format('j/n/Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($row->created_at)->format('H.i.s') }}</td>
                                 <td>
-                                    <a href="{{ route('admin.datalatihan.edit', $row) }}" class="btn btn-sm btn-info">Edit</a>
+                                    <a href="{{ route('admin.datalatihan.edit', $row) }}" class="badge bg-info">Edit</a>
 
                                     <form action="{{ route('admin.datalatihan.destroy', $row->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                                         @csrf
@@ -62,4 +62,5 @@
             {{ $nilai->links() }}
         </div>
     </div>
+    <br>
 @endsection

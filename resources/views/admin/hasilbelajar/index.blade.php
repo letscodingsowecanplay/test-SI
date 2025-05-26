@@ -21,10 +21,10 @@
 
         <div class="card-body">
             <div class="mb-3 d-flex gap-2">
-                <a href="{{ route('admin.hasilbelajar.export', ['format' => 'excel', 'kuis_id' => request('kuis_id')]) }}" class="btn btn-success btn-sm">
+                <a href="{{ route('admin.hasilbelajar.export', ['format' => 'excel', 'kuis_id' => request('kuis_id')]) }}" class="btn bg-coklap1 text-white btn-sm">
                     Export Excel
                 </a>
-                <a href="{{ route('admin.hasilbelajar.export', ['format' => 'pdf', 'kuis_id' => request('kuis_id')]) }}" class="btn btn-danger btn-sm">
+                <a href="{{ route('admin.hasilbelajar.export', ['format' => 'pdf', 'kuis_id' => request('kuis_id')]) }}" class="btn bg-coklap2 text-white btn-sm">
                     Export PDF
                 </a>
             </div>
@@ -71,4 +71,5 @@
             {{ $nilai->links() }}
         </div>
     </div>
+    <br>
 @endsection

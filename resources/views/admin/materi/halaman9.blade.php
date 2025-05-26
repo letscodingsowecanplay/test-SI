@@ -20,7 +20,7 @@
                 1 => 'Badik Ashu yang memiliki bentuk paling panjang adalah ...',
                 2 => 'Guci peninggalan zaman dahulu di Kalimantan yang memiliki bentuk paling tinggi adalah ...',
                 3 => 'Dayung kelotok yang memiliki bentuk paling panjang adalah ...',
-                4 => 'JMandau Kalimantan yang tergantung pada posisi paling rendah adalah ...'
+                4 => 'Mandau Kalimantan yang tergantung pada posisi paling rendah adalah ...'
             ];
 
             $gambarList = [
@@ -28,6 +28,26 @@
                 2 => 'soal2.png',
                 3 => 'soal3.png',
                 4 => 'soal4.png'
+            ];
+
+            // Penjelasan jawaban tiap soal
+            $penjelasan = [
+                1 => [
+                    'a' => 'Jawaban kamu benar. Badik Ashu A memang paling panjang di antara pilihan.',
+                    'b' => 'Jawaban kamu salah. Badik Ashu A lebih pendek daripada B.'
+                ],
+                2 => [
+                    'a' => 'Jawaban kamu benar. Guci A adalah yang paling tinggi dibandingkan yang lain.',
+                    'b' => 'Jawaban kamu salah. Guci B tidak lebih tinggi dari A.'
+                ],
+                3 => [
+                    'a' => 'Jawaban kamu benar. Dayung kelotok A yang paling panjang.',
+                    'b' => 'Jawaban kamu salah. Dayung kelotok B lebih pendek daripada A.'
+                ],
+                4 => [
+                    'a' => 'Jawaban kamu benar. Mandau A tergantung di posisi paling rendah.',
+                    'b' => 'Jawaban kamu salah. Mandau B posisinya tidak lebih rendah dari A.'
+                ],
             ];
         @endphp
 
@@ -37,16 +57,20 @@
             {{-- Contoh Soal --}}
             <div class="mb-5">
                 <h5><strong>Contoh Soal</strong>
-                    <button type="button" onclick="document.getElementById('audioContoh').play()" class="btn btn-sm bg-coklapbet text-white ms-2">🔊</button>
-                    <audio id="audioContoh" src="{{ asset('audio/materi/hal9_soal0.mp3') }}"></audio>
+                    <button onclick="toggleAudio(this)" 
+                            class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
+                            data-id="index-1" data-playing="false">🔊</button>
+                    <audio id="audio-index-1" src="{{ asset('sounds/materi/hal9/1.mp3') }}"></audio>
                 </h5>
                 <p>
                     Amati gambar berikut dengan saksama! Jawablah pertanyaan di bawah ini dengan menyeret dan meletakkan pilihan jawaban yang sesuai.
                 </p>
                 <p>
                     Kain Sasirangan yang memiliki bentuk paling pendek adalah ....
-                    <button type="button" onclick="document.getElementById('audioContoh').play()" class="btn btn-sm bg-coklapbet text-white ms-2">🔊</button>
-                    <audio id="audioContoh" src="{{ asset('audio/materi/hal9_soal0.mp3') }}"></audio>
+                    <button onclick="toggleAudio(this)" 
+                            class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
+                            data-id="index-2" data-playing="false">🔊</button>
+                    <audio id="audio-index-2" src="{{ asset('sounds/materi/hal9/2.mp3') }}"></audio>
                 </p>
 
                 <div class="text-center mb-3">
@@ -55,17 +79,17 @@
 
                 <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
                     <div class="block-option bg-light text-dark d-inline-block px-3 py-2 rounded border" draggable="false">
-                        a (kiri)
+                        a
                     </div>
                     <div class="block-option bg-light text-dark d-inline-block px-3 py-2 rounded border" draggable="false">
-                        b (kanan)
+                        b
                     </div>
                 </div>
 
                 <div class="drop-area-style text-center mb-4">
                     <p class="text-muted mb-1">Jawaban yang benar:</p>
                     <div class="block-option bg-success text-white d-inline-block px-3 py-2 rounded">
-                        a (kiri)
+                        a
                     </div>
                 </div>
 
@@ -75,8 +99,10 @@
             </div>
             <hr>
             <h5><strong>Ayo Mencoba</strong>
-                <button type="button" onclick="document.getElementById('audioContoh').play()" class="btn btn-sm bg-coklapbet text-white ms-2">🔊</button>
-                <audio id="audioContoh" src="{{ asset('audio/materi/hal9_soal0.mp3') }}"></audio>
+                    <button onclick="toggleAudio(this)" 
+                            class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
+                            data-id="index-3" data-playing="false">🔊</button>
+                    <audio id="audio-index-3" src="{{ asset('sounds/materi/hal9/3.mp3') }}"></audio>
             </h5>
             <p>
                 Amati gambar berikut dengan saksama! Jawablah pertanyaan di bawah ini dengan menyeret dan meletakkan pilihan jawaban yang sesuai.
@@ -87,15 +113,23 @@
                 @php
                     $key = 'soal' . $no;
                     $userJawaban = $jawabanUser[$key] ?? null;
-                    $jawabanLabel = $userJawaban === 'a' ? 'a (kiri)' : ($userJawaban === 'b' ? 'b (kanan)' : '-');
-                    $kunci = $kunciJawaban[$key] ?? '-';
+                    $kunci = $kunciJawaban[$key] ?? null;
+                    $benar = ($userJawaban && $userJawaban === $kunci);
                 @endphp
 
                 <div class="mb-4">
                     <div class="d-flex align-items-center mb-2">
                         <p class="mb-0"><strong>{{ $no }}. </strong> {{ $teks }}</p>
-                        <button type="button" onclick="document.getElementById('audio{{ $no }}').play()" class="btn btn-sm bg-coklapbet text-white ms-2">🔊</button>
-                        <audio id="audio{{ $no }}" src="{{ asset('audio/materi/hal9_soal'.$no.'.mp3') }}"></audio>
+                        <button 
+                            type="button" 
+                            onclick="toggleAudio(this)" 
+                            class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" 
+                            title="Dengarkan"
+                            data-id="hal9-{{ $no }}" 
+                            data-playing="false">
+                            🔊
+                        </button>
+                        <audio id="audio-hal9-{{ $no }}" src="{{ asset('sounds/materi/hal9/hal9-' . $no . '.mp3') }}"></audio>
                     </div>
                     <div class="text-center mb-3">
                         <img src="{{ asset('images/materi/ayo-mencoba-2/' . $gambarList[$no]) }}" class="img-fluid rounded shadow" style="max-width: 600px;">
@@ -103,8 +137,8 @@
 
                     @if(!$sudahMenjawab)
                         <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
-                            <div class="block-option" draggable="true" id="option-{{ $no }}-a" data-soal="{{ $no }}">a (kiri)</div>
-                            <div class="block-option" draggable="true" id="option-{{ $no }}-b" data-soal="{{ $no }}">b (kanan)</div>
+                            <div class="block-option" draggable="true" id="option-{{ $no }}-a" data-soal="{{ $no }}">a</div>
+                            <div class="block-option" draggable="true" id="option-{{ $no }}-b" data-soal="{{ $no }}">b</div>
                         </div>
                         <div class="drop-area-style text-center mb-4" id="drop-area-{{ $no }}" data-soal="{{ $no }}">
                             <p class="text-muted">Seret jawaban ke sini</p>
@@ -113,22 +147,28 @@
                     @else
                         <div class="drop-area-style text-center mb-3">
                             @if($userJawaban)
-                                <div class="block-option bg-secondary text-white d-inline-block px-3 py-2 rounded" style="cursor: default;" draggable="false">
-                                    {{ $jawabanLabel }}
+                                <div class="block-option {{ $benar ? 'bg-success' : 'bg-danger' }} text-white d-inline-block px-3 py-2 rounded" style="cursor: default;" draggable="false">
+                                    {{ $userJawaban }}
                                 </div>
                             @else
                                 <div class="text-muted">Belum dijawab</div>
                             @endif
                         </div>
+                    @endif
 
-                        <div class="text-center mb-4">
-                            <div class="block-option {{ $userJawaban === $kunci ? 'bg-success' : 'bg-danger' }} text-white d-inline-block px-3 py-2 rounded">
-                                Jawaban kamu: {{ $userJawaban ?? '-' }}
-                            </div>
+                    {{-- Penjelasan jawaban --}}
+                    @if($sudahMenjawab && $userJawaban)
+                        <div class="card card-body border-info bg-light mt-2">
+                            @php
+                                $isCorrect = $userJawaban === $kunci;
+                                $explain = $penjelasan[$no][$isCorrect ? 'a' : 'b'] ?? 'Kamu belum memilih jawaban atau belum ada penjelasan.';
+                            @endphp
+                            {!! $explain !!}
                             @if($status === 'lulus')
-                                <div class="mt-2 text-muted">
-                                    Kunci Jawaban: {{ $kunci }}
-                                </div>
+                                <hr>
+                                <span class="text-success">
+                                    <strong>Kunci Jawaban:</strong> {{ $kunci }}
+                                </span>
                             @endif
                         </div>
                     @endif
@@ -137,7 +177,7 @@
 
             @if(!$sudahMenjawab)
                 <div class="text-end">
-                    <button type="submit" class="btn btn-primary">Kirim Jawaban</button>
+                    <button type="submit" class="btn bg-coklap2 text-white">Kirim Jawaban</button>
                 </div>
             @endif
         </form>
@@ -158,14 +198,15 @@
     </div>
 
     <div class="card-footer d-flex justify-content-between align-items-center">
-        <a href="{{ route('admin.materi.halaman8') }}" class="btn btn-secondary">← Sebelumnya</a>
+        <a href="{{ route('admin.materi.halaman8') }}" class="btn bg-coklap2 text-white">← Sebelumnya</a>
         @if($sudahMenjawab && $status === 'lulus')
-            <a href="{{ route('admin.materi.halaman10') }}" class="btn btn-success">Selanjutnya →</a>
+            <a href="{{ route('admin.materi.halaman10') }}" class="btn bg-coklap1 text-white">Selanjutnya →</a>
         @else
-            <button class="btn btn-success disabled">Selanjutnya →</button>
+            <button class="btn bg-coklap2 text-white disabled">Selanjutnya →</button>
         @endif
     </div>
 </div>
+<br>
 @endsection
 
 @push('scripts')
@@ -222,5 +263,47 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 });
+    let currentAudio = null;
+    let currentButton = null;
+
+    function toggleAudio(button) {
+        const id = button.getAttribute('data-id');
+        const audio = document.getElementById(`audio-${id}`);
+
+        // Hentikan semua audio lain
+        document.querySelectorAll('audio').forEach(a => {
+            if (a !== audio) {
+                a.pause();
+                a.currentTime = 0;
+            }
+        });
+
+        // Reset semua tombol lain
+        document.querySelectorAll('button[data-id]').forEach(btn => {
+            if (btn !== button) {
+                btn.innerText = '🔊';
+                btn.setAttribute('data-playing', 'false');
+            }
+        });
+
+        // Play/pause toggle
+        if (audio.paused) {
+            audio.play();
+            button.innerText = '⏸️';
+            button.setAttribute('data-playing', 'true');
+            currentAudio = audio;
+            currentButton = button;
+        } else {
+            audio.pause();
+            button.innerText = '🔊';
+            button.setAttribute('data-playing', 'false');
+        }
+
+        // Saat audio selesai
+        audio.onended = function () {
+            button.innerText = '🔊';
+            button.setAttribute('data-playing', 'false');
+        };
+    }
 </script>
 @endpush

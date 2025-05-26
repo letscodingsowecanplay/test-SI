@@ -258,3 +258,27 @@
     background-color: #d3d3d3;
     color: #888;
 }
+
+.btn-masuk:hover {
+        background-color: #AD8B73 !important; /* warna hover khusus tombol login */
+}
+
+.bg-coklap1 {
+    background-color: #3B3030;
+}
+
+.bg-coklap1:hover {
+    background-color: #3B3030;
+}
+
+.bg-coklap2 {
+    background-color: #664343;
+}
+
+.bg-coklap2:hover {
+    background-color: #664343;
+}
+
+.bg-cokren{
+    background-color: #C68642;
+}

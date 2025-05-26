@@ -196,8 +196,10 @@ main .card {
 }
 
 .illustration-img {
-    max-width: 150px;
+    max-width: 300px;
     width: 100%;
+    max-height: 300px;
+    height: 100%;
 }
 
 .select2-container--default.select2-container--focus .select2-selection--multiple {
@@ -217,3 +219,22 @@ table tr th, td {
     "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }
 
+.breadcrumb {
+    background-color: transparent; /* jika ingin tanpa background */
+    padding: 0;
+    margin-bottom: 1rem;
+}
+
+.breadcrumb-item a {
+    color: #f57f17; /* ganti dengan warna link breadcrumb (misal: coklat tua) */
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    color: #f57f17; /* warna saat hover */
+}
+
+.breadcrumb-item.active {
+    color: #5C4033; /* warna teks breadcrumb aktif */
+    font-weight: bold;
+}

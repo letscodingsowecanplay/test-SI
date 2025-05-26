@@ -1,11 +1,6 @@
 <div class="sidebar position-fixed border-right col-md-3 col-lg-2 p-0 bg-coklap">
     <div class="offcanvas-md offcanvas-start" tabindex="-1" id="sidebarMenu"
          aria-labelledby="sidebarMenuLabel">
-        <!-- <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="sidebarMenuLabel">{{ __('Daftar Akun') }}</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu"
-                    aria-label="Close"></button>
-        </div> -->
 
         <div class="offcanvas-body position-static sidebar-sticky d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
             <ul class="nav flex-column">
@@ -37,7 +32,7 @@
                 @endcan
                 @can('datahasilbelajarsiswa_access')
                 <li class="nav-item">
-                    <a class="text-white nav-link {{ request()->is('admin/datahasilbelajar*') ? 'active' : '' }}"
+                    <a class="text-white nav-link {{ request()->is('admin/hasilbelajar*') ? 'active' : '' }}"
                     href="{{ route('admin.hasilbelajar.index') }}">
                         <span data-feather="bar-chart-2" class="align-text-bottom text-white"></span>
                         Hasil Belajar
@@ -46,7 +41,7 @@
                 @endcan
                 @can('editkkm_access')
                 <li class="nav-item">
-                    <a class="text-white nav-link {{ (request()->is('admin/editkkm*')) ? 'active' : '' }}"
+                    <a class="text-white nav-link {{ (request()->is('admin/kkm*')) ? 'active' : '' }}"
                     href="{{ route('admin.kkm.index') }}">
                         <span data-feather="award" class="align-text-bottom text-white"></span>
                         KKM
@@ -67,7 +62,7 @@
                 @can('evaluasi_access')
                 <li class="nav-item">
                         <a class="text-white nav-link {{ (request()->is('admin/evaluasi*')) ? 'active' : '' }}"
-                           href="#">
+                           href="{{ route('admin.evaluasi.petunjuk') }}">
                             <span data-feather="file-text" class="align-text-bottom text-white"></span>
                             Evaluasi
                         </a>
@@ -128,35 +123,6 @@
                     </li>
                 @endcan
             </ul>
-
-            <!-- <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-                <span>Setting</span>
-                <a class="link-secondary" href="#" aria-label="Add a new report">
-                    <span data-feather="plus-circle" class="align-text-bottom"></span>
-                </a>
-            </h6> -->
-            <!-- <ul class="nav flex-column mb-2">
-                {{--<li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span data-feather="settings" class="align-text-bottom"></span>
-                        App Setting
-                    </a>
-                </li>--}}
-                <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/profile')) ? 'active' : '' }}"
-                       href="{{ route('admin.profile.index') }}">
-                        <span data-feather="user" class="align-text-bottom"></span>
-                        Profile
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('admin/change-password')) ? 'active' : '' }}"
-                       href="{{ route('admin.password.index') }}">
-                        <span data-feather="key" class="align-text-bottom"></span>
-                        Change Password
-                    </a>
-                </li>
-            </ul> -->
         </div>
     </div>
 </div>

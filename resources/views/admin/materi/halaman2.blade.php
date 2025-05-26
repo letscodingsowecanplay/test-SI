@@ -13,18 +13,18 @@
                 <li class="list-group-item bg-transparent border-dark">
                     <h5 class="fw-bold mb-0">
                         Membandingkan dan Mengurutkan Panjang Benda
-                        <button onclick="playSound('judul')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" title="Dengarkan">
-                            🔊
-                        </button>
-                        <audio id="audio-hal2-1" src="{{ asset('sounds/materi/hal2/1.mp3') }}"></audio>
+                        <button onclick="toggleAudio(this)" 
+                                class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
+                                data-id="index-1" data-playing="false">🔊</button>
+                        <audio id="audio-index-1" src="{{ asset('sounds/materi/hal2/1.mp3') }}"></audio>
                     </h5>
 
                     <h6 class="fw-bold mt-3 mb-0">
                         Tujuan Pembelajaran
-                        <button onclick="playSound('tujuan')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" title="Dengarkan">
-                            🔊
-                        </button>
-                        <audio id="audio-hal2-2" src="{{ asset('sounds/materi/hal2/2.mp3') }}"></audio>
+                        <button onclick="toggleAudio(this)" 
+                                class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
+                                data-id="index-2" data-playing="false">🔊</button>
+                        <audio id="audio-index-2" src="{{ asset('sounds/materi/hal2/2.mp3') }}"></audio>
                     </h6>
 
                     <p class="mt-2">
@@ -37,10 +37,10 @@
                 <li class="list-group-item bg-transparent">
                     <h6 class="fw-bold mb-0">
                         Ayo Belajar
-                        <button onclick="playSound('ayo-belajar')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" title="Dengarkan">
-                            🔊
-                        </button>
-                        <audio id="audio-hal2-3" src="{{ asset('sounds/materi/hal2/3.mp3') }}"></audio>
+                        <button onclick="toggleAudio(this)" 
+                                class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
+                                data-id="index-3" data-playing="false">🔊</button>
+                        <audio id="audio-index-3" src="{{ asset('sounds/materi/hal2/3.mp3') }}"></audio>
                     </h6>
 
                     <p class="mt-2">
@@ -55,7 +55,10 @@
                     <img src="{{ asset('images/materi/baju-sasi-pendek.png') }}" class="img-fluid rounded shadow" alt="Gambar Penggaris">
                     <p class="mt-2 fw-semibold">
                         baju pengantin banjar lengan pendek
-                        <button onclick="playSound('gambar1')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" title="Dengarkan kalimat ini">🔊</button>
+                        <button onclick="toggleAudio(this)" 
+                                class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
+                                data-id="index-4" data-playing="false">🔊</button>
+                        <audio id="audio-index-4" src="{{ asset('sounds/materi/hal2/4.mp3') }}"></audio>
                         <audio id="audio-hal2-4" src="{{ asset('sounds/materi/hal2/4.mp3') }}"></audio>
                     </p>
                 </div>
@@ -63,16 +66,18 @@
                     <img src="{{ asset('images/materi/baju-sasi-panjang.svg') }}" class="img-fluid rounded shadow" alt="Gambar Pensil" style="width: 313px; height: 313px;">
                     <p class="mt-2 fw-semibold">
                         baju pengantin banjar lengan panjang
-                        <button onclick="playSound('gambar2')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" title="Dengarkan kalimat ini">🔊</button>
-                        <audio id="audio-hal2-5" src="{{ asset('sounds/materi/hal2/5.mp3') }}"></audio>
+                        <button onclick="toggleAudio(this)" 
+                                class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
+                                data-id="index-5" data-playing="false">🔊</button>
+                        <audio id="audio-index-5" src="{{ asset('sounds/materi/hal2/5.mp3') }}"></audio>
                     </p>
                 </div>
             </div>
         </div>
 
         <div class="card-footer d-flex justify-content-between">
-            <a href="{{ route('admin.materi.index') }}" class="btn btn-secondary">← Sebelumnya</a>
-            <a href="{{ route('admin.materi.halaman3') }}" class="btn btn-primary">Selanjutnya →</a>
+            <a href="{{ route('admin.materi.index') }}" class="btn bg-coklap2 text-white">← Sebelumnya</a>
+            <a href="{{ route('admin.materi.halaman3') }}" class="btn bg-coklap1 text-white">Selanjutnya →</a>
         </div>
     </div>
     <br>
@@ -80,17 +85,47 @@
 
 @section('scripts')
 <script>
-    function playSound(id) {
-        // pause all audio
-        document.querySelectorAll('audio').forEach(audio => {
-            audio.pause();
-            audio.currentTime = 0;
+    let currentAudio = null;
+    let currentButton = null;
+
+    function toggleAudio(button) {
+        const id = button.getAttribute('data-id');
+        const audio = document.getElementById(`audio-${id}`);
+
+        // Pause semua audio lain
+        document.querySelectorAll('audio').forEach(a => {
+            if (a !== audio) {
+                a.pause();
+                a.currentTime = 0;
+            }
         });
 
-        const audio = document.getElementById(`audio-${id}`);
-        if (audio) {
+        // Reset semua tombol ke 🔊
+        document.querySelectorAll('button[data-id]').forEach(btn => {
+            if (btn !== button) {
+                btn.innerText = '🔊';
+                btn.setAttribute('data-playing', 'false');
+            }
+        });
+
+        // Toggle play/pause
+        if (audio.paused) {
             audio.play();
+            button.innerText = '⏸️';
+            button.setAttribute('data-playing', 'true');
+            currentAudio = audio;
+            currentButton = button;
+        } else {
+            audio.pause();
+            button.innerText = '🔊';
+            button.setAttribute('data-playing', 'false');
         }
+
+        // Auto-reset ikon saat audio selesai
+        audio.onended = function () {
+            button.innerText = '🔊';
+            button.setAttribute('data-playing', 'false');
+        };
     }
 </script>
 @endsection

@@ -109,4 +109,5 @@
             {{ $users->links() }}
         </div>
     </div>
+    <br>
 @endsection

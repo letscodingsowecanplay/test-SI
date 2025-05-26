@@ -14,10 +14,10 @@
 
                     <p class="mt-2">
                         Kita bandingkan kain sasirangan a, b, dan c.
-                        <button onclick="playSound('paragraf-belajar')" class="btn btn-sm btn-outline-dark ms-2 bg-coklapbet text-white" title="Dengarkan">
-                            🔊
-                        </button>
-                        <audio id="audio-paragraf-belajar" src="{{ asset('sounds/materi/paragraf-belajar.mp3') }}"></audio>
+                        <button onclick="toggleAudio(this)" 
+                                class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
+                                data-id="index-1" data-playing="false">🔊</button>
+                        <audio id="audio-index-1" src="{{ asset('sounds/materi/hal8/1.mp3') }}"></audio>
                     </p>
                 </li>
             </ul>
@@ -35,10 +35,10 @@
             <ul class="list-group list-group-flush">
                 
                 <li class="list-group-item bg-transparent">
-                    <button onclick="playSound('paragraf-belajar')" class="btn btn-sm btn-outline-dark ms-2 bg-coklapbet text-white" title="Dengarkan">
-                        🔊
-                    </button>
-                    <audio id="audio-paragraf-belajar" src="{{ asset('sounds/materi/paragraf-belajar.mp3') }}"></audio>
+                    <button onclick="toggleAudio(this)" 
+                            class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
+                            data-id="index-2" data-playing="false">🔊</button>
+                    <audio id="audio-index-2" src="{{ asset('sounds/materi/hal8/2.mp3') }}"></audio>
                     <p class="mt-2">
                         Kain sasirangan a lebih pendek dari kain sasirangan b.<br>
                         kain sasirangan b lebih pendek dari kain sasirangan c.<br>
@@ -67,8 +67,8 @@
         </div>
 
         <div class="card-footer d-flex justify-content-between">
-            <a href="{{ route('admin.materi.halaman7') }}" class="btn btn-secondary">← Sebelumnya</a>
-            <a href="{{ route('admin.materi.halaman9') }}" class="btn btn-primary">Selanjutnya →</a>
+            <a href="{{ route('admin.materi.halaman7') }}" class="btn bg-coklap2 text-white">← Sebelumnya</a>
+            <a href="{{ route('admin.materi.halaman9') }}" class="btn bg-coklap1 text-white">Selanjutnya →</a>
         </div>
     </div>
     <br>
@@ -76,17 +76,47 @@
 
 @section('scripts')
 <script>
-    function playSound(id) {
-        // pause all audio
-        document.querySelectorAll('audio').forEach(audio => {
-            audio.pause();
-            audio.currentTime = 0;
+    let currentAudio = null;
+    let currentButton = null;
+
+    function toggleAudio(button) {
+        const id = button.getAttribute('data-id');
+        const audio = document.getElementById(`audio-${id}`);
+
+        // Pause semua audio lain
+        document.querySelectorAll('audio').forEach(a => {
+            if (a !== audio) {
+                a.pause();
+                a.currentTime = 0;
+            }
         });
 
-        const audio = document.getElementById(`audio-${id}`);
-        if (audio) {
+        // Reset semua tombol ke 🔊
+        document.querySelectorAll('button[data-id]').forEach(btn => {
+            if (btn !== button) {
+                btn.innerText = '🔊';
+                btn.setAttribute('data-playing', 'false');
+            }
+        });
+
+        // Toggle play/pause
+        if (audio.paused) {
             audio.play();
+            button.innerText = '⏸️';
+            button.setAttribute('data-playing', 'true');
+            currentAudio = audio;
+            currentButton = button;
+        } else {
+            audio.pause();
+            button.innerText = '🔊';
+            button.setAttribute('data-playing', 'false');
         }
+
+        // Auto-reset ikon saat audio selesai
+        audio.onended = function () {
+            button.innerText = '🔊';
+            button.setAttribute('data-playing', 'false');
+        };
     }
 </script>
 @endsection

@@ -22,17 +22,18 @@
             <button class="btn btn-secondary btn-nav" onclick="navigasiSoal('prev')">Sebelumnya</button>
             <button class="btn btn-secondary btn-nav" onclick="navigasiSoal('next')">Selanjutnya</button>
             <button class="btn btn-success btn-nav" onclick="submitJawaban()">Selesai</button>
-            <a href="{{ route('admin.materi.index') }}" class="btn btn-danger btn-nav">Kembali ke Materi</a>
+            <a href="{{ route('admin.materi.index') }}" class="btn bg-coklap text-white btn-nav">Kembali ke Materi</a>
         </div>
     </div>
 </div>
 
+
 <!-- Modal Hasil Kuis -->
 <div class="modal fade" id="hasilModal" tabindex="-1" aria-labelledby="hasilModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content bg-coklap">
+    <div class="modal-content bg-coklap text-white">
       <div class="modal-header">
-        <h5 class="modal-title" id="hasilModalLabel">Hasil Kuis 1</h5>
+        <h5 class="modal-title" id="hasilModalLabel">Hasil Evaluasi</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
       </div>
       <div class="modal-body text-center" id="hasilModalBody">
@@ -56,13 +57,13 @@
         },
         {
             id: 2,
-            soal: "Wadai khas kalimantan yang sering hadir disaat ramadhan memiliki ukuran paling panjang adalah .... a. Talas pandan b. Puteri selat c. Semua benar",
+            soal: "Wadai khas kalimantan yang sering hadir disaat ramadhan memiliki ukuran paling panjang adalah ....",
             pilihan: ["Talas pandan", "Puteri selat", "Amparan Tatak"],
             audio: "/audio/soal2.mp3"
         },
         {
             id: 3,
-            soal: "Utuh ingin membangun jembatan dibelakang halaman rumahnya. Diantara ketiga ukuran kayu ini, kayu yang paling pendek adalah ....",
+            soal: "Utuh ingin membangun jembatan dibelakang halaman rumahnya. Diantara ketiga ukuran kayu ulin ini, kayu yang paling pendek adalah ....",
             pilihan: ["a", "b", "c"],
             audio: "/audio/soal2.mp3"
         },
@@ -86,7 +87,7 @@
         },
         {
             id: 7,
-            soal: "Ikan diperairan kalimantan memiliki banyak jenis dan rupanya masingmasing. Panjang ikan haruan disamping adalah ....",
+            soal: "Ikan diperairan kalimantan memiliki banyak jenis dan rupanya masing-masing. Panjang ikan haruan adalah ....",
             pilihan: ["4 pensil", "3 pensil", "2 pensil"],
             audio: "/audio/soal2.mp3"
         },
@@ -118,9 +119,15 @@
         const data = soalList[indexSoal];
         let html = `
             <div class="question-title">${data.id}. ${data.soal}
-                <button onclick="playSound('audio${data.id}')" class="btn btn-sm btn-outline-dark text-white bg-coklap" title="Dengarkan kalimat ini">🔊</button>
-                <audio id="audio${data.id}" src="${data.audio}"></audio>
+                <button 
+                    onclick="toggleAudio(this)" 
+                    class="btn btn-sm btn-outline-dark text-white bg-coklap" 
+                    title="Dengarkan kalimat ini"
+                    data-id="kuis${data.id}" 
+                    data-playing="false">🔊</button>
+                <audio id="audio-kuis${data.id}" src="/sounds/evaluasi/index/${data.id}.mp3"></audio>
             </div>
+
             <form id="form-soal">
         `;
 
@@ -151,6 +158,50 @@
 
         renderNavigasi();
     }
+
+    let currentAudio = null;
+    let currentButton = null;
+
+    function toggleAudio(button) {
+        const id = button.getAttribute('data-id');
+        const audio = document.getElementById(`audio-${id}`);
+
+        // Stop semua audio selain yang aktif
+        document.querySelectorAll('audio').forEach(a => {
+            if (a !== audio) {
+                a.pause();
+                a.currentTime = 0;
+            }
+        });
+
+        // Reset semua tombol
+        document.querySelectorAll('button[data-id]').forEach(btn => {
+            if (btn !== button) {
+                btn.innerText = '🔊';
+                btn.setAttribute('data-playing', 'false');
+            }
+        });
+
+        // Play/pause toggle
+        if (audio.paused) {
+            audio.play();
+            button.innerText = '⏸️';
+            button.setAttribute('data-playing', 'true');
+            currentAudio = audio;
+            currentButton = button;
+        } else {
+            audio.pause();
+            button.innerText = '🔊';
+            button.setAttribute('data-playing', 'false');
+        }
+
+        // Reset ikon saat audio selesai
+        audio.onended = function () {
+            button.innerText = '🔊';
+            button.setAttribute('data-playing', 'false');
+        };
+    }
+
 
     function navigasiSoal(mode) {
         const form = document.getElementById('form-soal');
@@ -232,11 +283,11 @@
         const hasilFooter = document.getElementById('hasilModalFooter');
 
         hasilBody.innerHTML = `
-            <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
             <p><strong>Nama:</strong> {{ Auth::user()->name }}</p>
-            <p><strong>Sekolah:</strong> SD Banjarmasin</p>
             <p><strong>Kelas:</strong> 1</p>
-            <p><strong>Nilai Kuis 1:</strong> ${data.skor}</p>
+            <p><strong>Sekolah:</strong> SD Banjarmasin</p>
+            <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
+            <p><strong>Nilai Evaluasi:</strong> ${data.skor}</p>
             <p class="text-${data.skor_persen >= 70 ? 'success' : 'danger'} fw-bold">
                 ${data.skor_persen >= 70 
                     ? 'Selamat, anda lulus Evaluasi!'
@@ -255,26 +306,33 @@
         }
 
         const modalEl = document.getElementById('hasilModal');
-        if (modalEl) {
-            const modal = new bootstrap.Modal(modalEl);
-            modal.show();
+        const modal = new bootstrap.Modal(modalEl, {
+            keyboard: true,
+            backdrop: true
+        });
+        modal.show();
 
-            modalEl.querySelector('.btn-close')?.addEventListener('click', () => {
+        // Tangkap semua penutupan modal (X, ESC, klik luar)
+        document.addEventListener('hidden.bs.modal', function (e) {
+            if (e.target.id === 'hasilModal') {
                 window.location.href = "{{ route('admin.evaluasi.petunjuk') }}";
-            });
-        }
+            }
+        });
 
-            document.getElementById('lanjutMateri')?.addEventListener('click', () => {
-                window.location.href = "{{ route('admin.materi.halaman5') }}";
-            });
 
-            document.getElementById('ulangiKuis')?.addEventListener('click', () => {
-                window.location.href = "{{ route('admin.evaluasi.index') }}";
-            });
 
-            document.getElementById('selesaiEvaluasi')?.addEventListener('click', () =>{
-                window.location.href = "{{ route('admin.evaluasi.petunjuk') }}";
-            });
+
+        document.getElementById('lanjutMateri')?.addEventListener('click', () => {
+            window.location.href = "{{ route('admin.materi.halaman5') }}";
+        });
+
+        document.getElementById('ulangiKuis')?.addEventListener('click', () => {
+            window.location.href = "{{ route('admin.evaluasi.index') }}";
+        });
+
+        document.getElementById('selesaiEvaluasi')?.addEventListener('click', () =>{
+            window.location.href = "{{ route('admin.evaluasi.petunjuk') }}";
+        });
         })
         .catch(error => {
             console.error('Error details:', error);

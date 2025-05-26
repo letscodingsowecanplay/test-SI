@@ -62,4 +62,5 @@
             {{ $siswa->links() }}
         </div>
     </div>
+    <br>
 @endsection

@@ -31,9 +31,9 @@
         <a href="javascript:void(0)" class="dropdown-toggle text-white" data-bs-toggle="dropdown" aria-expanded="false">
             {{ auth()->user()->name }}
         </a>
-        <ul class="dropdown-menu dropdown-menu-lg-start border-0 shadow-sm rounded-0">
+        <ul class="dropdown-menu dropdown-menu-lg-start border-0 shadow-sm rounded-0 bg-coklap2">
             <li>
-                <a class="dropdown-item" href="{{ route('logout') }}"
+                <a class="dropdown-item bg-coklap2 text-white " href="{{ route('logout') }}"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                 >
                     {{ __('Keluar') }}

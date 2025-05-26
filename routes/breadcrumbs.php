@@ -87,12 +87,12 @@ Breadcrumbs::for('admin.materi.halaman3', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('admin.materi.halaman4', function ($trail) {
     $trail->parent('admin.materi.index');
-    $trail->push('Kuis - Halaman 4', route('admin.materi.halaman4'));
+    $trail->push('Ayo Mencoba - Halaman 4', route('admin.materi.halaman4'));
 });
 
 Breadcrumbs::for('admin.materi.halaman5', function ($trail) {
     $trail->parent('admin.materi.index');
-    $trail->push('Materi - Halaman 5', route('admin.materi.halaman5'));
+    $trail->push('Ayo Berlatih - Halaman 5', route('admin.materi.halaman5'));
 });
 Breadcrumbs::for('admin.materi.halaman6', function ($trail) {
     $trail->parent('admin.materi.index');
@@ -101,7 +101,7 @@ Breadcrumbs::for('admin.materi.halaman6', function ($trail) {
 
 Breadcrumbs::for('admin.materi.halaman7', function ($trail) {
     $trail->parent('admin.materi.index');
-    $trail->push('Kuis - Halaman 7', route('admin.materi.halaman7'));
+    $trail->push('Materi - Halaman 7', route('admin.materi.halaman7'));
 });
 
 Breadcrumbs::for('admin.materi.halaman8', function ($trail) {
@@ -111,12 +111,12 @@ Breadcrumbs::for('admin.materi.halaman8', function ($trail) {
 
 Breadcrumbs::for('admin.materi.halaman9', function ($trail) {
     $trail->parent('admin.materi.index');
-    $trail->push('Materi - Halaman 9', route('admin.materi.halaman9'));
+    $trail->push('Ayo Mencoba - Halaman 9', route('admin.materi.halaman9'));
 });
 
 Breadcrumbs::for('admin.materi.halaman10', function ($trail) {
     $trail->parent('admin.materi.index');
-    $trail->push('Kuis - Halaman 10', route('admin.materi.halaman10'));
+    $trail->push('Ayo Berlatih - Halaman 10', route('admin.materi.halaman10'));
 });
 
 Breadcrumbs::for('admin.materi.halaman11', function ($trail) {
@@ -141,12 +141,12 @@ Breadcrumbs::for('admin.materi.halaman14', function ($trail) {
 
 Breadcrumbs::for('admin.materi.halaman15', function ($trail) {
     $trail->parent('admin.materi.index');
-    $trail->push('Materi - Halaman 15', route('admin.materi.halaman15'));
+    $trail->push('Ayo Mencoba - Halaman 15', route('admin.materi.halaman15'));
 });
 
 Breadcrumbs::for('admin.materi.halaman16', function ($trail) {
     $trail->parent('admin.materi.index');
-    $trail->push('Materi - Halaman 16', route('admin.materi.halaman16'));
+    $trail->push('Ayo Berlatih - Halaman 16', route('admin.materi.halaman16'));
 });
 
 Breadcrumbs::for('admin.materi.halaman17', function ($trail) {

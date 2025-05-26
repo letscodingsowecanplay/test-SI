@@ -14,10 +14,10 @@
 
                     <p class="mt-2">
                         Kita bandingkan lukisan a, b, c, dan d.
-                        <button onclick="playSound('paragraf-belajar')" class="btn btn-sm btn-outline-dark ms-2 bg-coklapbet text-white" title="Dengarkan">
-                            🔊
-                        </button>
-                        <audio id="audio-paragraf-belajar" src="{{ asset('sounds/materi/paragraf-belajar.mp3') }}"></audio>
+                        <button onclick="toggleAudio(this)" 
+                                class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
+                                data-id="index-1" data-playing="false">🔊</button>
+                        <audio id="audio-index-1" src="{{ asset('sounds/materi/hal7/1.mp3') }}"></audio>
                     </p>
                 </li>
             </ul>
@@ -36,10 +36,10 @@
                 
 
                 <li class="list-group-item bg-transparent">
-                    <button onclick="playSound('paragraf-belajar')" class="btn btn-sm btn-outline-dark ms-2 bg-coklapbet text-white" title="Dengarkan">
-                        🔊
-                    </button>
-                    <audio id="audio-paragraf-belajar" src="{{ asset('sounds/materi/paragraf-belajar.mp3') }}"></audio>
+                    <button onclick="toggleAudio(this)" 
+                            class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
+                            data-id="index-1" data-playing="false">🔊</button>
+                    <audio id="audio-index-1" src="{{ asset('sounds/materi/hal7/1.mp3') }}"></audio>
                     <p class="mt-2">
                         Lukisan a lebih tinggi dari lukisan b, c, dan d.<br>
                         Jadi, lukisan a paling tinggi.
@@ -56,12 +56,6 @@
                         • paling rendah
                     </p>
                     <p class="mt-2">
-                        Kita dapat membandingkan tinggi dua benda.
-                        Kita menggunakan kata:<br>
-                        • lebih tinggi<br>
-                        • lebih rendah
-                    </p>
-                    <p class="mt-2">
                         Mengurutkan panjang, pendek, tinggi, dan rendah adalah proses menyusun benda-benda berdasarkan ukurannya, baik dari segi jarak maupun ketinggian. Dalam pengurutan ini, kita bisa mulai dari yang paling kecil hingga yang paling besar atau sebaliknya, tergantung kebutuhan. Benda yang lebih panjang atau lebih tinggi ditempatkan di salah satu ujung urutan, sementara yang lebih pendek atau lebih rendah berada di ujung lainnya. 
                     </p>
                     <p class="mt-2">
@@ -76,8 +70,8 @@
         </div>
 
         <div class="card-footer d-flex justify-content-between">
-            <a href="{{ route('admin.materi.halaman6') }}" class="btn btn-secondary">← Sebelumnya</a>
-            <a href="{{ route('admin.materi.halaman8') }}" class="btn btn-primary">Selanjutnya →</a>
+            <a href="{{ route('admin.materi.halaman6') }}" class="btn bg-coklap2 text-white">← Sebelumnya</a>
+            <a href="{{ route('admin.materi.halaman8') }}" class="btn bg-coklap1 text-white">Selanjutnya →</a>
         </div>
     </div>
     <br>
@@ -85,17 +79,47 @@
 
 @section('scripts')
 <script>
-    function playSound(id) {
-        // pause all audio
-        document.querySelectorAll('audio').forEach(audio => {
-            audio.pause();
-            audio.currentTime = 0;
+    let currentAudio = null;
+    let currentButton = null;
+
+    function toggleAudio(button) {
+        const id = button.getAttribute('data-id');
+        const audio = document.getElementById(`audio-${id}`);
+
+        // Pause semua audio lain
+        document.querySelectorAll('audio').forEach(a => {
+            if (a !== audio) {
+                a.pause();
+                a.currentTime = 0;
+            }
         });
 
-        const audio = document.getElementById(`audio-${id}`);
-        if (audio) {
+        // Reset semua tombol ke 🔊
+        document.querySelectorAll('button[data-id]').forEach(btn => {
+            if (btn !== button) {
+                btn.innerText = '🔊';
+                btn.setAttribute('data-playing', 'false');
+            }
+        });
+
+        // Toggle play/pause
+        if (audio.paused) {
             audio.play();
+            button.innerText = '⏸️';
+            button.setAttribute('data-playing', 'true');
+            currentAudio = audio;
+            currentButton = button;
+        } else {
+            audio.pause();
+            button.innerText = '🔊';
+            button.setAttribute('data-playing', 'false');
         }
+
+        // Auto-reset ikon saat audio selesai
+        audio.onended = function () {
+            button.innerText = '🔊';
+            button.setAttribute('data-playing', 'false');
+        };
     }
 </script>
 @endsection

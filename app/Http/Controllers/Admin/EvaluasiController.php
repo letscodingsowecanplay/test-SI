@@ -41,8 +41,8 @@ class EvaluasiController extends Controller
             $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 7;
 
             $kunci = [
-                '1' => 'A', '2' => 'C', '3' => 'C', '4' => 'C', '5' => 'C',
-                '6' => 'C', '7' => 'C', '8' => 'C', '9' => 'C', '10' => 'C',
+                '1' => 'A', '2' => 'C', '3' => 'C', '4' => 'B', '5' => 'B',
+                '6' => 'B', '7' => 'C', '8' => 'B', '9' => 'A', '10' => 'C',
             ];
 
             $benar = 0;
@@ -69,11 +69,12 @@ class EvaluasiController extends Controller
 
             return response()->json([
                 'success' => true,
-                'skor' => $benar,
+                'skor' => round(($benar / count($kunci)) * 100),
                 'skor_persen' => round(($benar / count($kunci)) * 100),
                 'total_soal' => count($kunci),
                 'status' => $status,
             ]);
+
 
         } catch (\Exception $e) {
             \Log::error('Gagal menyimpan evaluasi: ' . $e->getMessage());
@@ -110,7 +111,12 @@ class EvaluasiController extends Controller
 
         $bisaMulaiKuis = !$hasil || ($hasil && $hasil->status === 'tidak_lulus');
 
-        // Ambil kkm dari tabel kkm jika ingin ditampilkan
+        // Konversi skor ke persen untuk tampilan jika data tersedia
+        if ($hasil) {
+            $totalSoal = $hasil->total_soal ?: 10; // fallback default 10
+            $hasil->skor_persen = round(($hasil->skor / $totalSoal) * 100);
+        }
+
         $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? null;
 
         return view('admin.evaluasi.petunjuk', [
@@ -120,6 +126,7 @@ class EvaluasiController extends Controller
             'kkm' => $kkm,
         ]);
     }
+
 
 
 

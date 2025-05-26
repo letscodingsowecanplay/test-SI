@@ -32,7 +32,7 @@
                     @auth
                         <a href="{{ url('/home') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
                     @else
-                        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Masuk</a>
+                        <a href="{{ route('login.guru') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Masuk (Guru) </a>
 
                         @if (Route::has('register'))
                             <!-- <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a> -->
@@ -42,8 +42,31 @@
             @endif
 
             <div class="max-w-7xl mx-auto p-6 lg:p-8">
-                <div class="flex justify-center">
-                    <img src="{{ asset('images/logo-si.svg') }}" alt="Logo SI" class="h-32 w-auto sm:h-32 mx-auto" />
+                <div class="flex justify-center mt-16">
+                    <table style="margin:0 auto; border:none; background:transparent;">
+                        <tr>
+                            <td style="text-align:center; padding-bottom:0;">
+                                <img 
+                                    src="{{ asset('images/logo-si.svg') }}" 
+                                    alt="Logo SI" 
+                                    style="height:300px; display:block; margin:0 auto;"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center; padding-top:0;">
+                                <a href="{{ route('login.siswa') }}">
+                                    <img 
+                                        src="{{ asset('images/tombol-masuk-siswa.svg') }}" 
+                                        alt="Tombol Masuk"
+                                        style="height:200px; max-width:180px; display:block; margin:0 auto; transition:.15s;"
+                                        onmouseover="this.style.transform='scale(1.07)'"
+                                        onmouseout="this.style.transform='scale(1)'"
+                                    />
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
                 <div class="mt-16">

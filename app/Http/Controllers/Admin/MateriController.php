@@ -45,9 +45,9 @@ class MateriController extends Controller
         $status = $nilai->status ?? null;
 
         $kunci = [
-            'soal1' => 'a',
-            'soal2' => 'b',
-            'soal3' => 'a',
+            'soal1' => 'b',
+            'soal2' => 'a',
+            'soal3' => 'b',
             'soal4' => 'a',
         ];
 
@@ -76,7 +76,7 @@ class MateriController extends Controller
         $kuisId = 'ayo-mencoba-1';
 
         $kunci = [
-            'soal1' => 'a',
+            'soal1' => 'b',
             'soal2' => 'a',
             'soal3' => 'b',
             'soal4' => 'a',
@@ -269,10 +269,10 @@ class MateriController extends Controller
         $status = $nilaiRecord->status ?? null;
 
         $kunciJawaban = [
-            'soal1' => 'a',
-            'soal2' => 'b',
+            'soal1' => 'b',
+            'soal2' => 'a',
             'soal3' => 'a',
-            'soal4' => 'b',
+            'soal4' => 'a',
         ];
 
         $jawabanUser = is_array($nilaiRecord?->jawaban) ? $nilaiRecord->jawaban : [];
@@ -298,10 +298,10 @@ class MateriController extends Controller
         }
 
         $kunci = [
-            'soal1' => 'a',
-            'soal2' => 'b',
+            'soal1' => 'b',
+            'soal2' => 'a',
             'soal3' => 'a',
-            'soal4' => 'b',
+            'soal4' => 'a',
         ];
 
         $benar = 0;
@@ -534,8 +534,14 @@ class MateriController extends Controller
         $skor = $nilai->skor ?? null;
         $status = $nilai->status ?? null;
         $sudahMenjawab = $nilai !== null;
+        $kunci = [
+            'soal1' => 'salah',
+            'soal2' => 'benar',
+            'soal3' => 'salah',
+            'soal4' => 'benar'
+        ];
 
-        return view('admin.materi.halaman15', compact('sudahMenjawab', 'skor', 'kkm', 'jawabanUser', 'status'));
+        return view('admin.materi.halaman15', compact('sudahMenjawab', 'skor', 'kkm', 'kunci', 'jawabanUser', 'status'));
     }
 
 
@@ -553,10 +559,10 @@ class MateriController extends Controller
         $kuisId = 'ayo-mencoba-3';
 
         $kunci = [
-            'soal1' => 'benar',
-            'soal2' => 'salah',
-            'soal3' => 'benar',
-            'soal4' => 'salah',
+            'soal1' => 'salah',
+            'soal2' => 'benar',
+            'soal3' => 'salah',
+            'soal4' => 'benar'
         ];
 
         $benar = 0;

@@ -4,13 +4,13 @@
 
 <div class="card bg-coklat">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h4 class="mb-0">Alat Ukur Tidak Baku</h4>
+        <h4 class="mb-0">Pengukuran</h4>
     </div>
     <div class="card-body">
-    <button onclick="playSound('ayo-belajar')" class="btn btn-sm btn-outline-dark bg-coklapbet text-white" title="Dengarkan">
-        🔊
-    </button>
-    <audio id="audio-ayo-belajar" src="{{ asset('sounds/materi/ayo-belajar.mp3') }}"></audio>
+        <button onclick="toggleAudio(this)" 
+                class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
+                data-id="index-1" data-playing="false">🔊</button>
+        <audio id="audio-index-1" src="{{ asset('sounds/materi/hal13/1.mp3') }}"></audio>
         <div class="mt-4">
             <p>Mengukur panjang benda menggunakan satuan tidak baku dapat dilakukan dengan beberapa langkah sederhana. Perhatikan contoh berikut.<br><br>
 
@@ -49,8 +49,8 @@
     </div>
 
     <div class="card-footer d-flex justify-content-between">
-        <a href="{{ route('admin.materi.halaman12') }}" class="btn btn-secondary">← Sebelumnya</a>
-        <a href="{{ route('admin.materi.halaman14') }}" class="btn btn-primary">Selanjutnya →</a>
+        <a href="{{ route('admin.materi.halaman12') }}" class="btn bg-coklap2 text-white">← Sebelumnya</a>
+        <a href="{{ route('admin.materi.halaman14') }}" class="btn bg-coklap1 text-white">Selanjutnya →</a>
     </div>
 </div>
 <br>
@@ -59,16 +59,47 @@
 
 @section('scripts')
 <script>
-    function playSound(id) {
-        document.querySelectorAll('audio').forEach(audio => {
-            audio.pause();
-            audio.currentTime = 0;
+    let currentAudio = null;
+    let currentButton = null;
+
+    function toggleAudio(button) {
+        const id = button.getAttribute('data-id');
+        const audio = document.getElementById(`audio-${id}`);
+
+        // Pause semua audio lain
+        document.querySelectorAll('audio').forEach(a => {
+            if (a !== audio) {
+                a.pause();
+                a.currentTime = 0;
+            }
         });
 
-        const audio = document.getElementById(`audio-${id}`);
-        if (audio) {
+        // Reset semua tombol ke 🔊
+        document.querySelectorAll('button[data-id]').forEach(btn => {
+            if (btn !== button) {
+                btn.innerText = '🔊';
+                btn.setAttribute('data-playing', 'false');
+            }
+        });
+
+        // Toggle play/pause
+        if (audio.paused) {
             audio.play();
+            button.innerText = '⏸️';
+            button.setAttribute('data-playing', 'true');
+            currentAudio = audio;
+            currentButton = button;
+        } else {
+            audio.pause();
+            button.innerText = '🔊';
+            button.setAttribute('data-playing', 'false');
         }
+
+        // Auto-reset ikon saat audio selesai
+        audio.onended = function () {
+            button.innerText = '🔊';
+            button.setAttribute('data-playing', 'false');
+        };
     }
 </script>
 @endsection

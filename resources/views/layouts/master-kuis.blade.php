@@ -55,6 +55,10 @@
         .bg-coklap {
             background-color: #4E1F00;
         }
+
+        .bg-coklap:hover {
+            background-color: #4E1F00;
+        }
     </style>
 </head>
 <body>

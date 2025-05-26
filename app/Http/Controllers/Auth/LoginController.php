@@ -42,6 +42,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    // Di LoginController
     public function login(Request $request)
     {
         $request->validate([
@@ -65,6 +66,27 @@ class LoginController extends Controller
 
         Auth::login($user);
 
-        return redirect()->intended('/admin'); // atau dashboard sesuai role
+        // Redirect sesuai role kalau mau
+        if ($user->hasRole('Admin')) {
+            return redirect('/admin'); // atau dashboard guru
+        } elseif ($user->hasRole('Siswa')) {
+            return redirect('/admin'); // atau dashboard siswa
+        }
+        return redirect('/home');
     }
+
+
+    // Di LoginController.php
+
+    public function showGuruLoginForm()
+    {
+        // Kirim param jenis login (opsional) ke view, supaya form tahu labelnya
+        return view('auth.login-guru', ['role' => 'admin']);
+    }
+
+    public function showSiswaLoginForm()
+    {
+        return view('auth.login-siswa', ['role' => 'siswa']);
+    }
+
 }
