@@ -1,10 +1,10 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="card bg-coklat">
+<div class="card bg-coklat fs-5">
     <div class="card-header">Edit Data Hasil Belajar</div>
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.hasilbelajar.update", $nilai->id) }}">
+        <form method="POST" action="{{ route('admin.hasilbelajar.update', $nilai->id) }}">
             @csrf
             @method('PUT')
 
@@ -15,16 +15,16 @@
 
             <div class="mb-3">
                 <label>Kuis ID</label>
-                <input type="text" name="kuis_id" class="form-control" value="{{ $nilai->kuis_id }}" required>
+                <input type="text" class="form-control" value="{{ $nilai->kuis_id }}" disabled>
             </div>
 
             <div class="mb-3">
                 <label>Skor</label>
-                <input type="number" name="skor" class="form-control" value="{{ $nilai->skor }}" required>
+                <input type="number" name="skor" class="form-control" value="{{ $nilai->skor }}" required min="0">
             </div>
 
-            <button type="submit" class="btn btn-primary">Update</button>
-            <a href="{{ route('admin.hasilbelajar.index') }}" class="btn btn-secondary">Kembali</a>
+            <button type="submit" class="btn btn-primary fs-5">Update</button>
+            <a href="{{ route('admin.hasilbelajar.index') }}" class="btn btn-secondary fs-5">Kembali</a>
         </form>
     </div>
 </div>

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="card bg-coklat">
+    <div class="card bg-coklat fs-5">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h4 class="mb-0">Pengukuran</h4>
         </div>
@@ -61,7 +61,7 @@
                     <p class="mt-2">
                         Urutan lukisan dari yang paling tinggi adalah a, b, c, dan d
                         atau a, c, b, dan d.<br>
-                        Urutan lukisan dari yang paling pendek adalah d, c, b, dan a
+                        Urutan lukisan dari yang paling rendah adalah d, c, b, dan a
                         atau d, b, c, dan a.
                     </p>
                 </li>
@@ -70,8 +70,8 @@
         </div>
 
         <div class="card-footer d-flex justify-content-between">
-            <a href="{{ route('admin.materi.halaman6') }}" class="btn bg-coklap2 text-white">← Sebelumnya</a>
-            <a href="{{ route('admin.materi.halaman8') }}" class="btn bg-coklap1 text-white">Selanjutnya →</a>
+            <a href="{{ route('admin.materi.halaman6') }}" class="btn bg-coklap2 text-white fs-5">← Sebelumnya</a>
+            <a href="{{ route('admin.materi.halaman8') }}" class="btn bg-coklap1 text-white fs-5">Selanjutnya →</a>
         </div>
     </div>
     <br>

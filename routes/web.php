@@ -16,12 +16,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 // Di routes/web.php (atau admin.php jika kamu pecah file route)
 Route::get('/login/guru', [App\Http\Controllers\Auth\LoginController::class, 'showGuruLoginForm'])->name('login.guru');
 Route::get('/login/siswa', [App\Http\Controllers\Auth\LoginController::class, 'showSiswaLoginForm'])->name('login.siswa');
-Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
 
 Auth::routes();
 

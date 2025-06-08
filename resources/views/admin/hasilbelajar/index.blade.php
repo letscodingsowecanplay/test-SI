@@ -1,13 +1,13 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="card bg-coklat">
+    <div class="card bg-coklat fs-5">
         <div class="card-header d-flex justify-content-between align-items-center">
             <div class="float-start">
                 Data Hasil Belajar Siswa
             </div>
             <form method="GET" class="d-flex gap-2">
-                <select name="kuis_id" class="form-select form-select-sm">
+                <select name="kuis_id" class="form-select form-select-sm fs-5">
                     <option value="">-- Semua Hasil Belajar --</option>
                     @foreach($kuisIds as $kuis)
                         <option value="{{ $kuis }}" {{ $kuisDipilih == $kuis ? 'selected' : '' }}>
@@ -15,16 +15,16 @@
                         </option>
                     @endforeach
                 </select>
-                <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+                <button type="submit" class="btn btn-primary btn-sm fs-5">Filter</button>
             </form>
         </div>
 
         <div class="card-body">
             <div class="mb-3 d-flex gap-2">
-                <a href="{{ route('admin.hasilbelajar.export', ['format' => 'excel', 'kuis_id' => request('kuis_id')]) }}" class="btn bg-coklap1 text-white btn-sm">
+                <a href="{{ route('admin.hasilbelajar.export', ['format' => 'excel', 'kuis_id' => request('kuis_id')]) }}" class="btn bg-coklap1 text-white btn-sm fs-5">
                     Export Excel
                 </a>
-                <a href="{{ route('admin.hasilbelajar.export', ['format' => 'pdf', 'kuis_id' => request('kuis_id')]) }}" class="btn bg-coklap2 text-white btn-sm">
+                <a href="{{ route('admin.hasilbelajar.export', ['format' => 'pdf', 'kuis_id' => request('kuis_id')]) }}" class="btn bg-coklap2 text-white btn-sm fs-5">
                     Export PDF
                 </a>
             </div>
@@ -52,12 +52,12 @@
                                 <td>{{ \Carbon\Carbon::parse($row->created_at)->format('j/n/Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($row->created_at)->format('H.i.s') }}</td>
                                 <td>
-                                    <a href="{{ route('admin.hasilbelajar.edit', $row->id) }}" class="badge bg-info text-white text-decoration-none">Edit</a>
+                                    <a href="{{ route('admin.hasilbelajar.edit', $row->id) }}" class="badge bg-info text-white text-decoration-none fs-5">Edit</a>
 
                                     <form action="{{ route('admin.hasilbelajar.destroy', $row->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="badge bg-danger border-0">Hapus</button>
+                                        <button type="submit" class="badge bg-danger border-0 fs-5">Hapus</button>
                                     </form>
                                 </td>
                             </tr>

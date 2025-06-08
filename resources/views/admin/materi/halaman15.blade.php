@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="card bg-coklat">
+<div class="card bg-coklat fs-5">
     <div class="card-header">
         <h4 class="mb-0">Ayo Mencoba</h4>
     </div>
@@ -33,6 +33,13 @@
                         </div>
                     </div>
                 </div>
+                <p>
+                    Ingatlah! Alat ukur yang digunakan harus lebih kecil dari benda yang akan diukur. Dengan begitu, kita bisa menghitung berapa banyak alat ukur yang diperlukan untuk mengetahui ukuran benda tersebut.
+                    <button onclick="toggleAudio(this)" 
+                    class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
+                    data-id="index-4" data-playing="false">🔊</button>
+                    <audio id="audio-index-4" src="{{ asset('sounds/materi/hal15/4.mp3') }}">
+                </p>
 
                 <button onclick="toggleAudio(this)" 
                         class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
@@ -40,7 +47,8 @@
                 <audio id="audio-index-2" src="{{ asset('sounds/materi/hal15/2.mp3') }}"></audio>
 
                 <p>
-                    Setelah menyimak video, perhatikan pertanyaan berikut dan tentukan apakah pernyataan tersebut Benar atau Salah dengan menggeser slider pada pilihan jawaban.</p>
+                    Setelah menonton video, lihat gambar dan bacalah pernyataannya. Hitung alat ukur pada gambar. Geser bulatan ke kiri jika menurutmu salah, atau ke kanan jika menurutmu benar.
+                </p>
             </div>
             
             <div class="text-center mb-3">
@@ -64,7 +72,7 @@
             <input type="hidden" name="jawaban[soalcontoh]" id="input-soalcontoh" value="benar">
 
             <p class="text-muted text-center"><small>Jawaban: <strong>Benar</strong></small></p>
-            <p>Penyelesaian: <br>Berdasarkan isi video, pernyataan yang diberikan sesuai dengan informasi yang ditampilkan. Oleh karena itu, jawaban yang benar adalah Benar.</p>
+            <p>Penyelesaian: <br>Pernyataan yang diberikan sudah sesuai dengan apa yang ada di dalam gambar. Jadi, jawaban yang benar adalah Benar.</p>
         </div>
         <hr>
         <h5>Ayo Mencoba         
@@ -74,7 +82,7 @@
             <audio id="audio-index-3" src="{{ asset('sounds/materi/hal15/3.mp3') }}"></audio>
         </h5>
         
-        <p>Amati gambar berikut dengan saksama! Tentukan apakah pernyataan tersebut Benar atau Salah dengan menggeser slider pada pilihan jawaban.</p>
+        <p>Amati gambar berikut dengan saksama! Bacalah pernyataan yang diberikan. Hitung alat ukur yang ada pada gambar. Setelah itu, geser bulatan ke kiri jika menurutmu pernyataan itu salah, atau ke kanan jika menurutmu pernyataan itu benar.</p>
 
         @php
             // Sesuaikan urutan dan number agar tidak ambigu dengan $kunci
@@ -162,7 +170,7 @@
 
             @if(!$sudahMenjawab)
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn bg-coklap2 text-white">Kirim Jawaban</button>
+                    <button type="submit" class="btn bg-coklap2 text-white fs-5">Kirim Jawaban</button>
                 </div>
             @endif
         </form>
@@ -172,7 +180,7 @@
             <form action="{{ route('admin.materi.halaman15.reset') }}" method="POST" class="mt-3">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-danger">Ulangi Kuis</button>
+                <button type="submit" class="btn btn-danger fs-5">Ulangi Kuis</button>
             </form>
             <div class="alert alert-warning mt-3">
                 Nilai kamu belum mencapai KKM. Silakan ulangi kuis ini.
@@ -190,11 +198,11 @@
     </div>
 
     <div class="card-footer d-flex justify-content-between">
-        <a href="{{ route('admin.materi.halaman14') }}" class="btn bg-coklap2 text-white">← Sebelumnya</a>
+        <a href="{{ route('admin.materi.halaman14') }}" class="btn bg-coklap2 text-white fs-5">← Sebelumnya</a>
         @if($sudahMenjawab && $skor >= $kkm)
-            <a href="{{ route('admin.materi.halaman16') }}" class="btn bg-coklap1 text-white">Selanjutnya →</a>
+            <a href="{{ route('admin.materi.halaman16') }}" class="btn bg-coklap1 text-white fs-5">Selanjutnya →</a>
         @else
-            <button class="btn bg-coklap1 text-white disabled">Selanjutnya →</button>
+            <button class="btn bg-coklap1 text-white disabled fs-5">Selanjutnya →</button>
         @endif
     </div>
 </div>

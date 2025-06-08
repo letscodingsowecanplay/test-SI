@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="card bg-coklat">
+<div class="card bg-coklat fs-5">
     <div class="card-header">Tambah Siswa</div>
     <div class="card-body">
         <form method="POST" action="{{ route('admin.datasiswa.store') }}">
@@ -26,9 +26,10 @@
                 <label>Konfirmasi Password</label>
                 <input type="password" name="password_confirmation" class="form-control" required>
             </div>
-            <button type="submit" class="btn btn-success">Simpan</button>
-            <a href="{{ route('admin.datasiswa.index') }}" class="btn btn-secondary">Kembali</a>
+            <button type="submit" class="btn btn-success fs-5">Simpan</button>
+            <a href="{{ route('admin.datasiswa.index') }}" class="btn btn-secondary fs-5">Kembali</a>
         </form>
     </div>
 </div>
+<br>
 @endsection

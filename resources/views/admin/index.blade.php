@@ -7,8 +7,8 @@
                 <div class="card-body p-0 d-flex flex-fill">
                     <div class="row g-0 w-100">
                         <div class="col-6">
-                            <div class=" p-3 m-1">
-                                <h4 class="">Selamat datang, {{ auth()->user()->name }}!</h4>
+                            <div class=" p-3 m-1 fs-5">
+                                <h4 class="fw-bold">Selamat datang, {{ auth()->user()->name }}!</h4>
                                 @php
                                     $roles = auth()->user()->getRoleNames()->toArray();
                                 @endphp
@@ -34,8 +34,8 @@
             <div class="card flex-fill bg-coklat">
                 <div class="card-body py-4">
                     <div class="d-flex align-items-start">
-                        <div class="flex-grow-1">
-                            <h4 class="mb-2">Capaian Pembelajaran</h3>
+                        <div class="flex-grow-1 fs-5">
+                            <h4 class="mb-2 fw-bold">Capaian Pembelajaran</h3>
                             <p class="mb-2">
                                 Pada akhir Fase A, peserta didik dapat membandingkan panjang dan berat
                                 benda secara langsung. Mereka dapat mengukur dan mengestimasi panjang
@@ -64,8 +64,8 @@
                 <a href="{{ route('admin.datasiswa.index') }}" class="text-decoration-none text-reset">
                     <div class="card-body py-4">
                         <div class="d-flex align-items-start">
-                            <div class="flex-grow-1">
-                                <h4 class="mb-2">Cek Data Siswa</h3>
+                            <div class="flex-grow-1 fs-5">
+                                <h4 class="mb-2 fw-bold">Cek Data Siswa</h3>
                                 <p class="mb-2">Klik Disini Untuk Cek Data Siswa!</p>
                                 <div class="mb-0">
                                 </div>
@@ -90,8 +90,8 @@
                 <a href="{{ route('admin.materi.index') }}" class="text-decoration-none text-reset">
                     <div class="card-body py-4">
                         <div class="d-flex align-items-start">
-                            <div class="flex-grow-1">
-                                <h4 class="mb-2">Mulai Belajar</h3>
+                            <div class="flex-grow-1 fs-5">
+                                <h4 class="mb-2 fw-bold">Mulai Belajar</h3>
                                 <p class="mb-2">Klik Disini Untuk Mulai Belajar!</p>
                                 <div class="mb-0">
                                 </div>
@@ -120,8 +120,8 @@
                     <a href="{{ route('admin.hasilbelajar.index') }}" class="text-decoration-none text-reset">
                         <div class="card-body py-4">
                             <div class="d-flex align-items-start">
-                                <div class="flex-grow-1">
-                                    <h4 class="mb-2">Cek Hasil Belajar Siswa </h3>
+                                <div class="flex-grow-1 fs-5">
+                                    <h4 class="mb-2 fw-bold">Cek Hasil Belajar Siswa </h3>
                                     <p class="mb-2">Klik Disini Untuk Cek Data Hasil Belajar Siswa!</p>
                                     <div class="mb-0">
                                     </div>
@@ -145,15 +145,13 @@
             </div>
         @else
             <div class="col-12 col-sm-6 col-xxl-3 d-flex mb-4">
-                <div class="card flex-fill bg-coklat">
-                    <a href="{{ route('admin.evaluasi.petunjuk') }}" class="text-decoration-none text-reset">
+                <div class="card flex-fill bg-coklat position-relative" id="card-evaluasi-container">
+                    <a id="card-evaluasi-link" href="{{ route('admin.evaluasi.petunjuk') }}" class="text-decoration-none text-reset w-100 h-100 d-block card-evaluasi-link">
                         <div class="card-body py-4">
                             <div class="d-flex align-items-start">
-                                <div class="flex-grow-1">
-                                    <h4 class="mb-2">Mulai Evaluasi</h3>
+                                <div class="flex-grow-1 fs-5">
+                                    <h4 class="mb-2 fw-bold">Mulai Evaluasi</h4>
                                     <p class="mb-2">Klik Disini Untuk Mulai Evaluasi!</p>
-                                    <div class="mb-0">
-                                    </div>
                                 </div>
                                 <div class="d-inline-block ms-3">
                                     <div class="stat">
@@ -167,9 +165,41 @@
                             </div>
                         </div>
                     </a>
+                    <!-- Overlay Gembok -->
+                    <div id="gembok-evaluasi-overlay" class="gembok-overlay d-none">
+                        <span data-feather="lock" class="gembok-lock-icon"></span>
+                    </div>
                 </div>
             </div>
         @endif
     </div>
     
+@endsection
+@section('scripts')
+<script>
+window.initKunciCardEvaluasi = function(statusLulus) {
+    const bolehEvaluasi = statusLulus && statusLulus['ayo-berlatih-3'] === 'lulus';
+    const overlay = document.getElementById('gembok-evaluasi-overlay');
+    const link = document.getElementById('card-evaluasi-link');
+
+    if (!overlay || !link) return;
+
+    if (!bolehEvaluasi) {
+        overlay.classList.remove('d-none');
+        link.classList.add('locked');
+        // Remove href supaya bener-bener ga bisa klik/tekan
+        link.removeAttribute('href');
+    } else {
+        overlay.classList.add('d-none');
+        link.classList.remove('locked');
+        // Tambahkan kembali href jika sudah lulus
+        link.setAttribute('href', "{{ route('admin.evaluasi.petunjuk') }}");
+    }
+    if (window.feather) window.feather.replace();
+}
+// Jalankan saat DOM sudah siap (paling aman!)
+document.addEventListener('DOMContentLoaded', function() {
+    window.initKunciCardEvaluasi(@json($statusLulus ?? []));
+});
+</script>
 @endsection

@@ -29,11 +29,11 @@
 </head>
 <body class="bg-coksu">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-coklap shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-coklap shadow-sm fs-5">
             <div class="container">
                 <!-- Updated Navbar Brand -->
                 <a class=" col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 me-0 px-3 fs-6 text-white d-flex align-items-center justify-content-center"
-                   href="{{ route('admin.index') }}">
+                   href="#">
                     <img src="{{ asset('images/Logo-Si-Ukur.png') }}" alt="Logo" style="height: auto; width: 100px;">
                 </a>
                 
@@ -53,7 +53,7 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('welcome') }}">{{ __('Kembali') }}</a>
                                 </li>
                             @endif
 

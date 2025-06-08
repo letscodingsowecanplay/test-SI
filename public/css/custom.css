@@ -13,21 +13,6 @@
     transition: transform .35s ease;
     transform-origin: .5em 50%;
 }
-.sidebar li .submenu{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
-
-.sidebar .nav-link {
-    font-weight: 500;
-
-}
-.sidebar .nav-link:hover {
-    color: var(--bs-primary);
-}
 
 .accordion-item {
     background: transparent;
@@ -281,4 +266,91 @@
 
 .bg-cokren{
     background-color: #C68642;
+}
+
+.text-orange{
+    color:#f17c15;
+}
+
+.card-container.welcome {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.card.welcome {
+    flex: 1;
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+}
+.card-content.welcome {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px;
+}
+.card-icon.welcome {
+    height: 70px;
+    width: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    margin: 0 auto 20px;
+}
+.card-icon.welcome svg {
+    width: 32px;
+    height: 32px;
+}
+@media (max-width: 1200px) {
+    .card-container.welcome {
+        flex-wrap: wrap;
+    }
+    .card.welcome {
+        flex: 0 0 calc(50% - 8px);
+        min-height: 420px;
+    }
+}
+@media (max-width: 768px) {
+    .card.welcome {
+        flex: 0 0 100%;
+        min-height: auto;
+    }
+}
+
+.gembok-overlay {
+    position: absolute;
+    inset: 0; /* ganti top/left/right/bottom:0 */
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.83); /* lebih terang agar isi card tidak tampak */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    border-radius: inherit !important; /* <-- kunci agar ikut radius card */
+    pointer-events: all;
+    transition: background 0.2s;
+}
+
+.gembok-overlay.d-none { display: none !important; }
+
+.gembok-lock-icon {
+    font-size: 3.5rem !important;
+    color: #f17c15 !important;
+    filter: drop-shadow(0 0 7px #fff5);
+    stroke-width: 3.3px;
+    background: none;
+}
+
+.card-evaluasi-link.locked {
+    pointer-events: none !important;
+    user-select: none;
+    opacity: 0.55;
+    filter: blur(0.3px) grayscale(0.1);
 }

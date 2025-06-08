@@ -42,8 +42,11 @@ class AdminController extends Controller
             'password' => 'required|min:6|confirmed',
         ]);
 
+        // Format nama menjadi kapital setiap awal kata
+        $formattedName = ucwords(strtolower($request->name));
+
         $user = User::create([
-            'name' => $request->name,
+            'name' => $formattedName,
             'email' => $request->email,
             'nisn' => $request->nisn,
             'password' => Hash::make($request->password),
@@ -53,12 +56,6 @@ class AdminController extends Controller
         $user->assignRole('siswa');
 
         return redirect()->route('admin.datasiswa.index')->with('success', 'Data siswa berhasil ditambahkan.');
-    }
-
-
-    public function siswaEdit(User $user)
-    {
-        return view('admin.datasiswa.edit', compact('user'));
     }
 
     public function siswaUpdate(Request $request, User $user)
@@ -71,7 +68,14 @@ class AdminController extends Controller
             'password' => 'nullable|min:6|confirmed',
         ]);
 
-        $data = $request->only('name', 'email', 'nisn');
+        // Format nama menjadi kapital setiap awal kata
+        $formattedName = ucwords(strtolower($request->name));
+
+        $data = [
+            'name' => $formattedName,
+            'email' => $request->email,
+            'nisn' => $request->nisn,
+        ];
 
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
@@ -83,11 +87,15 @@ class AdminController extends Controller
         return redirect()->route('admin.datasiswa.index');
     }
 
-
+    public function siswaEdit(User $user)
+    {
+        return view('admin.datasiswa.edit', compact('user'));
+    }
 
     public function siswaDestroy($id)
     {
         $user = User::findOrFail($id);
+        \App\Models\Nilai::where('user_id', $user->id)->delete();
         $user->delete();
 
         return redirect()->route('admin.datasiswa.index')->with('success', 'Data siswa berhasil dihapus.');
@@ -118,24 +126,19 @@ class AdminController extends Controller
     public function latihanUpdate(Request $request, $id)
     {
         $request->validate([
-            'user_id' => 'required',
-            'kuis_id' => 'required',
-            'skor' => 'required|integer',
+            'skor' => 'required|integer|min:0',
         ]);
 
-        $nilai = Nilai::findOrFail($id);
+        $nilai = \App\Models\Nilai::findOrFail($id);
+
         $nilai->update([
-            'user_id' => $request->user_id,
-            'kuis_id' => $request->kuis_id,
             'skor' => $request->skor,
-            'total_soal' => $request->total_soal ?? 0,
-            'status' => $request->status,
-            'jawaban' => $request->jawaban,
         ]);
 
         flash()->addSuccess('Data latihan siswa berhasil diperbarui.');
         return redirect()->route('admin.datalatihan.index');
     }
+
 
     public function latihanDestroy($id)
     {
@@ -170,24 +173,18 @@ class AdminController extends Controller
     public function hasilBelajarUpdate(Request $request, $id)
     {
         $request->validate([
-            'user_id' => 'required',
-            'kuis_id' => 'required',
-            'skor' => 'required|integer',
+            'skor' => 'required|integer|min:0',
         ]);
 
-        $nilai = Nilai::findOrFail($id);
+        $nilai = \App\Models\Nilai::findOrFail($id);
         $nilai->update([
-            'user_id' => $request->user_id,
-            'kuis_id' => $request->kuis_id,
             'skor' => $request->skor,
-            'total_soal' => $request->total_soal ?? 0,
-            'status' => $request->status,
-            'jawaban' => $request->jawaban,
         ]);
 
-        flash()->addSuccess('Data latihan siswa berhasil diperbarui.');
+        flash()->addSuccess('Data hasil belajar berhasil diperbarui.');
         return redirect()->route('admin.hasilbelajar.index');
     }
+
 
     public function hasilBelajarDestroy($id)
     {

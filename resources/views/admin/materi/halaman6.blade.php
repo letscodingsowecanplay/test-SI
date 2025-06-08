@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="card bg-coklat">
+    <div class="card bg-coklat fs-5">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h4 class="mb-0">Pengukuran</h4>
         </div>
@@ -12,7 +12,7 @@
 
                 <li class="list-group-item bg-transparent">
                     <div class="d-flex align-items-start justify-content-between">
-                        <h6 class="fw-bold mb-0">Ayo Belajar
+                        <h6 class="fw-bold mb-0 fs-5">Ayo Belajar
                         <button onclick="toggleAudio(this)" 
                                 class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
                                 data-id="index-1" data-playing="false">🔊</button>
@@ -45,7 +45,7 @@
                             data-id="index-2" data-playing="false">🔊</button>
                     <audio id="audio-index-2" src="{{ asset('sounds/materi/hal6/2.mp3') }}"></audio>
                     <p class="mt-2">
-                        Kita akan membandingkan tinggi lukisan khas kalimantan yang digantung yaitu c dan d.
+                        Kita akan membandingkan tinggi lukisan khas Kalimantan yang digantung yaitu c dan d.
                     </p>
 
                     <p class="mt-2">
@@ -75,8 +75,8 @@
         </div>
 
         <div class="card-footer d-flex justify-content-between">
-            <a href="{{ route('admin.materi.halaman5') }}" class="btn bg-coklap2 text-white">← Sebelumnya</a>
-            <a href="{{ route('admin.materi.halaman7') }}" class="btn bg-coklap2 text-white">Selanjutnya →</a>
+            <a href="{{ route('admin.materi.halaman5') }}" class="btn bg-coklap2 text-white fs-5">← Sebelumnya</a>
+            <a href="{{ route('admin.materi.halaman7') }}" class="btn bg-coklap2 text-white fs-5">Selanjutnya →</a>
         </div>
     </div>
     <br>

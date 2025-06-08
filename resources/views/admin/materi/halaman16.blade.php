@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="card bg-coklat">
+<div class="card bg-coklat fs-5">
     <div class="card-header">
         <h4 class="mb-0">Ayo Berlatih</h4>
     </div>
@@ -140,7 +140,7 @@
 
             @if(!$sudahMenjawab)
                 <div class="text-end">
-                    <button type="submit" class="btn bg-coklap2 text-white">Kirim Jawaban</button>
+                    <button type="submit" class="btn bg-coklap2 text-white fs-5">Kirim Jawaban</button>
                 </div>
             @endif
         </form>
@@ -149,7 +149,7 @@
             <form action="{{ route('admin.materi.halaman16.reset') }}" method="POST" class="mt-3">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-danger">Ulangi Kuis</button>
+                <button type="submit" class="btn btn-danger fs-5">Ulangi Kuis</button>
             </form>
             <div class="alert alert-warning mt-3">Nilai kamu belum mencapai KKM. Silakan ulangi kuis ini.</div>
         @elseif($sudahMenjawab && $status === 'lulus')
@@ -163,11 +163,11 @@
     </div>
 
     <div class="card-footer d-flex justify-content-between align-items-center">
-        <a href="{{ route('admin.materi.halaman15') }}" class="btn bg-coklap2 text-white">← Sebelumnya</a>
+        <a href="{{ route('admin.materi.halaman15') }}" class="btn bg-coklap2 text-white fs-5">← Sebelumnya</a>
         @if($sudahMenjawab && $status === 'lulus')
-            <a href="{{ route('admin.evaluasi.petunjuk') }}" class="btn bg-coklap1 text-white">Selanjutnya →</a>
+            <a href="{{ route('admin.evaluasi.petunjuk') }}" class="btn bg-coklap1 text-white fs-5">Selanjutnya →</a>
         @else
-            <button class="btn bg-coklap1 text-white disabled">Selanjutnya →</button>
+            <button class="btn bg-coklap1 text-white disabled fs-5">Selanjutnya →</button>
         @endif
     </div>
 </div>

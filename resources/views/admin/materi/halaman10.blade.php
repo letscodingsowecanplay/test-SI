@@ -3,7 +3,7 @@
 @section('title', 'Ayo Berlatih')
 
 @section('content')
-<div class="card bg-coklat">
+<div class="card bg-coklat fs-5">
     <div class="card-header">
         <h4 class="mb-0">Ayo Berlatih</h4>
     </div>
@@ -19,7 +19,7 @@
             Pilihlah salah satu jawaban yang benar dari pilihan A, B, dan C!
             <button onclick="toggleAudio(this)" 
                     class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
-                    data-id="index-1" data-playing="false">🔊</button>
+                    data-id="index-1" data-playing="false" type="button">🔊</button>
             <audio id="audio-index-1" src="{{ asset('sounds/materi/hal10/1.mp3') }}"></audio>
         </p>
 
@@ -27,24 +27,24 @@
         // Penjelasan dua tipe untuk setiap soal
         $penjelasan = [
             0 => [
-                'benar' => 'Jawaban kamu benar. Urutan miniatur rumah banjar dari yang paling tinggi adalah Anno 1925, Bubungan Tinggi, lalu Gajah Manyusu sesuai urutan gambar.',
-                'salah' => 'Jawaban kamu salah. Perhatikan urutan tinggi rumah pada gambar.'
+                'benar' => 'Jawaban kamu benar. Urutan miniatur rumah banjar dari yang paling tinggi adalah a-b-c.',
+                'salah' => 'Jawaban kamu salah. Perhatikan kembali urutan tinggi rumah pada gambar.'
             ],
             1 => [
-                'benar' => 'Jawaban kamu benar. Tas kerajinan khas Kalimantan yang digantung paling rendah adalah tas ecoprint, lalu tas anyaman putih, dan paling atas tas anyaman hitam.',
-                'salah' => 'Jawaban kamu salah. Lihat posisi tas pada gambar.'
+                'benar' => 'Jawaban kamu benar. Tas kerajinan khas Kalimantan yang digantung paling rendah adalah a-b-c.',
+                'salah' => 'Jawaban kamu salah. Lihat kembali posisi tas pada gambar.'
             ],
             2 => [
                 'benar' => 'Jawaban kamu benar. Urutan patung dayak fiber glass dari yang paling panjang adalah b, a, lalu c sesuai gambar.',
-                'salah' => 'Jawaban kamu salah. Cermati ukuran patung.'
+                'salah' => 'Jawaban kamu salah. Cermati kembali ukuran patung.'
             ],
             3 => [
                 'benar' => 'Jawaban kamu benar. Urutan vas bunga akar keladi dari yang paling pendek adalah c, lalu b, dan paling tinggi a.',
-                'salah' => 'Jawaban kamu salah. Perhatikan ukuran vas pada gambar.'
+                'salah' => 'Jawaban kamu salah. Perhatikan kembali ukuran vas pada gambar.'
             ],
             4 => [
                 'benar' => 'Jawaban kamu benar. Urutan kain sasirangan dari yang paling panjang adalah a, lalu c, lalu b.',
-                'salah' => 'Jawaban kamu salah. Lihat panjang kain pada gambar.'
+                'salah' => 'Jawaban kamu salah. Lihat kembali panjang kain pada gambar.'
             ],
         ];
         @endphp
@@ -79,24 +79,25 @@
 
                 @foreach($item['pilihan'] as $key => $pilihan)
                     @php
-                        // Highlight logic
                         $isUserAnswer = ($userAnswer === $key);
                         $isKunci = ($kunci === $key);
                         $highlightClass = '';
 
                         if($status !== null && $isUserAnswer) {
                             if($userAnswer === $kunci) {
-                                $highlightClass = 'bg-success text-white'; // benar
+                                $highlightClass = 'bg-success text-white';
                             } else {
-                                $highlightClass = 'bg-danger text-white'; // salah
+                                $highlightClass = 'bg-danger text-white';
                             }
                         }
-                        // Jika bukan jawaban user, tampilkan default
+                        // File audio per pilihan
+                        $audioPilihan = asset("sounds/materi/hal10/pilihan/{$no}-{$key}.mp3");
+                        $audioId = "audio-hal10-{$no}-{$key}";
                     @endphp
                     <div class="card mb-2 bg-cokren {{ $highlightClass }}">
-                        <div class="card-body p-2">
+                        <div class="card-body p-2 d-flex align-items-center">
                             @if($status === null)
-                                <div class="form-check">
+                                <div class="form-check flex-grow-1">
                                     <input
                                         class="form-check-input"
                                         type="radio"
@@ -109,9 +110,14 @@
                                     <label class="form-check-label" for="soal{{ $index }}_{{ $key }}">
                                         {{ strtoupper($key) }}) {{ $pilihan }}
                                     </label>
+                                    {{-- Tombol audio per pilihan jawaban --}}
+                                    <button type="button" onclick="toggleAudio(this)" 
+                                        class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
+                                        data-id="{{ $audioId }}" data-playing="false">🔊</button>
+                                    <audio id="{{ $audioId }}" src="{{ $audioPilihan }}"></audio>
                                 </div>
                             @else
-                                <div>
+                                <div class="flex-grow-1">
                                     <span>{{ strtoupper($key) }}) {{ $pilihan }}</span>
                                     @if($status === 'lulus' && $isKunci)
                                         <span class="badge bg-success ms-2">Kunci Jawaban</span>
@@ -141,7 +147,7 @@
 
         @if($status === null)
             <div class="d-flex justify-content-end">
-                <button type="submit" class="btn bg-coklap2 text-white">Kirim Jawaban</button>
+                <button type="submit" class="btn bg-coklap2 text-white fs-5">Kirim Jawaban</button>
             </div>
             </form>
         @endif
@@ -149,7 +155,7 @@
         @if($status === 'tidak_lulus')
             <form action="{{ route('admin.materi.halaman10.reset') }}" method="POST" class="mb-3 mt-3">
                 @csrf
-                <button type="submit" class="btn btn-danger">Ulangi Kuis</button>
+                <button type="submit" class="btn btn-danger fs-5">Ulangi Kuis</button>
             </form>
         @endif
 
@@ -170,11 +176,11 @@
     </div>
 
     <div class="card-footer d-flex justify-content-between align-items-center">
-        <a href="{{ route('admin.materi.halaman9') }}" class="btn bg-coklap2 text-white">← Sebelumnya</a>
+        <a href="{{ route('admin.materi.halaman9') }}" class="btn bg-coklap2 text-white fs-5">← Sebelumnya</a>
         @if($status === 'lulus')
-            <a href="{{ route('admin.materi.halaman11') }}" class="btn bg-coklap1 text-white">Selanjutnya →</a>
+            <a href="{{ route('admin.materi.halaman11') }}" class="btn bg-coklap1 text-white fs-5">Selanjutnya →</a>
         @else
-            <button class="btn bg-coklap1 text-white disabled">Selanjutnya →</button>
+            <button class="btn bg-coklap1 text-white disabled fs-5">Selanjutnya →</button>
         @endif
     </div>
 </div>
@@ -186,7 +192,7 @@
 
     function toggleAudio(button) {
         const id = button.getAttribute('data-id');
-        const audio = document.getElementById(`audio-${id}`);
+        const audio = document.getElementById(id);
 
         // Stop semua audio lain
         document.querySelectorAll('audio').forEach(a => {
@@ -204,7 +210,7 @@
             }
         });
 
-        // Toggle play / pause
+        // Toggle play/pause
         if (audio.paused) {
             audio.play();
             button.innerText = '⏸️';

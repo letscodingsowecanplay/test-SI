@@ -1,4 +1,4 @@
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-1 mb-3 border-bottom">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-1 mb-3 border-bottom fs-5">
     {{ Breadcrumbs::render() }}
 </div>

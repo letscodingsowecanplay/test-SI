@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card bg-coklat">
+            <div class="card bg-coklat fs-5">
                 <div class="card-header text-center">
                     <b>{{ __('Masuk Sebagai Siswa') }}</b>
                 </div>
@@ -54,7 +54,7 @@
 
                         <div class="mb-0 row">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn bg-coklap btn-masuk">
+                                <button type="submit" class="btn bg-coklap btn-masuk fs-5">
                                     Masuk
                                 </button>
                             </div>
@@ -69,6 +69,14 @@
                         @endif
 
                     </form>
+
+                    <div class="text-center mt-4">
+                        <p>Belum memiliki akun? 
+                            <a href="{{ route('register') }}" class="text-decoration-underline text-orange fw-bold">
+                                Daftar di sini
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

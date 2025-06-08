@@ -11,25 +11,34 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 
+
 class MateriController extends Controller
 {
     public function index()
     {
-        return view('admin.materi.index');
+        return view('admin.materi.index', [
+            'nomorHalaman' => 1,
+        ]);
+        
     }
 
     public function halamanDua()
     {
-        return view('admin.materi.halaman2');
+        return view('admin.materi.halaman2', [
+            'nomorHalaman' => 2,
+        ]);
     }
 
     public function halamanTiga()
     {
-        return view('admin.materi.halaman3');
+        return view('admin.materi.halaman3', [
+            'nomorHalaman' => 3,
+        ]);
     }
 
     public function halamanEmpat()
     {
+        $nomorHalaman = 4;
         $userId = auth()->id();
         $kuisId = 'ayo-mencoba-1';
 
@@ -54,7 +63,7 @@ class MateriController extends Controller
         $jawabanUser = is_array($nilai?->jawaban) ? $nilai->jawaban : [];
 
         return view('admin.materi.halaman4', compact(
-            'sudahMenjawab', 'skor', 'kkm', 'status', 'jawabanUser', 'kunci'
+            'sudahMenjawab', 'skor', 'kkm', 'status', 'jawabanUser', 'kunci', 'nomorHalaman'
         ));
     }
 
@@ -136,34 +145,31 @@ class MateriController extends Controller
             ->with('success', 'Kuis berhasil direset. Silakan mulai ulang.');
     }
 
-
-
-
-
     public function halamanLima()
     {
-    $userId = auth()->id();
-    $kuisId = 'ayo-berlatih-1';
+        $nomorHalaman = 5;
+        $userId = auth()->id();
+        $kuisId = 'ayo-berlatih-1';
 
-    $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 3;
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 3;
 
-    $nilai = \App\Models\Nilai::where('user_id', $userId)
-        ->where('kuis_id', $kuisId)
-        ->first();
+        $nilai = \App\Models\Nilai::where('user_id', $userId)
+            ->where('kuis_id', $kuisId)
+            ->first();
 
-    $sudahMenjawab = $nilai !== null;
-    $skor = $nilai->skor ?? 0;
+        $sudahMenjawab = $nilai !== null;
+        $skor = $nilai->skor ?? 0;
 
-    $kunci = [
-        'soal1' => 'pendek',
-        'soal2' => 'panjang',
-        'soal3' => 'tinggi',
-        'soal4' => 'rendah'
-    ];
+        $kunci = [
+            'soal1' => 'pendek',
+            'soal2' => 'panjang',
+            'soal3' => 'tinggi',
+            'soal4' => 'rendah'
+        ];
 
-    $jawabanUser = is_array($nilai?->jawaban) ? $nilai->jawaban : [];
+        $jawabanUser = is_array($nilai?->jawaban) ? $nilai->jawaban : [];
 
-    return view('admin.materi.halaman5', compact('sudahMenjawab', 'skor', 'kkm', 'kunci', 'jawabanUser'));
+        return view('admin.materi.halaman5', compact('sudahMenjawab', 'skor', 'kkm', 'kunci', 'jawabanUser', 'nomorHalaman'));
     }
 
     public function simpanHalamanLima(Request $request)
@@ -240,21 +246,28 @@ class MateriController extends Controller
 
     public function halamanEnam()
     {
-        return view('admin.materi.halaman6');
+        return view('admin.materi.halaman6', [
+            'nomorHalaman' => 6,
+        ]);
     }
 
     public function halaman7()
     {
-        return view('admin.materi.halaman7');
+        return view('admin.materi.halaman7', [
+            'nomorHalaman' => 7,
+        ]);
     }
 
     public function halaman8()
     {
-        return view('admin.materi.halaman8');
+        return view('admin.materi.halaman8', [
+            'nomorHalaman' => 8,
+        ]);
     }
 
     public function halaman9()
     {
+        $nomorHalaman = 9;
         $userId = auth()->id();
         $kuisId = 'ayo-mencoba-2';
 
@@ -278,13 +291,14 @@ class MateriController extends Controller
         $jawabanUser = is_array($nilaiRecord?->jawaban) ? $nilaiRecord->jawaban : [];
 
         return view('admin.materi.halaman9', compact(
-            'sudahMenjawab', 'skor', 'kkm', 'jawabanUser', 'status', 'kunciJawaban'
+            'sudahMenjawab', 'skor', 'kkm', 'jawabanUser', 'status', 'kunciJawaban', 'nomorHalaman'
         ));
     }
 
 
     public function simpanHalaman9(Request $request)
     {
+        
         $request->validate([
             'jawaban.soal1' => 'required',
             'jawaban.soal2' => 'required',
@@ -363,29 +377,29 @@ class MateriController extends Controller
     {
         return [
             [
-                'pertanyaan' => '1. Urutan miniatur rumah banjar dari yang paling tinggi adalah ....',
+                'pertanyaan' => '1. Urutan miniatur Rumah Banjar berdasarkan bentuk dari yang paling tinggi adalah ....',
                 'gambar' => 'soal1.png',
                 'audio' => 'audio0.mp3',
                 'pilihan' => [
-                    'a' => 'Anno 1925 - Bubungan Tinggi - Gajah Manyusu',
-                    'b' => 'Bubungan Tinggi - Anno 1925 - Gajah Manyusu',
-                    'c' => 'Gajah Manyusu - Bubungan Tinggi - Anno 1925'
+                    'a' => 'a-b-c',
+                    'b' => 'b-a-c',
+                    'c' => 'c-b-a'
                 ],
                 'jawaban' => 'a',
             ],
             [
-                'pertanyaan' => '2. Urutan tas kerajinan khas Kalimantan dari yang digantung paling rendah adalah ....',
+                'pertanyaan' => '2. Urutan tas kerajinan khas Kalimantan berdasarkan ketinggiannya saat digantung, dari yang paling rendah adalah ....',
                 'gambar' => 'soal2.png',
                 'audio' => 'audio0.mp3',
                 'pilihan' => [
-                    'a' => 'Tas anyaman hitam - Tas anyaman putih - Tas ecoprint',
-                    'b' => 'Tas ecoprint - Tas anyaman putih - Tas anyaman Hitam',
-                    'c' => 'Tas anyaman putih - Tas anyaman hitam - Tas ecoprint'
+                    'a' => 'c-a-b',
+                    'b' => 'a-b-c',
+                    'c' => 'b-c-a'
                 ],
                 'jawaban' => 'b',
             ],
             [
-                'pertanyaan' => '3. Urutan kerajinan fiber glass patung dayak dimulai dari yang paling panjang adalah ....',
+                'pertanyaan' => '3. Urutan kerajinan patung Dayak berdasarkan bentuknya, dari yang paling tinggi adalah ....',
                 'gambar' => 'soal3.png',
                 'audio' => 'audio0.mp3',
                 'pilihan' => [
@@ -396,7 +410,7 @@ class MateriController extends Controller
                 'jawaban' => 'b',
             ],
             [
-                'pertanyaan' => '4. Urutan vas bunga akar keladi dimulai dari yang paling pendek adalah ....',
+                'pertanyaan' => '4. Urutan vas bunga akar keladi berdasarkan bentuknya, dari yang paling rendah adalah ....',
                 'gambar' => 'soal4.png',
                 'audio' => 'audio0.mp3',
                 'pilihan' => [
@@ -407,7 +421,7 @@ class MateriController extends Controller
                 'jawaban' => 'b',
             ],
             [
-                'pertanyaan' => '5. Urutan kain sasirangan dimulai dari yang paling panjang adalah ....',
+                'pertanyaan' => '5. Urutan kain sasirangan berdasarkan bentuknya, dari yang paling panjang adalah ....',
                 'gambar' => 'soal5.png',
                 'audio' => 'audio0.mp3',
                 'pilihan' => [
@@ -422,6 +436,7 @@ class MateriController extends Controller
 
     public function halaman10(Request $request)
     {
+        $nomorHalaman = 10;
         $kuisId = 'ayo-berlatih-2';
         $soal = $this->getSoalHalaman10();
 
@@ -440,7 +455,7 @@ class MateriController extends Controller
 
         return view('admin.materi.halaman10', compact(
             'soal', 'kkm', 'skor', 'status',
-            'kunciJawaban', 'jawabanUser'
+            'kunciJawaban', 'jawabanUser', 'nomorHalaman',
         ));
     }
 
@@ -467,12 +482,10 @@ class MateriController extends Controller
             }
         }
 
-        // Ambil nilai KKM dari DB
-        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 75;
-        $skorMinimal = ceil($kkm * $totalSoal / 100);
-        $status = $skor >= $skorMinimal ? 'lulus' : 'tidak_lulus';
+        // Ambil nilai KKM dari DB sebagai jumlah soal minimal yang harus benar
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 3;
+        $status = $skor >= $kkm ? 'lulus' : 'tidak_lulus';
 
-        // Simpan pakai model agar observer aktif & jawaban tidak di-escape
         \App\Models\Nilai::updateOrCreate(
             ['user_id' => auth()->id(), 'kuis_id' => $kuisId],
             [
@@ -481,13 +494,12 @@ class MateriController extends Controller
                 'jawaban' => $jawaban,
                 'status' => $status,
                 'updated_at' => now(),
-                'created_at' => now(), // hanya akan digunakan saat insert
+                'created_at' => now(),
             ]
         );
 
         return redirect()->route('admin.materi.halaman10')->with('success', 'Skor berhasil disimpan!');
     }
-
 
     public function resetHalaman10(Request $request)
     {
@@ -501,26 +513,35 @@ class MateriController extends Controller
 
     public function halaman11()
     {
-        return view('admin.materi.halaman11');
+        return view('admin.materi.halaman11', [
+            'nomorHalaman' => 11,
+        ]);
     }
 
     public function halaman12()
     {
-        return view('admin.materi.halaman12');
+        return view('admin.materi.halaman12', [
+            'nomorHalaman' => 12,
+        ]);
     }
 
     public function halaman13()
     {
-        return view('admin.materi.halaman13');
+        return view('admin.materi.halaman13', [
+            'nomorHalaman' => 13,
+        ]);
     }
 
     public function halaman14()
     {
-        return view('admin.materi.halaman14');
+        return view('admin.materi.halaman14', [
+            'nomorHalaman' => 14,
+        ]);
     }
 
     public function halaman15()
     {
+        $nomorHalaman = 15;
         $userId = auth()->id();
         $kuisId = 'ayo-mencoba-3';
 
@@ -541,7 +562,7 @@ class MateriController extends Controller
             'soal4' => 'benar'
         ];
 
-        return view('admin.materi.halaman15', compact('sudahMenjawab', 'skor', 'kkm', 'kunci', 'jawabanUser', 'status'));
+        return view('admin.materi.halaman15', compact('sudahMenjawab', 'skor', 'kkm', 'kunci', 'jawabanUser', 'status', 'nomorHalaman'));
     }
 
 
@@ -608,6 +629,7 @@ class MateriController extends Controller
 
     public function halaman16()
     {
+        $nomorHalaman = 16;
         $userId = auth()->id();
         $kuisId = 'ayo-berlatih-3';
 
@@ -623,7 +645,7 @@ class MateriController extends Controller
         $status = $nilai->status ?? null;
         $sudahMenjawab = $nilai !== null;
 
-        return view('admin.materi.halaman16', compact('sudahMenjawab', 'skor', 'kkm', 'jawabanUser', 'status'));
+        return view('admin.materi.halaman16', compact('sudahMenjawab', 'skor', 'kkm', 'jawabanUser', 'status', 'nomorHalaman'));
     }
 
     public function simpanHalaman16(Request $request)

@@ -4,7 +4,7 @@
 
 <div class="card bg-coklat">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h4 class="mb-0">Pengukuran</h4>
+        <h4 class="mb-0 fs-5">Pengukuran</h4>
     </div>
     <div class="card-body">
 
@@ -12,7 +12,7 @@
         <div class="row text-center my-4">
             <div class="col-md-6 mb-3">
                 <img src="{{ asset('images/materi/jukung-big.png') }}" class="img-fluid rounded shadow" alt="Pensil Pendek">
-                <p class="mt-2 fw-semibold">
+                <p class="mt-2 fw-semibold fs-5 ">
                     Jukung memiliki bentuk yang panjang. 
                     <button onclick="toggleAudio(this)" 
                             class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
@@ -22,7 +22,7 @@
             </div>
             <div class="col-md-6 mb-3">
                 <img src="{{ asset('images/materi/jukung-mini.png') }}" class="img-fluid rounded shadow" alt="Pensil Panjang">
-                <p class="mt-2 fw-semibold">
+                <p class="mt-2  fs-5">
                     Miniatur jukung memiliki bentuk yang pendek.
                     <button onclick="toggleAudio(this)" 
                             class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
@@ -36,7 +36,7 @@
         <div class="row text-center my-4">
             <div class="col-md-6 mb-3">
                 <img src="{{ asset('images/materi/rumahadat-big.png') }}" class="img-fluid rounded shadow" alt="Sedotan Panjang">
-                <p class="mt-2 fw-semibold">
+                <p class="mt-2  fs-5">
                     Rumah Adat Banjar Anjung Surung memiliki bentuk yang tinggi.
                     <button onclick="toggleAudio(this)" 
                             class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
@@ -46,7 +46,7 @@
             </div>
             <div class="col-md-6 mb-3">
                 <img src="{{ asset('images/materi/rumahadat-mini.png') }}" class="img-fluid rounded shadow" alt="Sedotan Pendek">
-                <p class="mt-2 fw-semibold">
+                <p class="mt-2  fs-5">
                     Miniatur Rumah Adat Banjar Tadah Alas memiliki bentuk yang rendah.
                     <button onclick="toggleAudio(this)" 
                             class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
@@ -60,7 +60,7 @@
         <div class="row text-center my-4">
             <div class="col-md-6 mb-3">
                 <img src="{{ asset('images/materi/bekantan-big.png') }}" class="img-fluid rounded shadow" alt="Penggaris Panjang">
-                <p class="mt-2 fw-semibold">
+                <p class="mt-2  fs-5">
                     Patung Bekantan memiliki bentuk yang tinggi.
                     <button onclick="toggleAudio(this)" 
                             class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
@@ -70,7 +70,7 @@
             </div>
             <div class="col-md-6 mb-3">
                 <img src="{{ asset('images/materi/bekantan-mini.png') }}" class="img-fluid rounded shadow" alt="Penggaris Pendek">
-                <p class="mt-2 fw-semibold">
+                <p class="mt-2  fs-5">
                     Miniatur Bekantan memiliki bentuk yang rendah.
                     <button onclick="toggleAudio(this)" 
                             class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
@@ -81,16 +81,16 @@
         </div>
 
         {{-- Dua Paragraf --}}
-        <div class="mt-2">
+        <div class="mt-2 fs-5">
             <p>
-                Ukuran panjang dan pendek digunakan untuk membandingkan jarak dari ujung ke ujung suatu benda. Benda dengan jarak yang lebih jauh disebut panjang, sedangkan benda dengan jarak lebih dekat disebut pendek.
+                Panjang dan pendek digunakan untuk membandingkan ukuran benda dari satu ujung ke ujung lainnya, biasanya dari kiri ke kanan atau sebaliknya. Benda yang membentang lebih jauh disebut panjang, sedangkan yang membentang sedikit disebut pendek. Panjang menunjukkan seberapa panjang bentuk benda.
                 <button onclick="toggleAudio(this)" 
                         class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
                         data-id="index-7" data-playing="false">🔊</button>
                 <audio id="audio-index-7" src="{{ asset('sounds/materi/hal3/7.mp3') }}"></audio>
             </p>
             <p>
-                Tinggi dan rendah adalah ukuran yang digunakan untuk membandingkan ketinggian suatu benda dari dasar ke atas. Benda yang memiliki jarak vertikal lebih jauh disebut tinggi, sedangkan benda dengan jarak vertikal lebih dekat disebut rendah.
+                Tinggi dan rendah digunakan untuk membandingkan ukuran benda dari bawah ke atas atau sebaliknya. Benda yang menjulang ke atas disebut tinggi, sedangkan yang hanya menjulang sedikit disebut rendah. Tinggi menunjukkan seberapa tinggi suatu benda.
                 <button onclick="toggleAudio(this)" 
                         class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
                         data-id="index-8" data-playing="false">🔊</button>
@@ -101,8 +101,8 @@
     </div>
 
     <div class="card-footer d-flex justify-content-between">
-        <a href="{{ route('admin.materi.halaman2') }}" class="btn bg-coklap2 text-white">← Sebelumnya</a>
-        <a href="{{ route('admin.materi.halaman4') }}" class="btn bg-coklap1 text-white">Selanjutnya →</a>
+        <a href="{{ route('admin.materi.halaman2') }}" class="btn bg-coklap2 text-white fs-5">← Sebelumnya</a>
+        <a href="{{ route('admin.materi.halaman4') }}" class="btn bg-coklap1 text-white fs-5">Selanjutnya →</a>
     </div>
 </div>
 <br>

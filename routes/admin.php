@@ -30,6 +30,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::resource('permissions', PermissionController::class);
 
     // Materi
+    Route::get('materi/halaman/{no}', [MateriController::class, 'halaman'])->name('materi.halaman');
+
     Route::get('materi', [MateriController::class, 'index'])->name('materi.index');
     Route::get('materi/halaman-2', [MateriController::class, 'halamanDua'])->name('materi.halaman2');
     Route::get('materi/halaman-3', [MateriController::class, 'halamanTiga'])->name('materi.halaman3');

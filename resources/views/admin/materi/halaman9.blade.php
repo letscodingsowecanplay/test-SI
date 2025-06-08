@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="card bg-coklat">
+<div class="card bg-coklat fs-5">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h4 class="mb-0">Ayo Mencoba</h4>
     </div>
@@ -17,10 +17,10 @@
 
         @php
             $soalList = [
-                1 => 'Badik Ashu yang memiliki bentuk paling panjang adalah ...',
-                2 => 'Guci peninggalan zaman dahulu di Kalimantan yang memiliki bentuk paling tinggi adalah ...',
-                3 => 'Dayung kelotok yang memiliki bentuk paling panjang adalah ...',
-                4 => 'Mandau Kalimantan yang tergantung pada posisi paling rendah adalah ...'
+                1 => 'Badik Ashu yang memiliki bentuk lebih panjang adalah ...',
+                2 => 'Guci peninggalan zaman dahulu di Kalimantan yang memiliki bentuk lebih tinggi adalah ...',
+                3 => 'Dayung kelotok yang memiliki bentuk lebih panjang adalah ...',
+                4 => 'Mandau Kalimantan yang tergantung pada posisi lebih rendah adalah ...'
             ];
 
             $gambarList = [
@@ -33,19 +33,19 @@
             // Penjelasan jawaban tiap soal
             $penjelasan = [
                 1 => [
-                    'a' => 'Jawaban kamu benar. Badik Ashu A memang paling panjang di antara pilihan.',
+                    'a' => 'Jawaban kamu benar. Badik Ashu A memang lebih panjang di antara pilihan.',
                     'b' => 'Jawaban kamu salah. Badik Ashu A lebih pendek daripada B.'
                 ],
                 2 => [
-                    'a' => 'Jawaban kamu benar. Guci A adalah yang paling tinggi dibandingkan yang lain.',
+                    'a' => 'Jawaban kamu benar. Guci A adalah yang lebih tinggi dibandingkan yang lain.',
                     'b' => 'Jawaban kamu salah. Guci B tidak lebih tinggi dari A.'
                 ],
                 3 => [
-                    'a' => 'Jawaban kamu benar. Dayung kelotok A yang paling panjang.',
+                    'a' => 'Jawaban kamu benar. Dayung kelotok A yang lebih panjang.',
                     'b' => 'Jawaban kamu salah. Dayung kelotok B lebih pendek daripada A.'
                 ],
                 4 => [
-                    'a' => 'Jawaban kamu benar. Mandau A tergantung di posisi paling rendah.',
+                    'a' => 'Jawaban kamu benar. Mandau A tergantung di posisi lebih rendah.',
                     'b' => 'Jawaban kamu salah. Mandau B posisinya tidak lebih rendah dari A.'
                 ],
             ];
@@ -66,7 +66,7 @@
                     Amati gambar berikut dengan saksama! Jawablah pertanyaan di bawah ini dengan menyeret dan meletakkan pilihan jawaban yang sesuai.
                 </p>
                 <p>
-                    Kain Sasirangan yang memiliki bentuk paling pendek adalah ....
+                    Kain Sasirangan yang memiliki bentuk lebih pendek adalah ....
                     <button onclick="toggleAudio(this)" 
                             class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
                             data-id="index-2" data-playing="false">🔊</button>
@@ -177,7 +177,7 @@
 
             @if(!$sudahMenjawab)
                 <div class="text-end">
-                    <button type="submit" class="btn bg-coklap2 text-white">Kirim Jawaban</button>
+                    <button type="submit" class="btn bg-coklap2 text-white fs-5">Kirim Jawaban</button>
                 </div>
             @endif
         </form>
@@ -185,24 +185,29 @@
         @if($sudahMenjawab && $status === 'tidak_lulus')
             <form action="{{ route('admin.materi.halaman9.reset') }}" method="POST" class="text-center mt-2">
                 @csrf
-                <button type="submit" class="btn btn-danger">Ulangi Kuis</button>
+                <button type="submit" class="btn btn-danger fs-5">Ulangi Kuis</button>
             </form>
             <div class="alert alert-warning text-center mt-3">
                 Nilai kamu belum mencapai KKM. Silakan ulangi kuis ini.
             </div>
         @elseif($sudahMenjawab && $status === 'lulus')
-            <div class="alert alert-success text-center mt-4">
-                Selamat, kamu telah mencapai KKM! Skor kamu: {{ $skor }}/4
+            <br><div class="text-center flex-grow-1">
+                <div class="alert alert-info d-inline-block mb-0">
+                    Skor Anda: {{ $skor }} / 4
+                </div>
+            </div><br>
+            <div class="alert alert-success mt-3">
+                Selamat, kamu telah mencapai KKM. Kamu boleh melanjutkan ke halaman berikutnya.
             </div>
         @endif
     </div>
 
     <div class="card-footer d-flex justify-content-between align-items-center">
-        <a href="{{ route('admin.materi.halaman8') }}" class="btn bg-coklap2 text-white">← Sebelumnya</a>
+        <a href="{{ route('admin.materi.halaman8') }}" class="btn bg-coklap2 text-white fs-5">← Sebelumnya</a>
         @if($sudahMenjawab && $status === 'lulus')
-            <a href="{{ route('admin.materi.halaman10') }}" class="btn bg-coklap1 text-white">Selanjutnya →</a>
+            <a href="{{ route('admin.materi.halaman10') }}" class="btn bg-coklap1 text-white fs-5">Selanjutnya →</a>
         @else
-            <button class="btn bg-coklap2 text-white disabled">Selanjutnya →</button>
+            <button class="btn bg-coklap2 text-white disabled fs-5">Selanjutnya →</button>
         @endif
     </div>
 </div>

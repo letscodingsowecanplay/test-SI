@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="card bg-coklat">
+    <div class="card bg-coklat fs-5">
         <div class="card-header">
             <h4 class="mb-0">
                 Pengukuran
@@ -19,7 +19,7 @@
                         <audio id="audio-index-1" src="{{ asset('sounds/materi/hal11/1.mp3') }}"></audio>
                     </h5>
 
-                    <h6 class="fw-bold mt-3 mb-0">
+                    <h6 class="fw-bold mt-3 mb-0 fs-5">
                         Tujuan Pembelajaran
                         <button onclick="toggleAudio(this)" 
                                 class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
@@ -35,7 +35,7 @@
                 </li>
 
                 <li class="list-group-item bg-transparent">
-                    <h6 class="fw-bold mb-0">
+                    <h6 class="fw-bold mb-0 fs-5">
                         Ayo Belajar
                         <button onclick="toggleAudio(this)" 
                                 class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
@@ -44,7 +44,7 @@
                     </h6>
 
                     <p class="mt-2">
-                        Kita dapat membandingkan panjang suatu benda dengan dua metode, yaitu secara langsung dan tidak langsung.<br>
+                        Kita dapat membandingkan panjang suatu benda dengan dua cara, yaitu secara langsung dan tidak langsung.<br>
                         Apa perbedaannya?
                     </p>
 
@@ -69,8 +69,8 @@
         </div>
 
         <div class="card-footer d-flex justify-content-between">
-            <a href="{{ route('admin.materi.halaman10') }}" class="btn bg-coklap2 text-white">← Sebelumnya</a>
-            <a href="{{ route('admin.materi.halaman12') }}" class="btn bg-coklap1 text-white">Selanjutnya →</a>
+            <a href="{{ route('admin.materi.halaman10') }}" class="btn bg-coklap2 text-white fs-5">← Sebelumnya</a>
+            <a href="{{ route('admin.materi.halaman12') }}" class="btn bg-coklap1 text-white fs-5">Selanjutnya →</a>
         </div>
     </div>
     <br>

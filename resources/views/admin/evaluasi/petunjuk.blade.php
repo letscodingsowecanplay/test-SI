@@ -1,7 +1,7 @@
 @extends('layouts.app') 
 
 @section('content')
-<div class="container py-4">
+<div class="container py-4 fs-5">
     <div class="row">
 
         {{-- Kolom 1: Profil dan Daftar Isi --}}
@@ -72,12 +72,16 @@
                     <p><strong>Email:</strong> {{ $user->email }}</p>
 
                     <div class="d-flex justify-content-around mt-4">
-                        <a href="{{ route('admin.materi.index') }}" class="btn bg-coklap1 text-white rounded-pill d-flex align-items-center justify-content-center text-white">Kembali ke Materi</a>
+                        <a href="{{ route('admin.materi.index') }}" class="btn bg-coklap1 text-white rounded-pill d-flex align-items-center justify-content-center text-white fs-5">Kembali ke Materi</a>
 
-                        @if($bisaMulaiKuis)
-                            <a href="{{ route('admin.evaluasi.index') }}" class="btn bg-coklap2 text-white rounded-pill">Mulai Evaluasi</a>
+                        @if(count($kuisBelumSelesai) > 0)
+                            <button class="btn bg-coklap2 text-white rounded-pill fs-5" disabled>Lengkapi Terlebih Dahulu</button>
+
+                        @elseif($hasil && $hasil->status !== 'tidak_lulus')
+                            <button class="btn bg-coklap2 text-white rounded-pill fs-5" disabled>Sudah Dikerjakan</button>
+
                         @else
-                            <button class="btn bg-coklap2 text-white rounded-pill" disabled>Sudah Dikerjakan</button>
+                            <a href="{{ route('admin.evaluasi.index') }}" class="btn bg-coklap2 text-white rounded-pill fs-5">Mulai Evaluasi</a>
                         @endif
                     </div>
                 </div>
@@ -85,14 +89,23 @@
         </div>
 
     </div>
+    @if(count($kuisBelumSelesai) > 0)
+        <div class="alert alert-warning mt-3">
+            <strong>Perhatian!</strong> Kamu belum menyelesaikan bagian berikut ini:
+            <ul class="mb-0">
+                @foreach ($kuisBelumSelesai as $kuis)
+                    <li>{{ $kuis }}</li>
+                @endforeach
+            </ul>
+            <small>Silakan selesaikan bagian di atas terlebih dahulu sebelum memulai evaluasi.</small>
+        </div>
+    @endif
+
     @if($hasil)
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="card mt-4 bg-coklat">
-                <div class="card-header text-center"><strong>Hasil Evaluasi <button onclick="toggleAudio(this)" 
-                        class="btn btn-sm btn-outline-dark bg-coklapbet text-white"
-                        data-id="index-4" data-playing="false">🔊</button>
-                <audio id="audio-index-4" src="{{ asset('sounds/evaluasi/petunjuk/4.mp3') }}"></audio></strong></div>
+                <div class="card-header text-center"><strong>Hasil Evaluasi</strong></div>
                 <div class="card-body">
                     <p><strong>Skor:</strong> {{ $hasil->skor_persen }} / 100</p>
                     <p><strong>Persentase:</strong> {{ round(($hasil->skor / $hasil->total_soal) * 100) }}%</p>

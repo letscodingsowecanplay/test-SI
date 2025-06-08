@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="card bg-coklat">
+    <div class="card bg-coklat fs-5">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h4 class="mb-0">Pengukuran</h4>
         </div>
@@ -67,8 +67,8 @@
         </div>
 
         <div class="card-footer d-flex justify-content-between">
-            <a href="{{ route('admin.materi.halaman7') }}" class="btn bg-coklap2 text-white">← Sebelumnya</a>
-            <a href="{{ route('admin.materi.halaman9') }}" class="btn bg-coklap1 text-white">Selanjutnya →</a>
+            <a href="{{ route('admin.materi.halaman7') }}" class="btn bg-coklap2 text-white fs-5">← Sebelumnya</a>
+            <a href="{{ route('admin.materi.halaman9') }}" class="btn bg-coklap1 text-white fs-5">Selanjutnya →</a>
         </div>
     </div>
     <br>
