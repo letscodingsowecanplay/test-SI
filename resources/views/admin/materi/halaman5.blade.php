@@ -131,7 +131,7 @@
         @elseif($sudahMenjawab && $skor >= $kkm)
             <br><div class="text-center flex-grow-1">
                 <div class="alert alert-info d-inline-block mb-0">
-                    Skor Anda: {{ $skor }} / 4
+                    Nilai Anda: {{ $skor }} / 100
                 </div>
             </div><br>
             <div class="alert alert-success mt-3">

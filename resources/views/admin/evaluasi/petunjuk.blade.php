@@ -107,10 +107,10 @@
             <div class="card mt-4 bg-coklat">
                 <div class="card-header text-center"><strong>Hasil Evaluasi</strong></div>
                 <div class="card-body">
-                    <p><strong>Skor:</strong> {{ $hasil->skor_persen }} / 100</p>
-                    <p><strong>Persentase:</strong> {{ round(($hasil->skor / $hasil->total_soal) * 100) }}%</p>
+                    <p><strong>Nilai:</strong> {{ $hasil->skor_persen }} / 100</p>
+                    <p><strong>Persentase:</strong> {{ $hasil->skor_persen }}%</p>
 
-                    @if($hasil->skor < 7)
+                    @if($hasil->skor < 70)
                         <p class="text-danger">Nilai Anda di bawah KKM. Silakan pelajari materi lagi dan mulai evaluasi jika sudah siap.</p>
                     @else
                         <p class="text-success">Selamat! Anda telah lulus Evaluasi ini.</p>

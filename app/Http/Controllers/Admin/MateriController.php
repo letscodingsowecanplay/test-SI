@@ -91,18 +91,23 @@ class MateriController extends Controller
             'soal4' => 'a',
         ];
 
-        $benar = 0;
+        $jumlahSoal = count($kunci);
+        $bobotPerSoal = 25;
+        $jumlahBenar = 0;
+
         foreach ($kunci as $soal => $jawabanBenar) {
             if (isset($jawaban[$soal]) && $jawaban[$soal] === $jawabanBenar) {
-                $benar++;
+                $jumlahBenar++;
             }
         }
 
+        $skor = $jumlahBenar * $bobotPerSoal; // Nilai akhir untuk disimpan di DB
+
         // Ambil nilai KKM dari tabel kkm
         $kkmRecord = \App\Models\Kkm::where('kuis_id', $kuisId)->first();
-        $kkm = $kkmRecord?->kkm ?? 3; // fallback ke 3 jika belum ada kkm-nya
+        $kkm = $kkmRecord?->kkm ?? 75; // fallback ke 75 (misal 3 soal benar dari 4 = 75)
 
-        $status = $benar >= $kkm ? 'lulus' : 'tidak_lulus';
+        $status = $skor >= $kkm ? 'lulus' : 'tidak_lulus';
         $now = now();
 
         $nilai = \App\Models\Nilai::where('user_id', $userId)
@@ -111,8 +116,8 @@ class MateriController extends Controller
 
         if ($nilai) {
             $nilai->update([
-                'skor' => $benar,
-                'total_soal' => count($kunci),
+                'skor' => $skor,
+                'total_soal' => $jumlahSoal,
                 'jawaban' => $jawaban,
                 'status' => $status,
                 'updated_at' => $now,
@@ -121,8 +126,8 @@ class MateriController extends Controller
             \App\Models\Nilai::create([
                 'user_id' => $userId,
                 'kuis_id' => $kuisId,
-                'skor' => $benar,
-                'total_soal' => count($kunci),
+                'skor' => $skor,
+                'total_soal' => $jumlahSoal,
                 'jawaban' => $jawaban,
                 'status' => $status,
                 'created_at' => $now,
@@ -131,9 +136,8 @@ class MateriController extends Controller
         }
 
         return redirect()->route('admin.materi.halaman4')
-            ->with('success', "Skor berhasil disimpan! Nilai Anda: $benar dari " . count($kunci) . ". KKM: $kkm");
+            ->with('success', "Nilai berhasil disimpan! Nilai Anda: $skor dari " . ($jumlahSoal * $bobotPerSoal) . ". KKM: $kkm");
     }
-
 
     public function resetHalamanEmpat()
     {
@@ -190,15 +194,20 @@ class MateriController extends Controller
             'soal4' => 'rendah'
         ];
 
-        $skor = 0;
+        $jumlahSoal = count($kunci);
+        $bobotPerSoal = 25;
+        $jumlahBenar = 0;
+
         foreach ($kunci as $soal => $jawabanBenar) {
             if (isset($jawaban[$soal]) && strtolower($jawaban[$soal]) === $jawabanBenar) {
-                $skor++;
+                $jumlahBenar++;
             }
         }
 
-        // Ambil nilai KKM dari tabel kkm
-        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 3;
+        $skor = $jumlahBenar * $bobotPerSoal; // Skor akhir yang dimasukkan ke DB
+
+        // Ambil nilai KKM dari tabel kkm (default 75 jika belum ada)
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 75;
         $status = $skor >= $kkm ? 'lulus' : 'tidak_lulus';
         $now = now();
 
@@ -209,7 +218,7 @@ class MateriController extends Controller
         if ($nilai) {
             $nilai->update([
                 'skor' => $skor,
-                'total_soal' => count($kunci),
+                'total_soal' => $jumlahSoal,
                 'jawaban' => $jawaban,
                 'status' => $status,
                 'updated_at' => $now,
@@ -219,7 +228,7 @@ class MateriController extends Controller
                 'user_id' => $userId,
                 'kuis_id' => $kuisId,
                 'skor' => $skor,
-                'total_soal' => count($kunci),
+                'total_soal' => $jumlahSoal,
                 'jawaban' => $jawaban,
                 'status' => $status,
                 'created_at' => $now,
@@ -228,7 +237,7 @@ class MateriController extends Controller
         }
 
         return redirect()->route('admin.materi.halaman5')
-            ->with('success', "Jawaban berhasil disimpan. Nilai Anda: $skor dari " . count($kunci) . ". KKM: $kkm");
+            ->with('success', "Jawaban berhasil disimpan. Nilai Anda: $skor dari " . ($jumlahSoal * $bobotPerSoal) . ". KKM: $kkm");
     }
 
 
@@ -298,7 +307,6 @@ class MateriController extends Controller
 
     public function simpanHalaman9(Request $request)
     {
-        
         $request->validate([
             'jawaban.soal1' => 'required',
             'jawaban.soal2' => 'required',
@@ -318,16 +326,18 @@ class MateriController extends Controller
             'soal4' => 'a',
         ];
 
-        $benar = 0;
+        $jumlahBenar = 0;
         foreach ($kunci as $soal => $kunciJawaban) {
             if (isset($jawaban[$soal]) && $jawaban[$soal] === $kunciJawaban) {
-                $benar++;
+                $jumlahBenar++;
             }
         }
 
+        $bobotPerSoal = 25;
+        $skor = $jumlahBenar * $bobotPerSoal;
         $kuisId = 'ayo-mencoba-2';
-        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 3;
-        $status = $benar >= $kkm ? 'lulus' : 'tidak_lulus';
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 75; // default 75 (bobot 3 soal benar)
+        $status = $skor >= $kkm ? 'lulus' : 'tidak_lulus';
         $now = now();
 
         $nilai = \App\Models\Nilai::where('user_id', auth()->id())
@@ -335,7 +345,7 @@ class MateriController extends Controller
             ->first();
 
         $data = [
-            'skor' => $benar,
+            'skor' => $skor,
             'total_soal' => count($kunci),
             'jawaban' => $jawaban,
             'status' => $status,
@@ -358,9 +368,8 @@ class MateriController extends Controller
         }
 
         return redirect()->route('admin.materi.halaman9')
-            ->with('success', "Skor berhasil disimpan! Nilai Anda: $benar. KKM: $kkm");
+            ->with('success', "Jawaban berhasil disimpan! Nilai Anda: $skor dari " . (count($kunci) * $bobotPerSoal) . ". KKM: $kkm");
     }
-
 
     public function resetHalaman9()
     {
@@ -472,18 +481,21 @@ class MateriController extends Controller
         $request->validate($rules);
 
         $totalSoal = count($soal);
-        $skor = 0;
+        $jumlahBenar = 0;
         $jawaban = [];
 
         foreach ($soal as $index => $item) {
             $jawaban[$index] = $request->input("jawaban_$index");
             if ($jawaban[$index] === $item['jawaban']) {
-                $skor++;
+                $jumlahBenar++;
             }
         }
 
-        // Ambil nilai KKM dari DB sebagai jumlah soal minimal yang harus benar
-        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 3;
+        $bobotPerSoal = 20;
+        $skor = $jumlahBenar * $bobotPerSoal;
+
+        // Ambil nilai KKM dari DB, KKM diasumsikan skor minimal (misal 60, 80, dll)
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 60; // Default 60
         $status = $skor >= $kkm ? 'lulus' : 'tidak_lulus';
 
         \App\Models\Nilai::updateOrCreate(
@@ -498,7 +510,8 @@ class MateriController extends Controller
             ]
         );
 
-        return redirect()->route('admin.materi.halaman10')->with('success', 'Skor berhasil disimpan!');
+        return redirect()->route('admin.materi.halaman10')
+            ->with('success', "Jawaban berhasil disimpan! Nilai Anda: $skor dari " . ($totalSoal * $bobotPerSoal) . ". KKM: $kkm");
     }
 
     public function resetHalaman10(Request $request)
@@ -586,21 +599,25 @@ class MateriController extends Controller
             'soal4' => 'benar'
         ];
 
-        $benar = 0;
+        $jumlahBenar = 0;
         foreach ($kunci as $soal => $kunciJawaban) {
             if (isset($jawaban[$soal]) && strtolower($jawaban[$soal]) === $kunciJawaban) {
-                $benar++;
+                $jumlahBenar++;
             }
         }
 
-        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 3;
-        $status = $benar >= $kkm ? 'lulus' : 'tidak_lulus';
+        $bobotPerSoal = 25;
+        $skor = $jumlahBenar * $bobotPerSoal;
+
+        // Ambil KKM dari tabel kkm, KKM dianggap skor minimal (misal 75)
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 75;
+        $status = $skor >= $kkm ? 'lulus' : 'tidak_lulus';
         $now = now();
 
         \App\Models\Nilai::updateOrCreate(
             ['user_id' => $userId, 'kuis_id' => $kuisId],
             [
-                'skor' => $benar,
+                'skor' => $skor,
                 'total_soal' => count($kunci),
                 'jawaban' => $jawaban, // langsung array, tidak di-encode
                 'status' => $status,
@@ -610,8 +627,9 @@ class MateriController extends Controller
         );
 
         return redirect()->route('admin.materi.halaman15')
-            ->with('success', "Skor berhasil disimpan! Nilai Anda: $benar dari " . count($kunci) . ". KKM: $kkm");
+            ->with('success', "Jawaban berhasil disimpan! Nilai Anda: $skor dari " . (count($kunci) * $bobotPerSoal) . ". KKM: $kkm");
     }
+
 
 
     public function resetHalaman15()
@@ -670,32 +688,36 @@ class MateriController extends Controller
             'soal5' => 7,
         ];
 
-        $benar = 0;
+        $jumlahBenar = 0;
         foreach ($kunci as $soal => $jawabanBenar) {
             if (isset($jawaban[$soal]) && (int)$jawaban[$soal] === $jawabanBenar) {
-                $benar++;
+                $jumlahBenar++;
             }
         }
 
-        // Ambil KKM dari tabel
-        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 3;
-        $status = $benar >= $kkm ? 'lulus' : 'tidak_lulus';
+        $bobotPerSoal = 20;
+        $skor = $jumlahBenar * $bobotPerSoal;
+
+        // Ambil KKM dari tabel, KKM di sini dianggap skor minimal (misal: 60)
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 60;
+        $status = $skor >= $kkm ? 'lulus' : 'tidak_lulus';
 
         \App\Models\Nilai::updateOrCreate(
             ['user_id' => $userId, 'kuis_id' => $kuisId],
             [
-                'skor' => $benar,
+                'skor' => $skor,
                 'total_soal' => count($kunci),
-                'jawaban' => $jawaban, // langsung array, bukan json
+                'jawaban' => $jawaban,
                 'status' => $status,
                 'updated_at' => now(),
-                'created_at' => now(), // hanya digunakan saat insert
+                'created_at' => now(),
             ]
         );
 
         return redirect()->route('admin.materi.halaman16')
-            ->with('success', "Skor berhasil disimpan! Nilai Anda: $benar dari " . count($kunci) . ". KKM: $kkm");
+            ->with('success', "Jawaban berhasil disimpan! Nilai Anda: $skor dari " . (count($kunci) * $bobotPerSoal) . ". KKM: $kkm");
     }
+
 
     public function resetHalaman16()
     {

@@ -4,7 +4,7 @@
     <div class="card bg-coklat fs-5">
         <div class="card-header">
             <div class="float-start">
-                Data Hasil Belajar Siswa
+                Data KKM
             </div>
         </div>
 
@@ -14,7 +14,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Kuid_id</th>
+                            <th>Kuis_id</th>
                             <th>KKM</th>
                             <th>Aksi</th>
                         </tr>
@@ -27,12 +27,6 @@
                                 <td>{{ $row->kkm }}</td>
                                 <td>
                                     <a href="{{ route('admin.kkm.edit', $row->id) }}" class="badge bg-info text-white text-decoration-none fs-5">Edit</a>
-
-                                    <form action="{{ route('admin.kkm.destroy', $row->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="badge bg-danger border-0 fs-5">Hapus</button>
-                                    </form>
                                 </td>
                             </tr>
                         @endforeach

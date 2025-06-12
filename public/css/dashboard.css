@@ -33,11 +33,11 @@ body {
 
 .sidebar .nav-link .feather {
     margin-right: 4px;
-    color: #727272;
+    color: #f17c15;
 }
 
 .sidebar .nav-link:not(.disabled):hover {
-    background: #f3f3ff !important;
+    background: #4E1F00 !important;
     text-shadow: 0 1px 0 #fff3;
 }
 

@@ -16,14 +16,8 @@
                             <label for="identity" class="col-md-4 col-form-label text-md-end">NISN</label>
                             <div class="col-md-6">
                                 <input
-                                    id="identity"
-                                    type="text"
-                                    class="form-control @error('identity') is-invalid @enderror"
-                                    name="identity"
-                                    value="{{ old('identity') }}"
-                                    required
-                                    autocomplete="identity"
-                                    autofocus
+                                    id="identity" type="text" class="form-control @error('identity') is-invalid @enderror" name="identity"value="{{ old('identity') }}"
+                                    required autocomplete="identity"autofocus
                                 >
                                 @error('identity')
                                     <span class="invalid-feedback" role="alert">

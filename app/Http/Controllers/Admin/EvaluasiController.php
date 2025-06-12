@@ -26,7 +26,7 @@ class EvaluasiController extends Controller
         $userId = auth()->id();
         $kuisId = 'evaluasi-1';
 
-        // Kunci jawaban di sini saja (tidak perlu di method terpisah)
+        // Kunci jawaban
         $kunci = [
             1 => 'A',
             2 => 'C',
@@ -50,14 +50,19 @@ class EvaluasiController extends Controller
             }
         }
 
-        $kkm = Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 7;
-        $status = $benar >= $kkm ? 'lulus' : 'tidak_lulus';
+        $bobot = 10; // Bobot per soal
+        $totalSoal = count($kunci);
+        $nilaiAkhir = $benar * $bobot;
 
-        Nilai::updateOrCreate(
+        // Ambil KKM, misal KKM 70 berarti harus dapat nilai 70 untuk lulus (bisa custom tiap evaluasi)
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisId)->value('kkm') ?? 70;
+        $status = $nilaiAkhir >= $kkm ? 'lulus' : 'tidak_lulus';
+
+        \App\Models\Nilai::updateOrCreate(
             ['user_id' => $userId, 'kuis_id' => $kuisId],
             [
-                'skor' => $benar,
-                'total_soal' => count($kunci),
+                'skor' => $nilaiAkhir,
+                'total_soal' => $totalSoal,
                 'jawaban' => $validated['jawaban'],
                 'status' => $status,
                 'updated_at' => now(),
@@ -67,12 +72,13 @@ class EvaluasiController extends Controller
 
         return response()->json([
             'success' => true,
-            'skor' => round(($benar / count($kunci)) * 100),
-            'skor_persen' => round(($benar / count($kunci)) * 100),
-            'total_soal' => count($kunci),
+            'skor' => $nilaiAkhir,
+            'skor_persen' => round(($nilaiAkhir / ($totalSoal * $bobot)) * 100),
+            'total_soal' => $totalSoal,
             'status' => $status,
         ]);
     }
+
 
     public function reset()
     {
@@ -89,16 +95,24 @@ class EvaluasiController extends Controller
         $user = Auth::user();
         $kuisEvaluasiId = 'evaluasi-1';
 
-        $hasil = Nilai::where('user_id', $user->id)
+        $hasil = \App\Models\Nilai::where('user_id', $user->id)
             ->where('kuis_id', $kuisEvaluasiId)
             ->first();
 
+        // Tentukan jumlah soal dan bobot per soal HARUS sesuai dengan logic saat simpan!
+        $jumlahSoal = 10;
+        $bobot = 10; // Bobot per soal, sesuaikan jika berubah
+        $skorMaksimal = $jumlahSoal * $bobot;
+
         if ($hasil) {
-            $totalSoal = $hasil->total_soal ?: 10;
-            $hasil->skor_persen = round(($hasil->skor / $totalSoal) * 100);
+            // Untuk backward compatibility, gunakan total_soal jika ada, kalau tidak, default 10
+            $totalSoal = $hasil->total_soal ?: $jumlahSoal;
+            $skorMaksimalAktual = $totalSoal * $bobot;
+            $skorUser = $hasil->skor ?? 0;
+            $hasil->skor_persen = $skorMaksimalAktual > 0 ? round(($skorUser / $skorMaksimalAktual) * 100) : 0;
         }
 
-        $kkm = Kkm::where('kuis_id', $kuisEvaluasiId)->value('kkm') ?? null;
+        $kkm = \App\Models\Kkm::where('kuis_id', $kuisEvaluasiId)->value('kkm') ?? null;
 
         // Daftar kuis prasyarat
         $kuisWajib = [
@@ -110,7 +124,7 @@ class EvaluasiController extends Controller
             'ayo-berlatih-3' => 'Ayo Berlatih 3',
         ];
 
-        $nilaiKuis = Nilai::where('user_id', $user->id)
+        $nilaiKuis = \App\Models\Nilai::where('user_id', $user->id)
             ->whereIn('kuis_id', array_keys($kuisWajib))
             ->get();
 
@@ -132,4 +146,6 @@ class EvaluasiController extends Controller
             'kuisBelumSelesai' => $kuisBelumLulus,
         ]);
     }
+
+
 }

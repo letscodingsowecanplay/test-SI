@@ -36,7 +36,7 @@
                             <th>No</th>
                             <th>Nama</th>
                             <th>NISN</th>
-                            <th>Skor</th>
+                            <th>Nilai</th>
                             <th>Hari</th>
                             <th>Waktu</th>
                             <th>Aksi</th>
@@ -52,8 +52,6 @@
                                 <td>{{ \Carbon\Carbon::parse($row->created_at)->format('j/n/Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($row->created_at)->format('H.i.s') }}</td>
                                 <td>
-                                    <a href="{{ route('admin.hasilbelajar.edit', $row->id) }}" class="badge bg-info text-white text-decoration-none fs-5">Edit</a>
-
                                     <form action="{{ route('admin.hasilbelajar.destroy', $row->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                                         @csrf
                                         @method('DELETE')

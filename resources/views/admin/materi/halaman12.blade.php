@@ -97,11 +97,10 @@
         </div>
 
         <div class="mt-4">
-            <button onclick="toggleAudio(this)" 
-                    class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
+            <p><strong>Kalian bisa menggunakan benda lain di sekitar.</strong> <button onclick="toggleAudio(this)" 
+                    class="btn btn-sm btn-outline-dark bg-coklapbet text-white"
                     data-id="index-10" data-playing="false">🔊</button>
-            <audio id="audio-index-10" src="{{ asset('sounds/materi/hal12/10.mp3') }}"></audio>
-            <p><strong>Kalian bisa menggunakan benda lain di sekitar.</strong></p>
+            <audio id="audio-index-10" src="{{ asset('sounds/materi/hal12/10.mp3') }}"></audio></p>
             <p><strong>Penjelasan:</strong></p>
             <ul>
                 <li>Jengkal adalah menggunakan jari tangan.</li>

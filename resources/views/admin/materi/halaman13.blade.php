@@ -7,11 +7,11 @@
         <h4 class="mb-0">Pengukuran</h4>
     </div>
     <div class="card-body">
-        <button onclick="toggleAudio(this)" 
-                class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
-                data-id="index-1" data-playing="false">🔊</button>
-        <audio id="audio-index-1" src="{{ asset('sounds/materi/hal13/1.mp3') }}"></audio>
         <div class="mt-4">
+            <button onclick="toggleAudio(this)" 
+                    class="btn btn-sm btn-outline-dark bg-coklapbet text-white"
+                    data-id="index-1" data-playing="false">🔊</button>
+            <audio id="audio-index-1" src="{{ asset('sounds/materi/hal13/1.mp3') }}"></audio>
             <p>Mengukur panjang benda menggunakan satuan tidak baku dapat dilakukan dengan beberapa langkah sederhana.<br><br>
 
             Cara mengukur yang benar:<br>

@@ -7,14 +7,13 @@
         </div>
 
         <div class="card-body">
-            <button onclick="toggleAudio(this)" 
-                    class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
-                    data-id="index-1" data-playing="false">🔊</button>
-            <audio id="audio-index-1" src="{{ asset('sounds/materi/hal14/1.mp3') }}"></audio>
-
             <ul class="list-group list-group-flush">
                 <li class="list-group-item bg-transparent">
                     <p class="mt-2">
+                        <button onclick="toggleAudio(this)" 
+                                class="btn btn-sm btn-outline-dark bg-coklapbet text-white"
+                                data-id="index-1" data-playing="false">🔊</button>
+                        <audio id="audio-index-1" src="{{ asset('sounds/materi/hal14/1.mp3') }}"></audio><br>
                         Kemungkinan Perbedaan Pengukuran pada Suatu Benda dengan Satuan Tidak Baku.
                     </p>
                     <p class="mt-2">
@@ -40,13 +39,13 @@
 
                 {{-- Caption dengan audio --}}
                 <div class="text-center mt-2">
-                    <button onclick="toggleAudio(this)" 
-                            class="btn btn-sm btn-outline-dark bg-coklapbet text-white"
-                            data-id="index-2" data-playing="false">🔊</button>
-                    <audio id="audio-index-2" src="{{ asset('sounds/materi/hal14/2.mp3') }}"></audio>
                     <p class="mt-2">
                         Panjang buku adalah 3 stik es krim.<br>
                         Panjang buku adalah 2 pensil.
+                        <button onclick="toggleAudio(this)" 
+                                class="btn btn-sm btn-outline-dark bg-coklapbet text-white"
+                                data-id="index-2" data-playing="false">🔊</button>
+                        <audio id="audio-index-2" src="{{ asset('sounds/materi/hal14/2.mp3') }}"></audio>
                     </p>
                 </div>
             </div>

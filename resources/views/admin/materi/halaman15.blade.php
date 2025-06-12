@@ -41,13 +41,12 @@
                     <audio id="audio-index-4" src="{{ asset('sounds/materi/hal15/4.mp3') }}">
                 </p>
 
-                <button onclick="toggleAudio(this)" 
-                        class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
-                        data-id="index-2" data-playing="false">🔊</button>
-                <audio id="audio-index-2" src="{{ asset('sounds/materi/hal15/2.mp3') }}"></audio>
-
                 <p>
                     Setelah menonton video, lihat gambar dan bacalah pernyataannya. Hitung alat ukur pada gambar. Geser bulatan ke kiri jika menurutmu salah, atau ke kanan jika menurutmu benar.
+                    <button onclick="toggleAudio(this)" 
+                            class="btn btn-sm btn-outline-dark bg-coklapbet text-white"
+                            data-id="index-2" data-playing="false">🔊</button>
+                    <audio id="audio-index-2" src="{{ asset('sounds/materi/hal15/2.mp3') }}"></audio>
                 </p>
             </div>
             
@@ -188,7 +187,7 @@
         @elseif($sudahMenjawab && $skor >= $kkm)
             <div class="text-center flex-grow-1">
                 <div class="alert alert-info d-inline-block mb-0">
-                    Skor Anda: {{ round($skor, 2) }} / {{ count($soal) }}
+                    Nilai Anda: {{ $skor }} / 100
                 </div>
             </div><br>        
             <div class="alert alert-success mt-3">

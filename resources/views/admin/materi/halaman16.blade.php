@@ -6,11 +6,11 @@
         <h4 class="mb-0">Ayo Berlatih</h4>
     </div>
     <div class="card-body">
-        <button onclick="toggleAudio(this)" 
-                class="btn btn-sm btn-outline-dark bg-coklapbet text-white"
-                data-id="index-1" data-playing="false">🔊</button>
-        <audio id="audio-index-1" src="{{ asset('sounds/materi/hal16/1.mp3') }}"></audio>
-        <p>Susunlah benda-benda berikut untuk mengukur suatu objek secara tepat menggunakan satuan tidak baku! <br>Petunjuk: <br>Klik benda yang disediakan sebagai satuan tidak baku. <br>Seret dan letakkan benda tersebut ke area dropzone pada objek yang akan diukur secara tepat dan sesuai.</p>
+        <p>Amati gambar berikut dengan saksama! Susunlah benda-benda berikut untuk mengukur suatu objek secara tepat menggunakan satuan tidak baku! <button onclick="toggleAudio(this)" 
+                    class="btn btn-sm btn-outline-dark bg-coklapbet text-white"
+                    data-id="index-1" data-playing="false">🔊</button>
+            <audio id="audio-index-1" src="{{ asset('sounds/materi/hal16/1.mp3') }}"></audio>
+            <br>Petunjuk: <br>Klik benda yang disediakan sebagai satuan tidak baku. <br>Seret dan letakkan benda tersebut ke area dropzone pada objek yang akan diukur secara tepat dan sesuai.</p>
 
         @php
             // Penjelasan langsung di blade
@@ -50,19 +50,18 @@
             @csrf
 
             @foreach($soalList as $no => $soal)
-                <button 
-                    type="button" 
-                    onclick="toggleAudio(this)" 
-                    class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" 
-                    title="Dengarkan"
-                    data-id="hal16-{{ $no }}" 
-                    data-playing="false">
-                    🔊
-                </button>
-                <audio id="audio-hal16-{{ $no }}" src="{{ asset('sounds/materi/hal16/hal16-' . $no . '.mp3') }}"></audio>
-
                 <div class="mb-3">
                     <strong>{{ $no }}. {{ $soal['kalimat'] }}</strong>
+                    <button 
+                        type="button" 
+                        onclick="toggleAudio(this)" 
+                        class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2" 
+                        title="Dengarkan"
+                        data-id="hal16-{{ $no }}" 
+                        data-playing="false">
+                        🔊
+                    </button>
+                    <audio id="audio-hal16-{{ $no }}" src="{{ asset('sounds/materi/hal16/hal16-' . $no . '.mp3') }}"></audio>
                 </div>
                 <div class="mb-5 text-center">
                     <div class="gambar-wrapper">
@@ -155,7 +154,7 @@
         @elseif($sudahMenjawab && $status === 'lulus')
             <div class="text-center flex-grow-1">
                 <div class="alert alert-info d-inline-block mb-0">
-                    Skor Anda: {{ round($skor, 2) }} / {{ count($soalList) }}
+                    Skor Anda: {{ $skor }} / 100
                 </div>
             </div><br>
             <div class="alert alert-success mt-3">Selamat, kamu telah mencapai KKM. Kamu boleh melanjutkan ke halaman berikutnya.</div>

@@ -37,7 +37,7 @@
 
                 <li class="list-group-item bg-transparent">
                     <button onclick="toggleAudio(this)" 
-                            class="btn btn-sm btn-outline-dark bg-coklapbet text-white ms-2"
+                            class="btn btn-sm btn-outline-dark bg-coklapbet text-white"
                             data-id="index-1" data-playing="false">🔊</button>
                     <audio id="audio-index-1" src="{{ asset('sounds/materi/hal7/1.mp3') }}"></audio>
                     <p class="mt-2">

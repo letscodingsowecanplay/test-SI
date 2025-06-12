@@ -4,7 +4,7 @@
             <th>No</th>
             <th>Nama</th>
             <th>NISN</th>
-            <th>Skor</th>
+            <th>Nilai</th>
             <th>Hari</th>
             <th>Waktu</th>
         </tr>

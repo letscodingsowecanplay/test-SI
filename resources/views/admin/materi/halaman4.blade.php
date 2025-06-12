@@ -93,6 +93,8 @@
 
             @foreach (range(1, 4) as $no)
                 <div class="mb-5 fs-5">
+
+                    <p class="mb-3"><strong>{{ $no }}. {{ $soalText[$no] }}</strong>
                     <button 
                         onclick="toggleAudio(this)" 
                         type="button" 
@@ -102,8 +104,7 @@
                         🔊
                     </button>
                     <audio id="audio-hal4_{{ $no }}" src="{{ asset('sounds/materi/hal4/hal4_' . $no . '.mp3') }}"></audio>
-
-                    <p class="mb-3"><strong>{{ $no }}. {{ $soalText[$no] }}</strong></p>
+                    </p>
 
                     <div class="position-relative mx-auto mb-3 soal-pilihan-gambar" style="max-width: 600px; height: 350px;">
                         <img src="{{ asset('images/materi/soal'.$no.'_bg.png') }}" class="w-100 h-100 rounded shadow" style="object-fit: cover;">
@@ -224,7 +225,7 @@
             <br>
             <div class="text-center flex-grow-1 fs-5">
                 <div class="alert alert-info d-inline-block mb-0">
-                    Skor Anda: {{ $skor }} / 4
+                    Nilai Anda: {{ $skor }} / 100
                 </div>
             </div>
             <br><div class="alert alert-success mt-3 fs-5">
